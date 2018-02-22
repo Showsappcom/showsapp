@@ -1,0 +1,41 @@
+*.pyc
+*.py~
+*.pyo
+settings_local.py
+.idea
+*.stderr
+*.stdout
+.svn
+nbproject
+.settings/
+#.gitignore*
+svn-commit*
+org.eclipse*
+.DS_Store
+^emails/
+.project
+.pydevproject
+uploads
+templates/robots.txt
+config.codekit
+nabenv/
+# Ignore all translation binaries
+*.mo
+
+# Gulp related rules and css
+node_modules/
+npm-debug.log
+templates/static/css/*.css
+*.map
+# Gulp and js
+templates/static/js/dist
+*.pid
+logs/
+gun.conf.py
+debug_toolbar
+.coverage
+.cache
+
+.vscode/settings.json
+.vscode/.ropeproject/*
+.vscode/launch.json
