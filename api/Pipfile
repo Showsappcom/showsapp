@@ -11,7 +11,8 @@ url = "https://pypi.python.org/simple"
 
 [packages]
 
-Django = "==2.0.2"
+django = "==2.0.2"
 djangorestframework = "*"
-Markdown = "*"
+markdown = "*"
 django-filter = "*"
+django-rest-auth = {extras = ["with_social"]}

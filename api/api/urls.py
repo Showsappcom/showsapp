@@ -16,8 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
+from accounts.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls'))
+    path('api-auth/', include('rest_framework.urls')),
+    path('rest-auth/', include('rest_auth.urls')),
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('rest-auth/facebook/', FacebookLogin.as_view(), name='fb_login'),
+    path('rest-auth/twitter/', TwitterLogin.as_view(), name='twitter_login'),
+    path('rest-auth/facebook/connect/', FacebookConnect.as_view(), name='fb_connect'),
+    path('rest-auth/twitter/connect/', TwitterConnect.as_view(), name='twitter_connect')    
 ]
