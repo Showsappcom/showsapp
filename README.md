@@ -25,17 +25,30 @@ pipenv install
 pipenv shell
 ```
 
-4. Run the django migrations:
+4. Install PostgreSQL server:
+  you can find instructions [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04)
+
+5. Create a database:
+```bash
+sudo createdb showsapp
+```
+6. Set the environment variables for the DB connection
+```bash
+export PSQL_DB_USER='your_postgres_user'
+export PSQL_DB_PASSWORD='your_postgres_user_password'
+```
+
+7. Run the django migrations:
 ```bash
 python3 manage.py migrate
 ```
 
-5. Run the django development server
+8. Run the django development server
 ```bash
 python3 manage.py runserver 0.0.0.0:8000
 ```
 
-6. Create a superuser for yourself:
+9. Create a superuser for yourself:
 ```bash
 python3 manage.py createsuperuser
 ```
