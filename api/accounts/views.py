@@ -29,3 +29,6 @@ class TwitterConnect(SocialConnectView):
     serializer_class = TwitterConnectSerializer
     adapter_class = TwitterOAuthAdapter
 
+def connect(request):    
+    context = {}
+    return render(request, 'accounts/connect.html', context)

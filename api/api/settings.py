@@ -25,7 +25,7 @@ SECRET_KEY = 'q4j6y1s*un^i#*lg&7*f7x=$z*!*v9plrl@x7bw(gkow#w73p+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.environ.get('host', '127.0.0.1')]
+ALLOWED_HOSTS = ['localhost', os.environ.get('host', '127.0.0.1')]
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -71,7 +72,7 @@ ROOT_URLCONF = 'api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['%s/templates/'%BASE_DIR,],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

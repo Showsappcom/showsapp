@@ -17,3 +17,6 @@ markdown = "*"
 django-filter = "*"
 django-rest-auth = {extras = ["with_social"]}
 "psycopg2" = "*"
+django-extensions = "*"
+werkzeug = "*"
+pyopenssl = "*"
