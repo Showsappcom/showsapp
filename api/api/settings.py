@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
-    'accounts'
+    'accounts',
+    'utils'
 
 
 ]
@@ -122,6 +123,67 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Loggin section
+# -----------------------
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },    
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        }        
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins', ],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+
+
+    }
+}
+
+# Email section
+# -----------------------
+EMAIL_BACKEND = 'utils.mail_message.AmazonSESBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'info@showsapp.ca'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# AWS SES Info
+DEFAULT_FROM_NAME = 'Showsapp'
+DEFAULT_EMAIL_ADDRESS = '<info@showsapp.ca>'
+DEFAULT_FROM_EMAIL = DEFAULT_FROM_NAME + DEFAULT_EMAIL_ADDRESS
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+REPLY_TO_ADDRESS = 'info@showsapp.ca'
+SES_DATA_CENTER = 'email.us-east-1.amazonaws.com'
+SES_ACCESS_KEY_ID = ''
+SES_SECRET_ACCESS_KEY = ''
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -140,3 +202,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# import the customized settings
+
+try:
+    from settings_local import *
+except ImportError:
+    pass

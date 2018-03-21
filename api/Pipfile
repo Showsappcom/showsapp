@@ -20,3 +20,4 @@ django-rest-auth = {extras = ["with_social"]}
 django-extensions = "*"
 werkzeug = "*"
 pyopenssl = "*"
+"psycopg2-binary" = "*"
