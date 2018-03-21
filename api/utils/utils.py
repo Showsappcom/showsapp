@@ -39,9 +39,9 @@ def make_token(user, email, timestamp=None):
     hash = salted_hmac(key_salt, value).hexdigest()[::2]
     return "%s-%s" % (timestamp, hash)
 
-def reset_password(onfuser):
-    onfuser.password_reset_token = make_token(onfuser, onfuser.email, None)                
-    onfuser.save()
+def reset_password(sauser):
+    sauser.password_reset_token = make_token(sauser, sauser.email, None)                
+    sauser.save()
 
 
 def boolean_switch(field):

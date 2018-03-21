@@ -3,5 +3,5 @@ from __future__ import unicode_literals
 from django.apps import AppConfig
 
 
-class OnfutilsConfig(AppConfig):
-    name = 'onfutils'
+class utilsConfig(AppConfig):
+    name = 'utils'

@@ -21,13 +21,13 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #THE SOFTWARE.
 
-import httplib
-import urllib
+import http.client
+import urllib.request, urllib.parse, urllib.error
 import hashlib
 import hmac
 import logging
 import base64
-from datetime import datetime
+import datetime
 from django.utils import timezone
 from xml.etree.ElementTree import XML
 
@@ -41,12 +41,12 @@ class AmazonSES:
         self._responseParser = AmazonResponseParser()
 
     def _getSignature(self, dateValue):
-        h = hmac.new(key=self._secretAccessKey, msg=dateValue, digestmod=hashlib.sha256)
+        h = hmac.new(key=self._secretAccessKey.encode(), msg=dateValue.encode(), digestmod=hashlib.sha256)
         return base64.b64encode(h.digest()).decode()
 
     def _getHeaders(self):
         headers = { 'Content-type': 'application/x-www-form-urlencoded' }
-        d = datetime.utcnow()
+        d = datetime.datetime.utcnow()
         dateValue = d.strftime('%a, %d %b %Y %H:%M:%S GMT')
         headers['Date'] = dateValue
         signature = self._getSignature(dateValue)
@@ -58,8 +58,8 @@ class AmazonSES:
             params = {}
         params['Action'] = actionName
         #https://email.us-east-1.amazonaws.com/
-        conn = httplib.HTTPSConnection(self._dataCenter)
-        params = urllib.urlencode(params)
+        conn = http.client.HTTPSConnection(self._dataCenter)
+        params = urllib.parse.urlencode(params)
         conn.request('POST', '/', params, self._getHeaders())
         response = conn.getresponse()
         responseResult = response.read()
@@ -87,14 +87,14 @@ class AmazonSES:
         params = { 'Source': source }
         for objName, addresses in zip(["ToAddresses", "CcAddresses", "BccAddresses"], [toAddresses, ccAddresses, bccAddresses]):
             if addresses:
-                if not isinstance(addresses, basestring) and getattr(addresses, '__iter__', False):
+                if not isinstance(addresses, str) and getattr(addresses, '__iter__', False):
                     for i, address in enumerate(addresses, 1):
                         params['Destination.%s.member.%d' % (objName, i)] = address
                 else:
                     params['Destination.%s.member.1' % objName] = addresses
 
         if replyToAddresses:
-            if not isinstance(replyToAddresses, basestring) and getattr(replyToAddresses, '__iter__', False):
+            if not isinstance(replyToAddresses, str) and getattr(replyToAddresses, '__iter__', False):
                 for i, address in enumerate(replyToAddresses, 1):
                     params['ReplyToAddresses.member.%d' % i] = address
             else:
@@ -249,7 +249,8 @@ class AmazonResponseParser:
         if xmlResponse.checkResponseName('ErrorResponse'):
             errorType = xmlResponse.getChildText('Error', 'Type')
             code = xmlResponse.getChildText('Error', 'Code')
-            message = xmlResponse.getChildText('Error', 'Message')            
+            message = xmlResponse.getChildText('Error', 'Message')
+            print(errorType, code, message)
             raise AmazonError(errorType, code, message)
 
     def parse(self, actionName, statusCode, reason, responseResult):

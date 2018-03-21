@@ -23,7 +23,7 @@ class Account(models.Model):
 
 
 class SAUser(models.Model):
-    user = models.OneToOneField(User, editable = False, related_name = 'onf_user', null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, editable = False, related_name = 'sa_user', null=True, on_delete=models.CASCADE)
     account = models.ForeignKey(Account, related_name='sa_users' , null=True, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=360, blank=True, null=True)
     last_name = models.CharField(max_length=360, blank=True, null=True)    

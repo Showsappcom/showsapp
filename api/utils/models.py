@@ -16,7 +16,7 @@ class FailedEmails(models.Model):
     exception_traceback = models.TextField("TraceBack")
 
     class Meta:
-        app_label = 'onfutils'
+        app_label = 'utils'
 
     def __unicode__(self):
         return self.recipient
@@ -32,7 +32,7 @@ class StandardResultsSetPagination(pagination.PageNumberPagination):
 class Calendar(models.Model):
     tick = models.DateTimeField(blank=True, null=True, default=timezone.now)
     class Meta:
-        app_label = 'onfutils'    
+        app_label = 'utils'    
 
 class CustomQueryBase(object):
     sql = models.TextField(blank=True, null=True)

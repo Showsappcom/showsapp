@@ -9,8 +9,8 @@ from django.core.mail import get_connection
 from django.core.mail.backends import base
 from django.core.mail.message import EmailMessage, EmailMultiAlternatives
 
-from onfutils import amazon_ses
-from onfutils.models import FailedEmails
+from utils import amazon_ses
+from utils.models import FailedEmails
 
 # get the logger
 logger = logging.getLogger(__name__)
