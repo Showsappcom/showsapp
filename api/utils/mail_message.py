@@ -17,9 +17,10 @@ logger = logging.getLogger(__name__)
 
 
 class AmazonSESBackend(base.BaseEmailBackend):
-    amazon = amazon_ses.AmazonSES(settings.SES_ACCESS_KEY_ID,
-                                  settings.SES_SECRET_ACCESS_KEY , settings.SES_DATA_CENTER)
-
+    print(settings.SES_ACCESS_KEY_ID, settings.SES_SECRET_ACCESS_KEY)
+    print("here")
+    amazon = amazon_ses.AmazonSES(settings.SES_ACCESS_KEY_ID, settings.SES_SECRET_ACCESS_KEY , settings.SES_DATA_CENTER)
+  
     def send_messages(self, messages):
         """
         Sends one or more EmailMessage objects and returns the number of email
@@ -35,7 +36,7 @@ class AmazonSESBackend(base.BaseEmailBackend):
                 self.amazon._performAction(
                     'SendRawEmail',
                     {'RawMessage.Data':
-                     base64.b64encode(msg.as_string())})
+                     base64.b64encode(msg.as_string().encode())})
             except Exception as e:
                 # log the exception
                 logger.error('Failed to send email %s' % (e.message))
@@ -61,7 +62,7 @@ class AmazonSESBackend(base.BaseEmailBackend):
         return num_sent
 
 
-class LLEmailMessage(EmailMessage):
+class SAEmailMessage(EmailMessage):
     def send(self, fail_silently=False):
         """Sends the email message."""
         if not self.recipients():
@@ -83,7 +84,7 @@ class LLEmailMessage(EmailMessage):
             f.save()
 
 
-class LLEmailMultiAlternatives(EmailMultiAlternatives):
+class SAEmailMultiAlternatives(EmailMultiAlternatives):
     def send(self, fail_silently=False):
         """Sends the email message."""
         if not self.recipients():
@@ -105,7 +106,7 @@ class LLEmailMultiAlternatives(EmailMultiAlternatives):
             f.save()
 
 
-def llsend_mail(subject, content, from_email, recipient_list, subtype=None,
+def sasend_mail(subject, content, from_email, recipient_list, subtype=None,
                 fail_silently=False, auth_user=None, auth_password=None,
                 connection=None):
 
@@ -114,7 +115,7 @@ def llsend_mail(subject, content, from_email, recipient_list, subtype=None,
                                               fail_silently=fail_silently)
 
     # create the message
-    message = LLEmailMessage(subject, content, from_email, recipient_list,
+    message = SAEmailMessage(subject, content, from_email, recipient_list,
                              connection=connection)
 
     # set content subtype

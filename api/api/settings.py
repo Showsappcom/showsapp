@@ -170,19 +170,19 @@ LOGGING = {
 # -----------------------
 EMAIL_BACKEND = 'utils.mail_message.AmazonSESBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'info@showsapp.ca'
+EMAIL_HOST_USER = 'info@showsapp.com'
 EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # AWS SES Info
-DEFAULT_FROM_NAME = 'Showsapp'
-DEFAULT_EMAIL_ADDRESS = '<info@showsapp.ca>'
+DEFAULT_FROM_NAME = 'Showsapp '
+DEFAULT_EMAIL_ADDRESS = '<info@showsapp.com>'
 DEFAULT_FROM_EMAIL = DEFAULT_FROM_NAME + DEFAULT_EMAIL_ADDRESS
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
-REPLY_TO_ADDRESS = 'info@showsapp.ca'
+REPLY_TO_ADDRESS = 'info@showsapp.com'
 SES_DATA_CENTER = 'email.us-east-1.amazonaws.com'
-SES_ACCESS_KEY_ID = ''
+SES_ACCESS_KEY_ID = 'wew'
 SES_SECRET_ACCESS_KEY = ''
 
 # Internationalization
@@ -205,9 +205,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-# import the customized settings
+# import the customized settings from settings_local
 
 try:
-    from settings_local import *
+    from .settings_local import *
 except ImportError:
     pass

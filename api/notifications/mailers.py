@@ -15,4 +15,3 @@ class WelcomeNotification(NotificationBase):
         context = super(WelcomeNotification, self).create_context()
         context.update({ 'user': self.user, 'subject' : self.subject, 'datetime': timezone.now() + datetime.timedelta(hours=12) })      
         return context
-        

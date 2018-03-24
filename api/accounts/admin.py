@@ -20,3 +20,11 @@ class AccountAdmin(admin.ModelAdmin):
     list_filter = ('activated', 'created_at', ) 
 
 admin.site.register(Account, AccountAdmin)
+
+
+class SAUserAdmin(admin.ModelAdmin):  
+    save_on_top = True
+    list_display = ('first_name', 'last_name', 'created_at', )
+
+
+admin.site.register(SAUser, SAUserAdmin)

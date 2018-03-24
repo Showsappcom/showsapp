@@ -9,7 +9,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import datetime
 from django.template import Context
-import StringIO
 
 
 def make_notification_setting_token(notification_setting):

@@ -101,7 +101,7 @@ def user_has_setting_enabled(sauser, verb):
 
 def make_notification_token(notification):
     timestamp = timezone.now()
-    value = (unicode(notification.id) + unicode(notification.recipient.email) + unicode(timestamp))
+    value = (str(notification.id) + str(notification.recipient.email) + str(timestamp))
     key_salt = "5#05A99-notification-tracking-token-generator"
     hash = salted_hmac(key_salt, value).hexdigest()[::2]
     return hash
@@ -115,13 +115,13 @@ class NotificationBase(object):
         self.verb = verb
         self.recipient = recipient
         self.level = level
-        if kwargs.has_key('from_name'):
+        if 'from_name' in kwargs :
             self.from_name = kwargs['from_name']
         else:
             self.from_name = None    
 
 
-        if kwargs.has_key('token'):
+        if 'token' in kwargs :
             self.token = kwargs['token']
         else:
             self.token = None   
@@ -159,7 +159,7 @@ class NotificationBase(object):
         newnotify = Notification(
             level = self.level,
             recipient=self.recipient,
-            verb=unicode(self.verb),   
+            verb=self.verb,   
             tag = tag,         
             description=kwargs.pop('description', None),
             timestamp=kwargs.pop('timestamp', datetime.datetime.utcnow().replace(tzinfo=utc)),
@@ -174,7 +174,7 @@ class NotificationBase(object):
         return newnotify
 
 
-    def send_email(self, message, recipient, subject='Ontario Fresh Notifications', **kwargs):    
+    def send_email(self, message, recipient, subject='Showsapp Notifications', **kwargs):    
         email_content = message
 
         if type(recipient) is not list:
@@ -188,7 +188,7 @@ class NotificationBase(object):
         try:
             reply_to = [self.reply_to]
         except:
-            reply_to = ['Ontario Fresh Messaging <' + hash+'@'+settings.EMAIL_ROUTER_DOMAIN+'>']
+            reply_to = ['Showsapp Messaging <info@showsapp.com>']
 
         if 'cc' in kwargs:
             cc=kwargs['cc']
@@ -203,7 +203,7 @@ class NotificationBase(object):
         if settings.DEBUG == True:
             from_email = "TEST | %s" %(from_email)
 
-        email = mail_message.LLEmailMessage(subject, email_content, from_email, recipient, reply_to=reply_to, cc=cc)
+        email = mail_message.SAEmailMessage(subject, email_content, from_email, recipient, reply_to=reply_to, cc=cc)
 
     
         try:

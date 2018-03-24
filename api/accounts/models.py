@@ -11,7 +11,6 @@ from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 class Account(models.Model):
-    
     name = models.CharField(max_length=255, blank=True, null=True)
     activated = models.BooleanField(default=False, blank=True)   
     created_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
@@ -19,11 +18,11 @@ class Account(models.Model):
     
 
     class Meta:
-        app_label = 'accounts' 
+        app_label = 'accounts'
 
 
 class SAUser(models.Model):
-    user = models.OneToOneField(User, editable = False, related_name = 'sa_user', null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, editable = True, related_name = 'sa_user', null=True, on_delete=models.CASCADE)
     account = models.ForeignKey(Account, related_name='sa_users' , null=True, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=360, blank=True, null=True)
     last_name = models.CharField(max_length=360, blank=True, null=True)    
