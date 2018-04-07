@@ -11,4 +11,5 @@ from accounts.views import *
 urlpatterns = [
     url(r'^login/', obtain_jwt_token),
     url(r'^token-refresh/', refresh_jwt_token),
+    url(r'^signup/', Signup.as_view(), name="signup"),
 ]
