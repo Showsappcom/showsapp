@@ -17,8 +17,6 @@ logger = logging.getLogger(__name__)
 
 
 class AmazonSESBackend(base.BaseEmailBackend):
-    print(settings.SES_ACCESS_KEY_ID, settings.SES_SECRET_ACCESS_KEY)
-    print("here")
     amazon = amazon_ses.AmazonSES(settings.SES_ACCESS_KEY_ID, settings.SES_SECRET_ACCESS_KEY , settings.SES_DATA_CENTER)
   
     def send_messages(self, messages):

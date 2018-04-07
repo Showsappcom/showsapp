@@ -14,6 +14,8 @@ class Account(models.Model):
     class Meta:
         app_label = 'accounts'
 
+    def __str__(self):
+        return "%s - %s" %(self.id, self.name)  
 
 class SAUser(models.Model):
     user = models.OneToOneField(User, editable=True, related_name='sa_user', null=True, on_delete=models.CASCADE)
@@ -28,3 +30,6 @@ class SAUser(models.Model):
 
     class Meta:
         app_label = 'accounts'
+
+    def __str__(self):
+        return "%s - %s %s (%s)" %(self.id, self.first_name, self.last_name, self.email)    

@@ -24,7 +24,7 @@ class FailedEmails(models.Model):
 #############################################################################################
 
 class StandardResultsSetPagination(pagination.PageNumberPagination):
-    page_size = 200
+    page_size = 25
     page_size_query_param = 'page_size'
 
 #############################################################################################

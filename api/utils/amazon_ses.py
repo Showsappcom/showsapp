@@ -49,10 +49,8 @@ class AmazonSES:
         d = datetime.datetime.utcnow()
         dateValue = d.strftime('%a, %d %b %Y %H:%M:%S GMT')
         headers['Date'] = dateValue
-        signature = self._getSignature(dateValue)        
-        print(self._accessKeyID)
+        signature = self._getSignature(dateValue)
         headers['X-Amzn-Authorization'] = 'AWS3-HTTPS AWSAccessKeyId=%s, Algorithm=HMACSHA256, Signature=%s' % (self._accessKeyID, signature)
-        print(headers)
         return headers
 
     def _performAction(self, actionName, params=None):
@@ -252,7 +250,6 @@ class AmazonResponseParser:
             errorType = xmlResponse.getChildText('Error', 'Type')
             code = xmlResponse.getChildText('Error', 'Code')
             message = xmlResponse.getChildText('Error', 'Message')
-            print(errorType, code, message)
             raise AmazonError(errorType, code, message)
 
     def parse(self, actionName, statusCode, reason, responseResult):
