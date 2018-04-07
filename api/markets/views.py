@@ -17,14 +17,36 @@ from rest_framework_jwt.settings import api_settings
 from markets.serializers import *
 from utils.models import StandardResultsSetPagination
 
-class PlaceOffer(views.APIView):
-    """
 
+class CreateItem(generics.CreateAPIView):
     """
+    A prodtected API to create an item as a seller.
+    """
+    serializer_class = CreateItemSerializer
 
+    def post(self, request, format='json'):
+        serializer = CreateItemSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            item = serializer.save()
+            return Response(ItemSerializer(item).data)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
+
+class PlaceOffer(generics.CreateAPIView):
+    """
+    A protected API to create an offer on an item.
+    """
+    authentication_classes = (JSONWebTokenAuthentication, )
+    permission_classes = (IsAuthenticated,)
+
+    serializer_class = CreateOfferSerializer
     def post(self, request, format=None):
-        data = request.data
-        return Response({})
+        serializer = CreateOfferSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            offer = serializer.save()
+            return Response(OfferSerializer(offer).data)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
 
 class MyItems(generics.ListAPIView):
     """

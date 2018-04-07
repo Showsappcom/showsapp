@@ -9,8 +9,9 @@ class Item(models.Model):
     name = models.CharField(max_length=360, blank=True, null=True)
     description = models.TextField(blank=True, null=True, default="")
     slug = models.SlugField(max_length=255, blank=True, null=True, db_index = True)
-    price = models.FloatField(blank=True, null=True, default=0)
-    active = models.BooleanField(default=False, blank=True)
+    price = models.FloatField(blank=False, null=False, default=0)
+    good_faith_money = models.FloatField(blank=False, null=False, default=0)
+    active = models.BooleanField(default=True, blank=True)
     created_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
 
