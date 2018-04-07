@@ -34,7 +34,7 @@ def make_token(user, email, timestamp=None):
     if not timestamp:
         delta = datetime.datetime.today() - datetime.datetime(2001, 1, 1)
         timestamp = int_to_base36(int(delta.days))
-    value = (unicode(user.id) + unicode(user.email) + unicode(email) + unicode(timestamp))
+    value = (str(user.id) + str(user.email) + str(email) + str(timestamp))
     key_salt = "L0cAlLin3-email-verification-token-generator"
     hash = salted_hmac(key_salt, value).hexdigest()[::2]
     return "%s-%s" % (timestamp, hash)
@@ -42,7 +42,6 @@ def make_token(user, email, timestamp=None):
 def reset_password(sauser):
     sauser.password_reset_token = make_token(sauser, sauser.email, None)                
     sauser.save()
-
 
 def boolean_switch(field):
     def _f(self):

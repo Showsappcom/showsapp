@@ -6,7 +6,7 @@ from django.conf import settings
 
 register = template.Library()
 
-ALLOWABLE_VALUES = ("CALL_US_AT", "EMAIL_HEADER_COLOR_1", "EMAIL_HEADER_COLOR_2", "EMAIL_US_AT", "DOMAIN", "FACEBOOK_APP_ID", "FRONTEND_DOMAIN", "DOMAIN_ONLY" )
+ALLOWABLE_VALUES = ("CALL_US_AT", "EMAIL_US_AT", "DOMAIN", "FACEBOOK_APP_ID", "FRONTEND_DOMAIN", "DOMAIN_ONLY" )
 
 # settings value
 @register.simple_tag

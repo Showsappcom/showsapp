@@ -24,7 +24,7 @@ admin.site.register(Account, AccountAdmin)
 
 class SAUserAdmin(admin.ModelAdmin):  
     save_on_top = True
-    list_display = ('first_name', 'last_name', 'created_at', )
+    list_display = ('email', 'first_name', 'last_name', 'created_at', )
 
 
 admin.site.register(SAUser, SAUserAdmin)

@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 
 class Account(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
-    activated = models.BooleanField(default=False, blank=True)   
+    activated = models.BooleanField(default=False, blank=True)
+    activation_token = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True, default=timezone.now)   
 
@@ -21,7 +22,7 @@ class SAUser(models.Model):
     last_name = models.CharField(max_length=360, blank=True, null=True)
     email = models.CharField(max_length=255, blank=True, null=True)
     activated = models.BooleanField(default=False, blank=True)
-
+    password_reset_token = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
 

@@ -1,0 +1,9 @@
+{% extends 'notifications/general_wrapper.html' %}
+{% load notifications_tags %}
+
+{% block subject %}
+{% endblock %}
+{% block body %}
+
+please click <a href='{% settings_value "FRONTEND_DOMAIN" %}activate/{{ user.account.activation_token }}'>here</a> to activate your account
+{% endblock %}
