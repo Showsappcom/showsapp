@@ -39,7 +39,7 @@ class CreateItemSerializer(serializers.Serializer):
 class OfferSerializer(serializers.ModelSerializer):
     class Meta:
         model = Offer
-        fields = ('id', 'sa_user', 'item', 'message', 'value', 'created_at')
+        fields = ('id', 'sa_user', 'item', 'message', 'value', 'good_faith_money_paid', 'on_hold', 'created_at')
 
 
 class CreateOfferSerializer(serializers.Serializer):
@@ -49,14 +49,19 @@ class CreateOfferSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         sa_user = self.context['request'].user.sa_user
-        item = validated_data.get('item')
+        item_id = validated_data.get('item')
         message = validated_data.get('message')
         value = validated_data.get('value')
+      
+        item = Item.objects.get(pk=item_id)
+        
+        on_hold = item.requires_good_faith_money
 
         offer = Offer.objects.create(
-            item_id=item, 
+            item=item,
             message=message,
             value=value,
+            on_hold=on_hold,
             sa_user=sa_user
         )
 
@@ -66,7 +71,8 @@ class DetailedItemSerializer(serializers.ModelSerializer):
     offers = serializers.SerializerMethodField('_offers')
 
     def _offers(self, obj):
-        return OfferSerializer(obj.offers.all(),many=True).data
+        return OfferSerializer(obj.offers.filter(on_hold=False),many=True).data
     class Meta:
         model = Item
-        fields = ('id', 'name', 'description', 'slug', 'price', 'offers', 'created_at')
+        fields = ('id', 'name', 'description', 'slug', 'price',
+            'good_faith_money', 'requires_good_faith_money', 'offers', 'created_at')

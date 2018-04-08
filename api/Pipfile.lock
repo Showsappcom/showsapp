@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8f3010b9f86817e65c1387e21f91dc42ab524dc408921ac1d16c5806a0dbd7b1"
+            "sha256": "bc671a95a722a24b7fa6c7f2e8c7a52304ae6506eced3ae7c96543c66440b8f9"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -9,9 +9,9 @@
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "4.13.0-37-generic",
+            "platform_release": "4.13.0-38-generic",
             "platform_system": "Linux",
-            "platform_version": "#42~16.04.1-Ubuntu SMP Wed Mar 7 16:03:28 UTC 2018",
+            "platform_version": "#43~16.04.1-Ubuntu SMP Wed Mar 14 17:48:43 UTC 2018",
             "python_full_version": "3.6.3",
             "python_version": "3.6",
             "sys_platform": "linux"
@@ -427,6 +427,13 @@
                 "sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9"
             ],
             "version": "==1.11.0"
+        },
+        "stripe": {
+            "hashes": [
+                "sha256:d895204135102ff63ad26cdbb315180fdec3f01c44fe964533f022f2719c35b2",
+                "sha256:2ec19bf8ad588ec04b36c35f359196fa1991f9ad911b1686ac2a12651a154947"
+            ],
+            "version": "==1.79.1"
         },
         "tablib": {
             "hashes": [
