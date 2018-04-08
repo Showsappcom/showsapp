@@ -7,13 +7,14 @@ from django.db.models import Q
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ('id', 'name', 'description', 'slug', 'price', 'created_at')
+        fields = ('id', 'name', 'description', 'slug', 'price', 'good_faith_money', 'requires_good_faith_money', 'created_at')
 
 class CreateItemSerializer(serializers.Serializer):
     name = serializers.CharField(allow_null=False, allow_blank=False, write_only=True, required=True)
     description = serializers.CharField(allow_null=True, allow_blank=True, write_only=True)
     price = serializers.FloatField(allow_null=False, write_only=True, required=True)
     good_faith_money = serializers.FloatField(allow_null=False, write_only=True, required=True)
+    requires_good_faith_money = serializers.NullBooleanField(write_only=True, required=False)
 
     def create(self, validated_data):
         sa_user = self.context['request'].user.sa_user
@@ -21,13 +22,15 @@ class CreateItemSerializer(serializers.Serializer):
         description = validated_data.get('description')
         price = validated_data.get('price')
         good_faith_money = validated_data.get('good_faith_money')
+        requires_good_faith_money = validated_data.get('requires_good_faith_money') or False
 
         item = Item.objects.create(
             name=name, 
             description=description,
             price=price,
             good_faith_money=good_faith_money,
-            sa_user=sa_user
+            sa_user=sa_user,
+            requires_good_faith_money=requires_good_faith_money
         )
 
         return item

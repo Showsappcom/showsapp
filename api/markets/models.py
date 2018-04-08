@@ -10,6 +10,7 @@ class Item(models.Model):
     description = models.TextField(blank=True, null=True, default="")
     slug = models.SlugField(max_length=255, blank=True, null=True, db_index = True)
     price = models.FloatField(blank=False, null=False, default=0)
+    requires_good_faith_money = models.BooleanField(default=False)
     good_faith_money = models.FloatField(blank=False, null=False, default=0)
     active = models.BooleanField(default=True, blank=True)
     created_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
