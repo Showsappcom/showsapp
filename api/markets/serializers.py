@@ -8,7 +8,8 @@ import stripe
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ('id', 'name', 'description', 'slug', 'price', 'good_faith_money', 'requires_good_faith_money', 'created_at')
+        fields = ('id', 'name', 'description', 'slug', 'price', 'good_faith_money',
+        'requires_good_faith_money', 'latitude','longitude','address', 'created_at')
 
 class CreateItemSerializer(serializers.Serializer):
     name = serializers.CharField(allow_null=False, allow_blank=False, write_only=True, required=True)
@@ -16,6 +17,9 @@ class CreateItemSerializer(serializers.Serializer):
     price = serializers.FloatField(allow_null=False, write_only=True, required=True)
     good_faith_money = serializers.FloatField(allow_null=False, write_only=True, required=True)
     requires_good_faith_money = serializers.NullBooleanField(write_only=True, required=False)
+    latitude = serializers.FloatField(allow_null=False, write_only=True, required=False)
+    longitude = serializers.FloatField(allow_null=False, write_only=True, required=False)
+    address = serializers.CharField(allow_null=False, allow_blank=False, write_only=True, required=True)
 
     def create(self, validated_data):
         sa_user = self.context['request'].user.sa_user
@@ -24,6 +28,9 @@ class CreateItemSerializer(serializers.Serializer):
         price = validated_data.get('price')
         good_faith_money = validated_data.get('good_faith_money')
         requires_good_faith_money = validated_data.get('requires_good_faith_money') or False
+        latitude = validated_data.get('latitude')
+        longitude = validated_data.get('longitude')
+        address = validated_data.get('address')
 
         item = Item.objects.create(
             name=name, 
@@ -31,7 +38,10 @@ class CreateItemSerializer(serializers.Serializer):
             price=price,
             good_faith_money=good_faith_money,
             sa_user=sa_user,
-            requires_good_faith_money=requires_good_faith_money
+            requires_good_faith_money=requires_good_faith_money,
+            latitude=latitude,
+            longitude=longitude,
+            address=address
         )
 
         return item

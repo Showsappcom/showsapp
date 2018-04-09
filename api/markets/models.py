@@ -13,6 +13,9 @@ class Item(models.Model):
     requires_good_faith_money = models.BooleanField(default=False)
     good_faith_money = models.FloatField(blank=False, null=False, default=0.0)
     active = models.BooleanField(default=True, blank=True)
+    latitude = models.FloatField(blank=False, null=False, default=0.0)
+    longitude = models.FloatField(blank=False, null=False, default=0.0)
+    address = models.CharField(max_length=360, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
 
