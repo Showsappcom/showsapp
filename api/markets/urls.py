@@ -11,5 +11,6 @@ from markets.views import *
 urlpatterns = [
     url(r'^create_item/', CreateItem.as_view(), name="create_item"),
     url(r'^myitems/', MyItems.as_view(), name="myitems"),
-    url(r'^place_offer/', PlaceOffer.as_view(), name="place_offer")
+    url(r'^place_offer/', PlaceOffer.as_view(), name="place_offer"),
+    url(r'^pay_gfm/', PayGFM.as_view(), name="pay_gfm")
 ]

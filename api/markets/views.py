@@ -48,6 +48,21 @@ class PlaceOffer(generics.CreateAPIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
 
+class PayGFM(generics.CreateAPIView):
+    """
+    A protected API to pay a GFM for an on-hold offer and release it.
+    """
+    authentication_classes = (JSONWebTokenAuthentication, )
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PayGFMSerializer
+    def post(self, request, format=None):
+        serializer = PayGFMSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            offer = serializer.save()
+            return Response(OfferSerializer(offer).data)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)      
+
 class MyItems(generics.ListAPIView):
     """
 

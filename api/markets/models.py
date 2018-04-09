@@ -51,6 +51,7 @@ class Offer(models.Model):
     value = models.FloatField(blank=True, null=True, default=0.0)
     on_hold = models.BooleanField(default=False, blank=True)
     good_faith_money_paid = models.FloatField(blank=False, null=False, default=0.0)
+    charge_token = models.CharField(max_length=360, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
 

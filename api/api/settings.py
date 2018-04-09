@@ -233,6 +233,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Payment system integration keys
+STRIPE = {
+    "SECRET_KEY": "sk_test_key",
+    "PUBLISHABLE_KEY": "pk_test_key"
+}
+
 # import the customized settings from settings_local
 
 try:

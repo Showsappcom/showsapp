@@ -2,6 +2,7 @@ from rest_framework import serializers
 from markets.models import *
 from accounts.serializers import AccountSerializer, SAUserSerializer
 from django.db.models import Q
+import stripe
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -64,6 +65,31 @@ class CreateOfferSerializer(serializers.Serializer):
             on_hold=on_hold,
             sa_user=sa_user
         )
+
+        return offer
+
+class PayGFMSerializer(serializers.Serializer):
+    offer = serializers.IntegerField(allow_null=False, write_only=True, required=True)
+    token = serializers.CharField(write_only=True, required=True)
+    
+    def create(self, validated_data):
+        offer_id = validated_data.get('offer')
+        offer = Offer.objects.get(pk=offer_id)
+        item = offer.item
+        
+        stripe.api_key = settings.STRIPE['SECRET_KEY']
+
+        charge = stripe.Charge.create(
+            amount=offer.value * 100,
+            currency='cad',
+            description=str(offer),
+            source=token,
+            capture=False
+        )
+
+        offer.on_hold = False
+        
+        offer.save()
 
         return offer
 
