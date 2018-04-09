@@ -1,4 +1,5 @@
 from django.conf.urls import include, url
+from django.urls import path
 from django.contrib import admin
 from django.views.generic.base import TemplateView
 from django.contrib.sitemaps.views import sitemap
@@ -9,8 +10,9 @@ from rest_framework_jwt.views import refresh_jwt_token
 from markets.views import *
 
 urlpatterns = [
-    url(r'^create_item/', CreateItem.as_view(), name="create_item"),
-    url(r'^myitems/', MyItems.as_view(), name="myitems"),
-    url(r'^place_offer/', PlaceOffer.as_view(), name="place_offer"),
-    url(r'^pay_gfm/', PayGFM.as_view(), name="pay_gfm")
+    path('create_item/', CreateItem.as_view(), name="create_item"),
+    path('myitems/', MyItems.as_view(), name="myitems"),
+    path('place_offer/', PlaceOffer.as_view(), name="place_offer"),
+    path('pay_gfm/', PayGFM.as_view(), name="pay_gfm"),
+    path('item/<int:id>/', item, name='item'),
 ]

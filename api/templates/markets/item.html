@@ -1,0 +1,20 @@
+<html>
+    <head>
+    </head>
+    <body>
+        {{ item.name }}
+
+        <form action="/api/v1/markets/pay_gfm/" method="POST">
+            <script
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="{{ stripe_pk }}"
+              data-amount="{{ value }}"
+              data-name="showsapp.com"
+              data-description="Widget"
+              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+              data-locale="auto"
+              data-currency="cad">
+            </script>
+          </form>
+    </body>
+</html>

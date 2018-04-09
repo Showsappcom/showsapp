@@ -73,6 +73,8 @@ class PayGFMSerializer(serializers.Serializer):
     token = serializers.CharField(write_only=True, required=True)
     
     def create(self, validated_data):
+        
+        print(self.context['request'])
         offer_id = validated_data.get('offer')
         offer = Offer.objects.get(pk=offer_id)
         item = offer.item

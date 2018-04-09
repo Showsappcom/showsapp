@@ -16,7 +16,9 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.settings import api_settings
 from markets.serializers import *
 from utils.models import StandardResultsSetPagination
-
+from django.http import HttpResponse
+from django.template import Template, Context
+from django.template.loader import get_template
 
 class CreateItem(generics.CreateAPIView):
     """
@@ -52,8 +54,8 @@ class PayGFM(generics.CreateAPIView):
     """
     A protected API to pay a GFM for an on-hold offer and release it.
     """
-    authentication_classes = (JSONWebTokenAuthentication, )
-    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (JSONWebTokenAuthentication, )
+    # permission_classes = (IsAuthenticated,)
     serializer_class = PayGFMSerializer
     def post(self, request, format=None):
         serializer = PayGFMSerializer(data=request.data, context={'request': request})
@@ -91,3 +93,10 @@ class MyItems(generics.ListAPIView):
 
         serializer = self.get_serializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
+
+
+def item(request,id):
+    item = Item.objects.get(pk=id)
+    context = { "item": item, "stripe_pk": settings.STRIPE['PUBLISHABLE_KEY'], "value": item.good_faith_money * 100 }
+    template = get_template('./markets/item.html')
+    return HttpResponse(template.render(context,request))
