@@ -53,10 +53,44 @@ class SignupSerializer(serializers.Serializer):
 
             WelcomeNotification(sa_user).send()
         except:
-            raise exceptions.APIException('Error saving the user.')    
+            raise exceptions.APIException('Error saving the user.')
 
         return sa_user
 
+
+class ActivateSerializer(serializers.Serializer):
+    token = serializers.CharField(allow_null=False, allow_blank=False, write_only=True)
+    
+
+    def create(self, validated_data):
+
+        token = validated_data.get('token')
+        
+        try:
+            account = Account.objects.filter(activation_token = token)[0]
+        except:
+            raise
+            raise exceptions.ValidationError('Could not find an account.')
+
+        try:
+            sa_user = account.sa_users.all()[0]
+
+            # getting auth user
+            user = sa_user.user
+
+            account.activated = True
+            account.activation_token = None
+            account.save()
+            sa_user.activated = True       
+            sa_user.save()
+
+            ### updating and activating the auth user
+            user.is_active = True
+            user.save()
+        except:
+            raise exceptions.APIException('Error saving the user.')
+
+        return sa_user
 
 class PasswordResetSerializer(serializers.Serializer):
     email = serializers.CharField(allow_null=False, allow_blank=False, write_only=True, required=True)

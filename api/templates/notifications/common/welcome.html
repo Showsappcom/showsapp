@@ -5,5 +5,6 @@
 {% endblock %}
 {% block body %}
 
-please click <a href='{% settings_value "FRONTEND_DOMAIN" %}activate/{{ user.account.activation_token }}'>here</a> to activate your account
+<p>Thanks for registering with ShowsApp.com. Please click this <a href='{% settings_value "FRONTEND_DOMAIN" %}activate/{{ user.account.activation_token }}'>link</a> to activate your account.</p>
+
 {% endblock %}

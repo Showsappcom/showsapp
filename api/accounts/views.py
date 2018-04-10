@@ -20,7 +20,7 @@ from notifications.mailers import  PasswordResetNotification
 
 class Signup(generics.CreateAPIView):
     """
-    Signup API: returns a serialized account object or an error message.
+    Signup API: returns a serialized user object or an error message.
     """
     serializer_class = SignupSerializer
     def post(self, request, format='json'):
@@ -28,9 +28,19 @@ class Signup(generics.CreateAPIView):
         if serializer.is_valid():
             user = serializer.save()
             return Response(SAUserSerializer(user).data)
-        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class Activate(generics.CreateAPIView):
+    """
+    Activate Account API: returns a serialized user object or an error message.
+    """
+    serializer_class = ActivateSerializer
+    def post(self, request, format='json'):
+        serializer = ActivateSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response(SAUserSerializer(user).data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PasswordResetView(generics.CreateAPIView):
     """
