@@ -11,6 +11,7 @@ class AccountSerializer(serializers.ModelSerializer):
         model = Account
         fields = ('id', 'name')
 
+
 class SAUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = SAUser
@@ -32,7 +33,7 @@ class SignupSerializer(serializers.Serializer):
         first_name = validated_data.get('first_name')
         last_name = validated_data.get('last_name')
         name = validated_data.get('name')
-        
+
         users_results = User.objects.filter(username__iexact=email)
         if users_results.exists():
             raise exceptions.ValidationError('User already exists.')
@@ -92,6 +93,7 @@ class ActivateSerializer(serializers.Serializer):
 
         return sa_user
 
+
 class PasswordResetSerializer(serializers.Serializer):
     email = serializers.CharField(allow_null=False, allow_blank=False, write_only=True, required=True)
 
@@ -112,7 +114,6 @@ class PasswordResetSerializer(serializers.Serializer):
             PasswordResetNotification(sa_user).send()
 
         return sa_user
-
 
 
 class SetPasswordSerializer(serializers.Serializer):

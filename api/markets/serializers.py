@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from markets.models import *
+from markets.models import WaitingListSubscription, Item, Offer
 from accounts.serializers import AccountSerializer, SAUserSerializer
 from django.db.models import Q
 import stripe
@@ -57,15 +57,15 @@ class CreateOfferSerializer(serializers.Serializer):
     item = serializers.IntegerField(allow_null=False, write_only=True, required=True)
     message = serializers.CharField(allow_null=True, allow_blank=True, write_only=True)
     value = serializers.FloatField(allow_null=False, write_only=True, required=True)
-
+    
     def create(self, validated_data):
         sa_user = self.context['request'].user.sa_user
         item_id = validated_data.get('item')
         message = validated_data.get('message')
         value = validated_data.get('value')
-      
+
         item = Item.objects.get(pk=item_id)
-        
+
         on_hold = item.requires_good_faith_money
 
         offer = Offer.objects.create(
@@ -78,17 +78,48 @@ class CreateOfferSerializer(serializers.Serializer):
 
         return offer
 
+
+class WaitingListSubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WaitingListSubscription
+        fields = ('id', 'sa_user', 'item', 'active', 'created_at')
+
+
+class CreateWaitingListSubscriptionSerializer(serializers.Serializer):
+
+    item = serializers.IntegerField(allow_null=False, write_only=True, required=True)
+    active = serializers.NullBooleanField(write_only=True, required=False)
+
+    def create(self, validated_data):
+        sa_user = self.context['request'].user.sa_user
+        item_id = validated_data.get('item')
+        active = validated_data.get('requires_good_faith_money') or True
+
+        item = Item.objects.get(pk=item_id)
+
+        subscriptions = WaitingListSubscription.objects.filter(item_id=item,sa_user=sa_user).order_by('-id')
+        if subscriptions.exists():
+            subscription = subscriptions[0]
+        else:    
+            subscription = WaitingListSubscription.objects.create(
+                item=item,
+                sa_user=sa_user,
+                active=active
+            )
+
+        return subscription
+
 class PayGFMSerializer(serializers.Serializer):
     offer = serializers.IntegerField(allow_null=False, write_only=True, required=True)
     token = serializers.CharField(write_only=True, required=True)
-    
+
     def create(self, validated_data):
-        
+
         print(self.context['request'])
         offer_id = validated_data.get('offer')
         offer = Offer.objects.get(pk=offer_id)
         item = offer.item
-        
+
         stripe.api_key = settings.STRIPE['SECRET_KEY']
 
         charge = stripe.Charge.create(
@@ -100,17 +131,23 @@ class PayGFMSerializer(serializers.Serializer):
         )
 
         offer.on_hold = False
-        
+
         offer.save()
 
         return offer
 
 class DetailedItemSerializer(serializers.ModelSerializer):
     offers = serializers.SerializerMethodField('_offers')
+    waiting_list = serializers.SerializerMethodField('_waiting_list')
 
     def _offers(self, obj):
-        return OfferSerializer(obj.offers.filter(on_hold=False),many=True).data
+        return OfferSerializer(obj.offers.filter(on_hold=False), many=True).data
+
+    def _waiting_list(self, obj):
+        return WaitingListSubscriptionSerializer(obj.waiting_list_subscription.filter(active=True), many=True).data
+
     class Meta:
         model = Item
         fields = ('id', 'name', 'description', 'slug', 'price',
-            'good_faith_money', 'requires_good_faith_money', 'offers', 'created_at')
+                  'good_faith_money', 'requires_good_faith_money',
+                  'offers', 'waiting_list', 'created_at')

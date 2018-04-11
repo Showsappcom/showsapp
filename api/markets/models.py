@@ -47,6 +47,7 @@ class Item(models.Model):
             self.setSlug()
         super(Item, self).save(*args, **kwargs)
 
+
 class Offer(models.Model):
     sa_user = models.ForeignKey(SAUser, related_name='offers', null=True, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, related_name='offers', on_delete=models.CASCADE)
@@ -55,6 +56,17 @@ class Offer(models.Model):
     on_hold = models.BooleanField(default=False, blank=True)
     good_faith_money_paid = models.FloatField(blank=False, null=False, default=0.0)
     charge_token = models.CharField(max_length=360, blank=True, null=True)
+    created_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
+    updated_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
+
+    class Meta:
+        app_label = 'markets'
+
+
+class WaitingListSubscription(models.Model):
+    sa_user = models.ForeignKey(SAUser, related_name='waiting_list_subscription', null=True, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, related_name='waiting_list_subscription', on_delete=models.CASCADE)
+    active = models.BooleanField(default=True, blank=True)
     created_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
 

@@ -31,7 +31,7 @@ class CreateItem(generics.CreateAPIView):
         if serializer.is_valid():
             item = serializer.save()
             return Response(ItemSerializer(item).data)
-        
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
 
 class PlaceOffer(generics.CreateAPIView):
@@ -47,8 +47,24 @@ class PlaceOffer(generics.CreateAPIView):
         if serializer.is_valid():
             offer = serializer.save()
             return Response(OfferSerializer(offer).data)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
+        return 
+
+
+class JoinWaitingList(generics.CreateAPIView):
+    """
+    A protected API to join the waiting list on an item.
+    """
+    authentication_classes = (JSONWebTokenAuthentication, )
+    permission_classes = (IsAuthenticated,)
+
+    serializer_class = CreateWaitingListSubscriptionSerializer
+    def post(self, request, format=None):
+        serializer = CreateWaitingListSubscriptionSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            subscription = serializer.save()
+            return Response(WaitingListSubscriptionSerializer(subscription).data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class PayGFM(generics.CreateAPIView):
     """
@@ -78,7 +94,7 @@ class MyItems(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user.sa_user
-        items= user.items.all().order_by('active','id')
+        items = user.items.all().order_by('active','id')
 
         return items
 
