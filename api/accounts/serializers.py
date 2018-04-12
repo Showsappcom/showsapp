@@ -39,12 +39,12 @@ class SignupSerializer(serializers.Serializer):
             raise exceptions.ValidationError('User already exists.')
 
         try:
-            auth_user = User.objects.create(first_name = first_name, last_name= last_name, email = email, username = email)
+            auth_user = User.objects.create(first_name=first_name, last_name=last_name, email=email, username=email)
             auth_user.set_password(password)
             auth_user.save()
             account = Account.objects.create(name=name)
 
-            sa_user = SAUser.objects.create(first_name = first_name, last_name = last_name, user = auth_user, account = account, email=email)
+            sa_user = SAUser.objects.create(first_name=first_name, last_name=last_name, user=auth_user, account=account, email=email)
 
             # create a token
             token = make_token(sa_user.user, email, timestamp=None)
@@ -61,16 +61,14 @@ class SignupSerializer(serializers.Serializer):
 
 class ActivateSerializer(serializers.Serializer):
     token = serializers.CharField(allow_null=False, allow_blank=False, write_only=True)
-    
 
     def create(self, validated_data):
 
         token = validated_data.get('token')
-        
+
         try:
-            account = Account.objects.filter(activation_token = token)[0]
+            account = Account.objects.filter(activation_token=token)[0]
         except:
-            raise
             raise exceptions.ValidationError('Could not find an account.')
 
         try:
@@ -100,13 +98,13 @@ class PasswordResetSerializer(serializers.Serializer):
     def create(self, validated_data):
 
         email = validated_data.get('email')
-        
+
         users_results = User.objects.filter(username__iexact=email)
         if not users_results.exists():
             raise exceptions.ValidationError('User does not exist.')
 
         sa_user = users_results[0].sa_user
-        
+
         if not sa_user.activated:
             raise exceptions.PermissionDenied("The user you are trying to reset the password for is not activated.")
         else:

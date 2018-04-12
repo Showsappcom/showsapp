@@ -1,8 +1,9 @@
-from notifications.models import *
+from notifications.models import Notification
 import datetime
 from django.utils import timezone
 from accounts.models import Account
 from notifications.utils import *
+
 
 class WelcomeNotification(NotificationBase):
     def __init__(self, user, template='./notifications/common/welcome.html', verb=Notification.Verb.WELCOME):
@@ -16,14 +17,30 @@ class WelcomeNotification(NotificationBase):
         context.update({'user': self.user, 'subject': self.subject, 'datetime': timezone.now() + datetime.timedelta(hours=12) })      
         return context
 
+
 class PasswordResetNotification(NotificationBase):
     def __init__(self, user, template='./notifications/common/reset_password.html', verb=Notification.Verb.PASSWORD_RESET):
         self.user = user
-        self.subject =  "Reset your password" 
+        self.subject = "Reset your password"
         self.need_settings = False
         super(PasswordResetNotification, self).__init__(template, verb, user.user, level=Notification.LEVELS.SUCCESS)
 
     def create_context(self):
         context = super(PasswordResetNotification, self).create_context()
-        context.update({ 'user': self.user, 'subject' : self.subject })      
-        return context        
+        context.update({'user': self.user, 'subject': self.subject})
+        return context
+
+
+class NewOfferNotification(NotificationBase):
+    def __init__(self, user, item, offer, template='./notifications/seller/new_offer.html', verb=Notification.Verb.NEW_OFFER):
+        self.user = user
+        self.item = item
+        self.offer = offer
+        self.subject = "New Offer on your %s" %(item.name)
+        self.need_settings = False
+        super(NewOfferNotification, self).__init__(template, verb, user.user, level=Notification.LEVELS.SUCCESS)
+
+    def create_context(self):
+        context = super(NewOfferNotification, self).create_context()
+        context.update({'user': self.user, 'subject': self.subject, 'item':self.item, 'offer':self.offer})
+        return context

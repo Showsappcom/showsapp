@@ -1,0 +1,21 @@
+{% extends 'notifications/general_wrapper.html' %}
+{% load notifications_tags %}
+
+{% block subject %}
+{% endblock %}
+{% block body %}
+
+<p>Great news! A buyer has offered </b>${{ offer.value }}</b> for your <b>{{ item.name }}</b>.
+    {% if item.requires_good_faith_money %}
+       They have also deposited <b>${{ item.good_faith_money }}</b> Good Faith Money, as requested. 
+    {% endif %}   
+    Would you like to <a href="">accept</a>/<a href="">counter</a>/<a href="">decline</a> this offer?</p>
+
+<p>If you accept the offer, the buyer will automatically be forwarded your contact email/phone number so that you can schedule a pickup.</p>
+
+{% if item.requires_good_faith_money %}
+<p>*Remember, when you accept an offer with Good Faith Money deposited,
+    that deposit stays with ShowsApp as a donation to help us keep the lights on and staff families fed so that we can continue to keep serving you.
+    The buyer has agreed to pay <b>${{ item.price }}</b> minus <b>${{ item.good_faith_money }}</b> Good Faith Money.</p>
+{% endif %}
+{% endblock %}

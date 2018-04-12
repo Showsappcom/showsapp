@@ -3,7 +3,7 @@ from markets.models import WaitingListSubscription, Item, Offer
 from accounts.serializers import AccountSerializer, SAUserSerializer
 from django.db.models import Q
 import stripe
-
+from notifications.mailers import NewOfferNotification
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -57,7 +57,7 @@ class CreateOfferSerializer(serializers.Serializer):
     item = serializers.IntegerField(allow_null=False, write_only=True, required=True)
     message = serializers.CharField(allow_null=True, allow_blank=True, write_only=True)
     value = serializers.FloatField(allow_null=False, write_only=True, required=True)
-    
+
     def create(self, validated_data):
         sa_user = self.context['request'].user.sa_user
         item_id = validated_data.get('item')
@@ -76,6 +76,7 @@ class CreateOfferSerializer(serializers.Serializer):
             sa_user=sa_user
         )
 
+        NewOfferNotification(sa_user, item, offer).send()
         return offer
 
 

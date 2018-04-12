@@ -26,13 +26,15 @@ class Notification(models.Model):
     # enumerate notification verbs
     Verb = Enumeration(
         'welcome',
-        'password reset'
+        'password reset',
+        'new offer'
 
     )
 
     NOTIFICATION_VERB = (
         (Verb.WELCOME, ('welcome')),
         (Verb.PASSWORD_RESET, ('password reset')),
+        (Verb.NEW_OFFER, ('new offer')),
     )
 
     LEVELS = Enumeration('success', 'info', 'warning', 'error')
