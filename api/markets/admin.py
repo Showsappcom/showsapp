@@ -16,7 +16,7 @@ admin.site.register(Item, ItemAdmin)
 
 class OfferAdmin(admin.ModelAdmin):
     save_on_top = True
-    list_display = ('id', 'sa_user', 'item', 'value', 'created_at', )
+    list_display = ('id', 'sa_user', 'item', 'value', 'accepted', 'on_hold', 'created_at', )
 
 admin.site.register(Offer, OfferAdmin)
 

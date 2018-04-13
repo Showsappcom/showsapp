@@ -79,6 +79,28 @@ class CreateOfferSerializer(serializers.Serializer):
         NewOfferNotification(sa_user, item, offer).send()
         return offer
 
+class AcceptDeclineOfferSerializer(serializers.Serializer):
+    offer = serializers.IntegerField(allow_null=False, write_only=True, required=True)
+    accept = serializers.NullBooleanField(write_only=True, required=True)
+
+    def create(self, validated_data):
+        sa_user = self.context['request'].user.sa_user
+        offer_id = validated_data.get('offer')
+        accept = validated_data.get('accept')
+
+        try:
+            offer = Offer.objects.get(pk=offer_id)
+        except:
+            raise exceptions.ValidationError('Could not find an offer with the given id') 
+
+        if item.sa_user != sa_user:
+            raise exceptions.ValidationError('Unauthorized to perform this action.') 
+
+        offer.accepted = accept
+
+        offer.save
+
+        return offer
 
 class WaitingListSubscriptionSerializer(serializers.ModelSerializer):
     class Meta:

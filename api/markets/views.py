@@ -47,8 +47,23 @@ class PlaceOffer(generics.CreateAPIView):
         if serializer.is_valid():
             offer = serializer.save()
             return Response(OfferSerializer(offer).data)
-        return 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class AcceptDeclineOffer(generics.CreateAPIView):
+    """
+    A protected API to accept or decline an offer on an item.
+    """
+    authentication_classes = (JSONWebTokenAuthentication, )
+    permission_classes = (IsAuthenticated,)
+
+    serializer_class = AcceptDeclineOfferSerializer
+    def post(self, request, format=None):
+        serializer = AcceptDeclineOfferSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            offer = serializer.save()
+            return Response(OfferSerializer(offer).data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
 class JoinWaitingList(generics.CreateAPIView):
     """
