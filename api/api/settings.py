@@ -235,6 +235,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = '%s/templates/static/' % BASE_DIR
+
+
 # Payment system integration keys
 STRIPE = {
     "SECRET_KEY": "sk_test_key",
