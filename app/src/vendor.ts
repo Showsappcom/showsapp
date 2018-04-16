@@ -19,20 +19,8 @@ import 'rxjs/add/operator/takeWhile';
 import 'lodash';
 import 'hammerjs';
 
-/* d3 and nvd3 */
-// import 'd3';
-// import 'plotly.js';
-// import 'nvd3';
-
 
 /*ngrx - state manager*/
 import '@ngrx/core';
 import '@ngrx/store';
-
-/* file saver */
-// import 'file-saver/FileSaver.min.js';
-
-/* Internationalization For Cross Browser */
-// import 'intl';
-// import 'intl/locale-data/jsonp/en';
 

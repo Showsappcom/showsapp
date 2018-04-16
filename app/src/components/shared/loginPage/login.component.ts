@@ -235,8 +235,8 @@ export class LoginComponent {
 
     console.log('i will be here');
     this._loginService.register({
-      firstName: this.requestFormControl.get('firstName').value,
-      lastName: this.requestFormControl.get('lastName').value,
+      firstName: this.requestFormControl.get('first_name').value,
+      lastName: this.requestFormControl.get('last_name').value,
       email: this.requestFormControl.get('email').value,
       password: this.requestFormControl.get('requestPassword').value
     }).takeWhile(() => {

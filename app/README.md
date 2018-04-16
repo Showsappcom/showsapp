@@ -26,6 +26,7 @@ Getting Started
 $ npm install
 $ npm start
 ```
+ - Go to 'http://localhost:5550/'
 
 Application Build
 -----------------
