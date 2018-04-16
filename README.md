@@ -15,7 +15,7 @@ pip install pipenv
 
 2. Clone the [code](https://github.com/ShowsAppCo/showsapp):
 ```bash
-git clone git@github.com:ShowsAppCo/showsapp.git
+git clone git@github.com:ShowsAppCom/showsapp.git
 ```
 
 3. Install the requirements:
