@@ -1,0 +1,21 @@
+@import "../../../shared/styles/_mixins.scss";
+
+
+.retry-error-container{
+
+  @include flexbox();
+  @include justify-content(center);
+  @include align-items(center);
+
+  .retry-error-content{
+
+    @include flexbox();
+    @include flex-direction(column);
+    @include justify-content(center);
+    @include align-items(center);
+
+    i {
+      margin-bottom: 20px;
+    }
+  }
+}

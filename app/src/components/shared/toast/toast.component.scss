@@ -1,0 +1,12 @@
+@import '../../../shared/styles/_mixins.scss';
+
+.toast-content-container {
+  @include flexbox();
+  @include flex-direction(row);
+  @include align-items(center);
+
+  span {
+    @include flex-grow(1);
+  }
+
+}

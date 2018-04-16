@@ -1,0 +1,26 @@
+@import '~@angular/material/theming';
+@import "_mixins.scss";
+
+
+
+@mixin forms-theme($theme) {
+
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  .error-snack{
+    background-color: map-get($warn, 500);
+    color: map-get($foreground, text);
+  }
+
+
+
+  .success-snack{
+    background-color: map-get($primary, 200);
+    color: map-get($foreground, text);
+  }
+
+}

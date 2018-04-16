@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": "./src",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es6"
+    ],
+    "module": "es6",
+    "moduleResolution": "node",
+    "noEmitHelpers": true,
+    "noUnusedLocals": false,
+    "removeComments": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "es5",
+    "types": [
+      "node",
+      "jasmine",
+      "hammerjs",
+      "d3",
+      "plotly.js"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "aotMobile",
+    "aot",
+    "src/components/mobile/app/app.*.ts",
+    "src/components/mobile/base/base.*.ts",
+    "src/components/mobile/navDashboard/navDashboard.*.ts",
+    "src/components/mobile/navigation/sideBar/sideBar.*.ts",
+    "src/components/mobile/navigation/sideNav/sideNav.*.ts",
+    "src/components/mobile/navigation/navigation.*.ts",
+    "src/main.aot.ts",
+    "src/mainMobile.aot.ts",
+    "target",
+    "tmp",
+    "archive"
+  ]
+}

@@ -1,0 +1,26 @@
+@import 'fonts/lxi-fontello/css/fontello.scss';
+@import 'fonts/material-icons/material-icons.scss';
+
+$xLarge: 70px;
+$large: 50px;
+$medium: 35px;
+i, mat-icon {
+  font-size: 24px;
+  &.x-large{
+    font-size: $xLarge;
+    width: $xLarge;
+    height: $xLarge;
+  }
+
+  &.large{
+    font-size: $large;
+    width: $large;
+    height: $large;
+  }
+
+  &.medium {
+    font-size: $medium;
+    width: $medium;
+    height: $medium;
+  }
+}

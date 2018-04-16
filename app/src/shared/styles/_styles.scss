@@ -1,0 +1,56 @@
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-family: 'Open Sans', 'Helvetica', 'Noto', sans-serif;
+}
+
+@import "_showsAppTheme.scss";
+@import "_font_styles.scss";
+@import '_icon_styles.scss';
+
+body {
+  margin: 0 !important;
+  overflow-x: auto;
+
+}
+
+//Typical Styles
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                         not supported by any browser */
+}
+
+.no-focus:focus {
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.clearfix:after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+/*** TODO: Remove once theme file used ***/
+.mat-dialog-container {
+  position: relative;
+}
+
+.details-dialog .mat-dialog-container {
+  padding: 0 !important;
+}
+
+.operate-selection-modal .mat-dialog-container{
+  padding: 10px !important;
+}

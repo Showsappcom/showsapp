@@ -1,0 +1,206 @@
+@import '~@angular/material/theming';
+@import "../../../shared/styles/_mixins.scss";
+
+@mixin login-page($theme) {
+  $whiteColour: white;
+
+  $themePallet: map-get($theme, primary);
+  $backgroundPallet: map-get($theme, background);
+  $foregroundPallet: map-get($theme, foreground);
+
+  $themeColour: map-get($themePallet, 500);
+  $backgroundColour: map-get($backgroundPallet, background);
+  $foreGroundColour: map-get($foregroundPallet, base);
+
+  mat-form-field{
+    margin-bottom: 10px;
+  }
+
+  .page-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: $themeColour;
+    background-image: url('../../shared/assets/backgrounds/material-design-hd-wallpaper-no-0560-1920x1920.png') !important;
+    background-size: cover;
+    top: 0;
+
+    @include flexbox();
+    @include flex-direction(column);
+
+    .login-container {
+      @include flexbox();
+      @include flex-direction(column);
+      @include justify-content(center);
+      @include align-items(center);
+      padding: 20px;
+
+      .shows-app-mission-statement {
+        @include flexbox();
+        @include flex-direction(column);
+        @include align-items(center);
+        //width: 100%;
+
+        .shows-app-mission{
+          @include flexbox();
+          @include flex-direction(column);
+          @include align-items(center);
+        }
+
+        .login-form {
+          @include flexbox();
+          @include flex-direction(column);
+          @include align-items(center);
+          width: 100%;
+
+          mat-form-field {
+            width: 100%;
+          }
+
+          margin-bottom: 20px;
+        }
+
+        .login-form-container {
+          @include flexbox();
+          @include flex-direction(column);
+          @include align-items(center);
+          width: 300px;
+        }
+
+        .request-container {
+          @include flexbox();
+          @include flex-direction(column);
+          @include align-items(center);
+          margin-top: 25px;
+        }
+
+      }
+
+      a {
+        &.primary-color {
+          color: $themeColour;
+        }
+      }
+
+      .login-form {
+        @include flexbox();
+        @include flex-direction(column);
+      }
+
+      .login-btn-container {
+        @include flexbox();
+        @include justify-content(center);
+      }
+
+      background-color: $backgroundColour;
+      margin: auto;
+      max-width: 500px;
+      min-height: 500px;
+
+      @media (max-width: 600px) {
+        min-height: 100%;
+        max-width: 100%;
+      }
+      width: 100%;
+
+      .form-controls {
+        @include flexbox();
+        @include flex-direction(column);
+        @include align-items(center);
+        @include justify-content(center);
+        height: 190px;
+
+        button {
+
+          margin-top: 20px;
+          margin-bottom: 20px;
+          width: 300px;
+
+        }
+
+        .signing-in {
+          @include flexbox();
+          @include flex-direction(column);
+          @include align-items(center);
+          @include justify-content(center);
+
+          width: 300px;
+
+          mat-progress-bar {
+            margin-bottom: 20px;
+          }
+        }
+
+      }
+
+      .optional-details {
+        @include flexbox();
+        @include flex-direction(column);
+        @include align-items(center);
+        @include justify-content(center);
+
+        .forgot-link {
+          color: $themeColour;
+          cursor: pointer;
+          margin-bottom: 20px;
+
+          a {
+            text-decoration: underline;
+          }
+        }
+
+        .eula-information {
+          @include flexbox();
+          @include flex-direction(column);
+          @include align-items(center);
+          @include justify-content(center);
+          margin-bottom: 20px;
+
+          .hyper-link {
+            margin-top: 5px;
+            a {
+
+              color: $themeColour;
+              cursor: pointer;
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .software-information {
+
+          font-size: 10px;
+          margin-bottom: 20px;
+
+        }
+      }
+
+    }
+  }
+
+  .request-form-container {
+    @include flexbox();
+    @include flex-direction(column);
+    @include align-items(center);
+    width: 300px;
+
+    .request-container {
+      @include flexbox();
+      @include flex-direction(column);
+      @include align-items(center);
+      width: 100%;
+
+
+
+      .login-form {
+        width: 100%;
+      }
+      .have-account-container {
+        margin-top: 25px;
+      }
+    }
+  }
+
+}
+
+
+

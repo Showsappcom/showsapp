@@ -1,0 +1,25 @@
+@import '~@angular/material/theming';
+@import "../../../shared/styles/_mixins.scss";
+
+@mixin toast-message($theme) {
+  $whiteColour: white;
+  $themePallet: map-get($theme, primary);
+  $themeWarnPallet: map-get($theme, warn);
+  $backgroundPallet: map-get($theme, background);
+  $foregroundPallet: map-get($theme, foreground);
+
+  $themeColour: map-get($themePallet, 500);
+  $themeWarnColour: map-get($themeWarnPallet, 500);
+  $backgroundColour: map-get($backgroundPallet, background);
+  $foreGroundColour: map-get($foregroundPallet, base);
+
+  .error-snack{
+    background: $themeWarnColour !important;
+  }
+
+  .success-snack{
+    background: $themeColour !important;
+  }
+}
+
+

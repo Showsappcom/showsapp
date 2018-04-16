@@ -1,0 +1,41 @@
+ {
+  "compilerOptions": {
+    "baseUrl": "",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es6"
+    ],
+    "module": "es6",
+    "moduleResolution": "node",
+    "noEmitHelpers": true,
+    "removeComments": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "es5",
+    "types": [
+      "jasmine",
+      "node",
+      "hammerjs",
+      "d3"
+    ]
+  },
+  "files": [
+    "src/main.aot.ts",
+    "src/components/app/app.module.ts",
+    "src/components/base/base.module.ts",
+    "src/components/buyer/buyerDashboard.module.ts",
+    "src/components/seller/sellerDashboard.module.ts",
+    "src/vendor.ts",
+    "src/polyfills.ts"
+  ],
+  "angularCompilerOptions": {
+    "genDir": "./src/ngfactory",
+    "skipMetadataEmit" : false
+  }
+}
+
+
+
+

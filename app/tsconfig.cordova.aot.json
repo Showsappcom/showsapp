@@ -1,0 +1,48 @@
+ {
+  "compilerOptions": {
+    "baseUrl": "",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es6"
+    ],
+    "module": "es6",
+    "moduleResolution": "node",
+    "noEmitHelpers": true,
+    "removeComments": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "es5",
+    "types": [
+      "jasmine",
+      "node",
+      "hammerjs",
+      "d3"
+    ]
+  },
+  "files": [
+    "src/main.aot.ts",
+    "src/components/desktop/app/app.module.ts",
+    "src/components/desktop/base/base.module.ts",
+    "src/components/desktop/buildings/floorPlanMap/floorPlanMap.module.ts",
+    "src/components/desktop/manualActions/manualActions.module.ts",
+    "src/components/desktop/navDashboard/navDashboard.module.ts",
+    "src/components/desktop/scheduling/scheduling.module.ts",
+    "src/components/desktop/settings/systemSettings.module.ts",
+    "src/components/desktop/systemHierarchy/systemHierarchy.module.ts",
+    "src/components/desktop/userManagement/user.module.ts",
+    "src/components/shared/loginPage/login.module.ts",
+    "src/components/shared/modals/modals.module.ts",
+    "src/vendor.ts",
+    "src/polyfills.ts"
+  ],
+  "angularCompilerOptions": {
+    "genDir": "./src/ngfactory",
+    "skipMetadataEmit" : false
+  }
+}
+
+
+
+

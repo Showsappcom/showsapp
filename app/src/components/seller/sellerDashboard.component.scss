@@ -1,0 +1,49 @@
+@import '../../shared/styles/_mixins';
+
+.main-container {
+  @include flexbox();
+  @include flex-direction(row);
+  height: 100%;
+  .item-list {
+    @include transition(width 0.3s ease-in);
+    width: 300px;
+
+    &.mobile {
+
+      min-width: 0;
+      opacity: 0;
+
+    }
+  }
+
+  .item-list{
+    @include flex-grow(1);
+    padding: 20px;
+
+    mat-card {
+      width: 100%;
+
+      margin-bottom: 25px;
+    }
+
+  }
+
+  //@media (max-width: 600px) {
+  //
+  //  .item-list{
+  //    width: 100%;
+  //
+  //  }
+  //  .right-container {
+  //
+  //
+  //    width: 0;
+  //    display: none;
+  //    //padding: 20px;
+  //
+  //
+  //  }
+  //}
+
+}
+

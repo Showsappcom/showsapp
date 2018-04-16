@@ -1,0 +1,86 @@
+//@import '~@angular/material/_theming.scss';
+@import url('fonts/typeface-open-sans/index.scss');
+//@import url('~typeface-open-sans/index.css');
+
+@import '~@angular/material/theming';
+@import './_mixins.scss';
+/* Custom Themed Components */
+@import '../../components/shared/loginPage/login.theme.scss';
+@import '../../components/shared/modals/popover/popover.theme.scss';
+@import '../../components/shared/toast/toast.theme.scss';
+@import 'formStyles.scss';
+
+
+
+$custom-typography: mat-typography-config(
+        $font-family: 'Open Sans, Helvetica, Noto, sans-serif'
+);
+
+
+
+@mixin custom-components-theme($theme) {
+  @include login-page($theme);
+  @include popover-theme($theme, map-get($mat-dark-theme-background, background));
+  @include forms-theme($theme);
+  @include toast-message($theme);
+
+}
+
+@include mat-core($custom-typography);
+
+$app-primary: mat-palette($mat-green);
+$app-accent:  mat-palette($mat-green, 200);
+$app-warn: mat-palette($mat-red, A700);
+$app-theme:   mat-light-theme($app-primary, $app-accent, $app-warn);
+
+
+
+@include angular-material-theme($app-theme);
+
+.shows-app-theme{
+  @include angular-material-theme($app-theme);
+  .mat-card{
+    background-color: white;
+  }
+  @include custom-components-theme($app-theme);
+  @extend .mat-drawer-content;
+
+  h1,h2,h3,h4,span,i, mat-icon{
+    &.primary-color{
+      color: map-get(map-get($app-theme, primary),500);
+    }
+    &.accent-color{
+      color: map-get(map-get($app-theme, primary),700);
+
+    }
+  }
+}
+
+
+$dark-primary: mat-palette($mat-green, 300);
+$dark-accent:  mat-palette($mat-green, 700);
+$dark-warn: mat-palette($mat-red, A700);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+.shows-app-dark-theme {
+  @include angular-material-theme($dark-theme);
+  @include custom-components-theme($dark-theme);
+  @extend .mat-drawer-content;
+
+  background-color: #333d43;
+}
+
+
+
+
+
+/*=================================
+* LXI - Theme Extensions
+===================================*/
+.mat-drawer-content{
+  overflow: hidden !important;
+}
+
+
+
+
