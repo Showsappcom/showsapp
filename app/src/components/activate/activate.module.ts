@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
  * Required Angular Material Modules
  */
 import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 
@@ -18,14 +19,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
  * Custom Modules and Components
  */
 import { ActivateComponent } from './activate.component';
-// import { LeftNavigationModule } from '../navigation/left/leftNavigation.module';
-
 
 
 @NgModule({
   imports: [
     CommonModule,
     MatButtonModule,
+    MatSidenavModule,
     MatToolbarModule,
     RouterModule.forChild(
       [

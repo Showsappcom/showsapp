@@ -5,6 +5,7 @@ import { RouterModule, Route, Routes, PreloadAllModules, PreloadingStrategy } fr
 import { ActivationViaAuthenticationGuard } from '../../guards/routing.guard';
 
 /* Component */
+import { ActivateComponent } from '../activate/activate.component';
 import { LoginComponent } from '../shared/loginPage/login.component';
 
 import { Observable } from 'rxjs/Observable';
@@ -28,6 +29,10 @@ const appRoutes : Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
+  },
+  {
+    path: 'activate/:activateCode',
+    component: ActivateComponent
   },
   {
     path: 'login',

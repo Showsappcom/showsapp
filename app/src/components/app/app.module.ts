@@ -26,6 +26,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 /**
  * Custom Modules
  */
+import { ActivateModule } from '../activate/activate.module';
 import { BaseModule } from '../base/base.module';
 import { LoginModule } from '../shared/loginPage/login.module';
 import { LoadingModule } from '../shared/loading/loading.module';
@@ -68,6 +69,7 @@ import { ToastEvent } from '../../services/toastEvent.service';
     ToastComponent
   ],
   imports: [
+    ActivateModule,
     AppRoutingModule,
     BaseModule,
     BrowserAnimationsModule,
