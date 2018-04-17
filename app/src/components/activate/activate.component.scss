@@ -1,0 +1,81 @@
+@import "../../shared/styles/_mixins.scss";
+
+.side-nav-container {
+  @include flexbox();
+  @include flex-direction(row);
+
+  height: 100vh;
+  width: 100vw;
+
+  mat-toolbar-row{
+    padding: 0 20px;
+  }
+
+}
+
+.base-container {
+  @include flexbox();
+  @include flex-direction(row);
+  width: 100vw;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  mat-toolbar-row{
+    padding: 0 20px;
+  }
+
+  .main-content{
+    height: 100%;
+    width: 100%;
+
+    .router-container{
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .base-content {
+    //@include flexbox();
+    //@include flex-direction(column);
+    //
+    ////background-color: $elms-grey-background;
+    //width: 100%;
+    //
+    //.router-container {
+    //  @include flex-grow(1);
+    //  height: 100%;
+    //  overflow-y: auto;
+    //}
+    //
+    //.main-content {
+    //  @include flexbox();
+    //  @include flex-direction(row);
+    //  height: 100%;
+    //}
+  }
+}
+
+
+
+mat-toolbar-row {
+  padding-left: 0;
+}
+
+.tool-bar-menu {
+
+  @include transition(background-color 0.5s ease-in-out);
+
+  cursor: pointer;
+  margin-right: 10px;
+  height: 64px;
+  width: 64px;
+  min-width: 64px;
+  min-height: 64px;
+  padding: 0;
+  outline: none !important;
+
+  &.desk-top {
+    background-color: white;
+    border-radius: 0;
+  }
+}

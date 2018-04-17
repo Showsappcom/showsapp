@@ -31,7 +31,7 @@ function init(){
 
 document.addEventListener('DOMContentLoaded', () => {
   platformBrowserDynamic().bootstrapModule(AppModule);
-  init();
+  // init();
 });
 
 

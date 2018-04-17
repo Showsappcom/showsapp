@@ -34,7 +34,7 @@ const appRoutes : Routes = [
     component: LoginComponent
   },
   {
-    path: 'base',
+    path: 'app',
     loadChildren: '../base/base.module#BaseModule',
     canLoad: [ ActivationViaAuthenticationGuard ]
   },

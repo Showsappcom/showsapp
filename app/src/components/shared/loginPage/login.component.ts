@@ -235,8 +235,8 @@ export class LoginComponent {
 
     console.log('i will be here');
     this._loginService.register({
-      firstName: this.requestFormControl.get('first_name').value,
-      lastName: this.requestFormControl.get('last_name').value,
+      first_name: this.requestFormControl.get('firstName').value,
+      last_name: this.requestFormControl.get('lastName').value,
       email: this.requestFormControl.get('email').value,
       password: this.requestFormControl.get('requestPassword').value
     }).takeWhile(() => {
@@ -247,6 +247,7 @@ export class LoginComponent {
         type: COMMON_CONST.INFO,
         message: 'Please Check Your E-mail, to verify the account'
       });
+      this.loginView = true;
       console.log('the response is ::', res);
     });
   }

@@ -26,6 +26,13 @@ const baseRoutes : Routes = [
         }
       },
       {
+        path: 'activate/:activationCode',
+        loadChildren: '../activate/activate.module#ActivateModule',
+        data: {
+          preLoad: true
+        }
+      },
+      {
         path: 'item/:id',
         loadChildren: '../buyer/buyerDashboard.module#BuyerDashboardModule',
         data: {

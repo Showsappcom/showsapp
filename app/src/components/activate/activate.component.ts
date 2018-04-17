@@ -2,7 +2,8 @@
  * Required Angular Imports
  */
 import { Component, ViewChild } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
+
 import { MatDrawer } from '@angular/material/sidenav';
 
 
@@ -44,14 +45,17 @@ import * as fromRoot from '../../reducers';
  * @property selector - provides the selector to use in dom tree
  */
 @Component({
-  templateUrl: './base.component.html',
-  styleUrls: [ './base.component.scss' ]
+  templateUrl: './activate.component.html',
+  styleUrls: [ './activate.component.scss' ]
 })
 
 
-export class BaseComponent {
+export class ActivateComponent {
 
-
+  /**
+   * @type {boolean} _compActive - provides a variable if the comp is active
+   */
+  private _compActive : boolean = true;
 
   /**
    * @type {Subscription} _messageEventSub - provides a subscription to message events
@@ -62,17 +66,18 @@ export class BaseComponent {
   /**
    * @type {string} toolBarTitle - provides a reference to the toolbar title
    */
-  public toolBarTitle : string = 'Dashboard';
-
+  public toolBarTitle : string = 'Activation';
 
 
   /**
    * Provides element reference to the side navigation
    * @param {MessageEvent} _msgEvent - message event provider
+   * @param {ActivatedRoute} _route - activate route provider
    * @param {Router} _router - router provider
    * @param {Store<fromRoot.State>} _store - store provider
    */
   constructor( private _msgEvent : MessageEvent,
+               private _route : ActivatedRoute,
                private _router : Router,
                private _store : Store<fromRoot.State> ) {
 
@@ -85,8 +90,7 @@ export class BaseComponent {
    */
   ngOnInit() : void {
 
-    BaseComponent._updateBodyStyle();
-    this._setupMessageEventListener();
+    this._sendActivationRequest();
 
   }
 
@@ -98,52 +102,31 @@ export class BaseComponent {
   ngOnDestroy() : void {
 
 
-
-    if (this._messageEventSub) {
-      this._messageEventSub.unsubscribe();
-    }
-
-
+    this._clearSubs();
     window.removeEventListener('resize', null);
 
 
   }
 
-
-
   /**
-   * static method that updates the body style to allow overflow
+   * clears the subs
    * @returns void
    */
-  private static _updateBodyStyle() : void {
-
-    document.getElementsByTagName('body')[ 0 ].style.overflowX = 'auto';
-
+  private _clearSubs() : void {
+    this._compActive = false;
   }
 
-  /**
-   * Setup a message event subscription
-   * @returns void
-   */
-  private _setupMessageEventListener() : void {
 
-    this._messageEventSub = this._msgEvent.on().subscribe(( msg : MessageModel ) => {
 
-      this.toolBarTitle = msg.data.title;
+  private _sendActivationRequest() : void {
+
+    this._route.params.takeWhile(() => {
+      return this._compActive;
+    }).subscribe((params) => {
+      console.log('will send activation request', params);
 
     });
   }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

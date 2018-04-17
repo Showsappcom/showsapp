@@ -118,7 +118,7 @@ export class AppComponent implements OnInit {
     }).subscribe(( state : BaseState ) => {
       console.log('the state is::::::::::::::::::::::::', state);
       if (state.loggedIn) {
-        this._routeToPath('base/main');
+        this._routeToPath('app/main');
       }
     });
   }
@@ -252,7 +252,7 @@ export class AppComponent implements OnInit {
 
       if (event instanceof RoutesRecognized) {
 
-        if (event && event.url !== '/login' && event.url !== '/base/dashboard') {
+        if (event && event.url !== '/login' && event.url !== '/app/main') {
           this._routeRequested = event.url;
         }
 
