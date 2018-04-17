@@ -53,6 +53,9 @@ $app-theme:   mat-light-theme($app-primary, $app-accent, $app-warn);
       color: map-get(map-get($app-theme, primary),700);
 
     }
+    &.error-color{
+      color: map-get(map-get($app-theme, warn),500);
+    }
   }
 }
 

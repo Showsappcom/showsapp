@@ -7,7 +7,7 @@
   height: 100vh;
   width: 100vw;
 
-  mat-toolbar-row{
+  mat-toolbar-row {
     padding: 0 20px;
   }
 
@@ -21,61 +21,48 @@
   overflow-x: hidden;
   overflow-y: hidden;
 
-  mat-toolbar-row{
+  mat-toolbar-row {
     padding: 0 20px;
   }
 
-  .main-content{
+  .main-content {
     height: 100%;
     width: 100%;
 
-    .router-container{
+    .content-container {
       height: 100%;
       width: 100%;
+      padding: 20px;
+
+      .centre-content {
+        @include flexbox();
+        @include flex-direction(column);
+        @include justify-content(center);
+        @include align-items(center);
+      }
+
+      .progress-loading {
+        margin-top: 20px;
+      }
+      .activation-failed {
+        @include flexbox();
+        @include flex-direction(column);
+        @include justify-content(center);
+        @include align-items(center);
+
+
+        button, span {
+          margin-top: 20px;
+        }
+      }
     }
   }
   .base-content {
-    //@include flexbox();
-    //@include flex-direction(column);
-    //
-    ////background-color: $elms-grey-background;
-    //width: 100%;
-    //
-    //.router-container {
-    //  @include flex-grow(1);
-    //  height: 100%;
-    //  overflow-y: auto;
-    //}
-    //
-    //.main-content {
-    //  @include flexbox();
-    //  @include flex-direction(row);
-    //  height: 100%;
-    //}
   }
 }
-
-
 
 mat-toolbar-row {
   padding-left: 0;
 }
 
-.tool-bar-menu {
 
-  @include transition(background-color 0.5s ease-in-out);
-
-  cursor: pointer;
-  margin-right: 10px;
-  height: 64px;
-  width: 64px;
-  min-width: 64px;
-  min-height: 64px;
-  padding: 0;
-  outline: none !important;
-
-  &.desk-top {
-    background-color: white;
-    border-radius: 0;
-  }
-}

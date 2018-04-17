@@ -351,7 +351,7 @@ if ( ENV_DEVELOPMENT ) {
       { from: './src/shared/assets', to: 'assets' }
     ] ),
     new workboxPlugin.GenerateSW( {
-      cacheId: 'shows-app',
+      cacheId: 'shows-app[manifestHash]',
       clientsClaim: true,
       directoryIndex: 'index.html',
       // globDirectory: DIST_DIR,

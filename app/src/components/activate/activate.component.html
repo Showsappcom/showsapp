@@ -6,8 +6,30 @@
   </mat-toolbar>
   <div class="base-container">
     <div class="main-content">
-      <div class="router-container">
-        Please wait while we activate your account
+      <div class="content-container">
+        <mat-card>
+          <div class="mat-card-content centre-content">
+            <div class="activation-pending" *ngIf="!retryActivation && !activationSuccessful">
+              <mat-progress-spinner
+                class="example-margin"
+                color="primary"
+                mode="indeterminate">
+              </mat-progress-spinner>
+              <div class="progress-loading">
+              <span>
+                Please wait while we activate your account
+              </span>
+              </div>
+            </div>
+            <div class="activation-failed" *ngIf="retryActivation">
+              <mat-icon color="primary" class="x-large">error</mat-icon>
+              <div class="retry-message">
+                <span>There was a problem with activating your account please try agin</span>
+              </div>
+              <button mat-raised-button color="primary" (click)="retryAccountActivation()">RETRY</button>
+            </div>
+          </div>
+        </mat-card>
       </div>
     </div>
   </div>

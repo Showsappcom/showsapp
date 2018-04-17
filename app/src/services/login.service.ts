@@ -45,6 +45,7 @@ export class LoginService {
   private _BASE_URL : string = APP_SETUP.devEnvironment ? 'http://staging.aws.showsapp.com:8888/' : location.origin;
   private _loginURL : string = this._BASE_URL + 'api/v1/accounts/login/';
   private _registerURL : string = this._BASE_URL + 'api/v1/accounts/signup/';
+  private _retrievePassword : string = this._BASE_URL + 'api/v1/accounts/password_reset/';
 
   constructor( private _dataService : DataService, private _store : Store<fromRoot.State>, private _toastEvent : ToastEvent ) {
 
@@ -116,7 +117,28 @@ export class LoginService {
   }
 
   public retrievePassword(email: string): any{
+    let requestOptions = {
+      method: 'POST',
+      body: email,
+      withCredentials: true
+    }, url = this._loginURL;
 
+    console.log('the url is::::', url);
+    console.log('the email is::: ', email);
+
+    return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
+
+      return res;
+
+    }).catch(( error : any ) => {
+      this._toastEvent.fire({
+        type: COMMON_CONST.ERROR,
+        message: 'There was an error with your request please try again'
+      });
+
+      return Observable.throw(error || COMMON_CONST.SERVER_ERROR);
+
+    });
   }
 
 }

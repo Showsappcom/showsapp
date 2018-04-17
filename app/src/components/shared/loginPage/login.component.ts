@@ -240,7 +240,9 @@ export class LoginComponent {
       email: this.requestFormControl.get('email').value,
       password: this.requestFormControl.get('requestPassword').value
     }).takeWhile(() => {
+
       return this._compActive;
+
     }).subscribe(( res : any ) => {
 
       this._toastEvent.fire({
@@ -265,6 +267,12 @@ export class LoginComponent {
     }).subscribe(( res : any ) => {
 
       console.log('the response is ::', res);
+      this._toastEvent.fire({
+        type: COMMON_CONST.INFO,
+        message: 'Please Check Your E-mail, for instruction to reset your password'
+      });
+
+      this.loginView = true;
 
 
       // ...this._baseState, loggedIn: true,
