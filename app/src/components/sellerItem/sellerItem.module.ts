@@ -5,6 +5,7 @@ import {
   NgModule
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 
@@ -19,11 +20,11 @@ import { MatCardModule } from '@angular/material/card';
 /**
  * Custom Components
  */
-import { SellerDashboardComponent } from './sellerDashboard.component';
+import { SellerItemComponent } from './sellerItem.component';
 /**
  * Seller Service
  */
-import { SellerService } from '../../services/seller.service';
+import { SellerItemService } from '../../services/sellerItem.service';
 
 @NgModule({
   imports: [
@@ -32,17 +33,18 @@ import { SellerService } from '../../services/seller.service';
     MatCardModule,
     MatIconModule,
     MatListModule,
+    ReactiveFormsModule,
     RouterModule.forChild(
       [
         {
-          path: '', component: SellerDashboardComponent, pathMatch: 'full'
+          path: '', component: SellerItemComponent, pathMatch: 'full'
         }
       ]),
 
   ],
-  declarations: [ SellerDashboardComponent ],
-  exports: [ SellerDashboardComponent ],
-  providers: [ SellerService ],
+  declarations: [ SellerItemComponent ],
+  exports: [ SellerItemComponent ],
+  providers: [ SellerItemService ],
   schemas: []
 })
-export class SellerDashboardModule {}
+export class SellerItemModule {}

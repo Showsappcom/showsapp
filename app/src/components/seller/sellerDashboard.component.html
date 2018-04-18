@@ -1,5 +1,12 @@
+<div class="title-row">
+  <h2 class="title">Posted Items</h2>
+  <button mat-button color="primary" (click)="addItem()">
+    <mat-icon>add</mat-icon>
+    ADD ITEM
+  </button>
+</div>
 <div class="main-container">
-  <div class="item-list" *ngIf="!itemSelected">
+  <div class="item-list">
     <mat-card class="mat-card-ref" *ngFor="let item of sellersItems">
       <mat-card-title><span class="primary-color">{{item.title}}</span> - ${{item.cost}}</mat-card-title>
       <mat-card-subtitle><span class="accent-color">{{item.offers.length}} Offers</span></mat-card-subtitle>
@@ -11,10 +18,6 @@
         <button mat-button color="primary">EDIT ITEM</button>
       </mat-card-actions>
     </mat-card>
-  </div>
-  <div class="selected-item" *ngIf="itemSelected">
-
-
   </div>
 </div>
 

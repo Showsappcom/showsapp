@@ -8,6 +8,7 @@
 @import '../../components/shared/loginPage/login.theme.scss';
 @import '../../components/shared/modals/popover/popover.theme.scss';
 @import '../../components/shared/toast/toast.theme.scss';
+@import '../../components/sellerItem/sellerItem.theme';
 @import 'formStyles.scss';
 
 
@@ -20,6 +21,7 @@ $custom-typography: mat-typography-config(
 
 @mixin custom-components-theme($theme) {
   @include login-page($theme);
+  @include seller-item($theme);
   @include popover-theme($theme, map-get($mat-dark-theme-background, background));
   @include forms-theme($theme);
   @include toast-message($theme);

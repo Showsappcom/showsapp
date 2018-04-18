@@ -1,0 +1,41 @@
+@import '~@angular/material/theming';
+@import "../../shared/styles/_mixins";
+
+@mixin seller-item($theme) {
+  $whiteColour: white;
+
+  $themePallet: map-get($theme, primary);
+  $backgroundPallet: map-get($theme, background);
+  $foregroundPallet: map-get($theme, foreground);
+
+  $themeColour: map-get($themePallet, 500);
+  $backgroundColour: map-get($backgroundPallet, background);
+  $foreGroundColour: map-get($foregroundPallet, base);
+
+  mat-form-field {
+    margin-bottom: 10px;
+  }
+
+  .item-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    background-color: $backgroundColour;
+
+    .title-row {
+      @include flexbox();
+
+      .title {
+        @include flex-grow(1);
+
+      }
+    }
+  }
+
+}
+
+
+

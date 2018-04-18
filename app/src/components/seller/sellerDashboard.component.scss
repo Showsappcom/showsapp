@@ -1,5 +1,16 @@
 @import '../../shared/styles/_mixins';
 
+.title-row {
+  @include flexbox();
+  @include flex-direction(row);
+  @include align-items(center);
+  padding: 0 20px;
+
+  .title {
+    @include flex-grow(1);
+  }
+}
+
 .main-container {
   @include flexbox();
   @include flex-direction(row);
@@ -16,9 +27,9 @@
     }
   }
 
-  .item-list{
+  .item-list {
     @include flex-grow(1);
-    padding: 20px;
+    padding: 0 20px;
 
     mat-card {
       width: 100%;

@@ -2,6 +2,7 @@
  * Angular Imports
  */
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 /**
  * Custom Services
@@ -28,18 +29,29 @@ import { SELLER_ITEM_LIST as SellerItems } from '../../configurations/mocks/mock
 
 export class SellerDashboardComponent {
 
-  public sellersItems : any;
-  public offerList : any;
-  public itemSelected : object = null;
 
-  constructor( private _store : Store<fromRoot.State>,
-               private _sellerService : SellerService ) {
+  /**
+   * @type {any} offerList- provides an offer list
+   */
+  public offerList : any;
+
+  /**
+   * @type {any} sellerItems- provides an item list
+   */
+  public sellersItems : any;
+
+
+  constructor( private _router : Router,
+               private _sellerService : SellerService,
+               private _store : Store<fromRoot.State>
+  ) {
 
   }
 
 
   ngOnInit() {
 
+    console.log('INIT IS HERE......');
     this._getSellersItems();
 
   }
@@ -55,11 +67,14 @@ export class SellerDashboardComponent {
 
   private _getSellersItems() : void {
     let offerList = [];
-    this.sellersItems = SellerItems.splice(0);
-    this.sellersItems.map(( node ) => {
+    let temp = JSON.parse(JSON.stringify(SellerItems));
+    this.sellersItems = temp;
+
+    console.log('the sellers items are ::::', this.sellersItems, SellerItems);
+    this.sellersItems.forEach(( node ) => {
       offerList = [
         ...offerList,
-        ...node.offers.map(( offer ) => {
+        ...node.offers.forEach(( offer ) => {
           return { ...offer, objectId: node.id, title: node.title };
 
         })
@@ -71,6 +86,11 @@ export class SellerDashboardComponent {
     console.log('offerList:::', this.offerList);
 
 
+  }
+
+
+  public addItem() : void {
+    this._router.navigate([ '/app/create' ]);
   }
 
 

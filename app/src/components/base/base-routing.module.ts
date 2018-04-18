@@ -36,7 +36,23 @@ const baseRoutes : Routes = [
         path: 'item/:id',
         loadChildren: '../buyer/buyerDashboard.module#BuyerDashboardModule',
         data: {
-          preLoad: true
+          preLoad: true,
+        }
+      },
+      {
+        path: 'create',
+        loadChildren: '../sellerItem/sellerItem.module#SellerItemModule',
+        data: {
+          preLoad: false,
+          create: true
+        }
+      },
+      {
+        path: 'item/:id',
+        loadChildren: '../sellerItem/sellerItem.module#SellerItemModule',
+        data: {
+          preLoad: false,
+          create: false
         }
       },
       {

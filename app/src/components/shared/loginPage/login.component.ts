@@ -1,18 +1,8 @@
 /**
  * Required Modules
  */
-import {
-  Component
-} from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-
-/**
- * Libraries
- */
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 
 /**
  * Required Store
@@ -22,11 +12,6 @@ import * as fromRoot from '../../../reducers';
 import * as BaseActions from '../../../actions/base';
 import { State as BaseState } from "../../../reducers/base";
 
-
-/**
- * Required Configuration
- */
-import { APP_SETUP as appConfig } from '../../../configurations/app.configuration';
 
 /**
  * Required Services

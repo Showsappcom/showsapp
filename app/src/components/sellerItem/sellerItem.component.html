@@ -1,0 +1,19 @@
+<div class="item-container">
+  <div class="title-row">
+    <h2 class="title">{{createItem ? 'Create Item' : 'Edit Item'}}</h2>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="item-content-container">
+    <div class="form-container" *ngIf="formGenerated"></div>
+    <!--<form></form>-->
+  </div>
+  <button mat-button color="primary" (click)="processItemAction()">{{createItem ? 'ADD ITEM' : 'SAVE'}}</button>
+</div>
+
+
+
+
+
+
