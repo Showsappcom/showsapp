@@ -49,7 +49,6 @@ class PlaceOffer(generics.CreateAPIView):
             return Response(OfferSerializer(offer).data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class AcceptDeclineOffer(generics.CreateAPIView):
     """
     A protected API to accept or decline an offer on an item.
@@ -80,7 +79,6 @@ class JoinWaitingList(generics.CreateAPIView):
             return Response(WaitingListSubscriptionSerializer(subscription).data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class PayGFM(generics.CreateAPIView):
     """
     A protected API to pay a GFM for an on-hold offer and release it.
@@ -98,7 +96,7 @@ class PayGFM(generics.CreateAPIView):
 
 class MyItems(generics.ListAPIView):
     """
-
+    A protected API to list the items for the seller
     """
     pagination_class = StandardResultsSetPagination
     authentication_classes = (JSONWebTokenAuthentication, )
@@ -109,7 +107,7 @@ class MyItems(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user.sa_user
-        items = user.items.all().order_by('active','id')
+        items = user.items.filter(active=True).order_by('id')
 
         return items
 
@@ -125,6 +123,38 @@ class MyItems(generics.ListAPIView):
         serializer = self.get_serializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
+class MyItem(generics.ListAPIView):
+    """
+    A protected API to get or delete an item by id for the seller
+    """
+    pagination_class = StandardResultsSetPagination
+    authentication_classes = (JSONWebTokenAuthentication, )
+    permission_classes = (IsAuthenticated,)
+    serializer_class = DetailedItemSerializer
+
+    def get(self, request, id, *args, **kwargs):
+        """
+        A protected API to get an item by id for the seller
+        """
+        if Item.objects.filter(id=id):
+            item = Item.objects.get(pk=id)
+            serializer = self.get_serializer(item, context={'request': request})
+            return Response(serializer.data)
+        else:
+            return Response({}, status=404)
+
+    def delete(self, request, id):
+        """
+        A protected API to delete an item by id for the seller
+        """
+        if Item.objects.filter(id=id):
+            item = Item.objects.get(pk=id)
+            item.active = False
+            item.save()
+            serializer = self.get_serializer(item, context={'request': request})
+            return Response(serializer.data)
+        else:
+            return Response({}, status=404)
 
 def item(request,id):
     item = Item.objects.get(pk=id)

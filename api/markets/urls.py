@@ -12,6 +12,7 @@ from markets.views import *
 urlpatterns = [
     path('create_item/', CreateItem.as_view(), name="create_item"),
     path('myitems/', MyItems.as_view(), name="myitems"),
+    path('myitems/<int:id>', MyItem.as_view(), name='myitems'),
     path('place_offer/', PlaceOffer.as_view(), name="place_offer"),
     path('accept_offer/', AcceptDeclineOffer.as_view(), name="accept_offer"),
     path('join_waiing_list/', JoinWaitingList.as_view(), name="join_waiing_list"),
