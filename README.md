@@ -59,21 +59,3 @@ Navigate your browser to [localhost:8000/admin/](localhost:8000/admin/)
 and provide the superuser credentials you've created the previous step.
 
 Hola!
-
-## Front-end Description
-
-### Set it up
-
-1. Install [yarn](https://yarnpkg.com/lang/en/docs/install/)
-```bash
-sudo apt-get update && sudo apt-get install yarn
-```
-Or follow the instructions in the link above
-
-2. Change directory into the app and run it:
-```bash
-cd app
-yarn start
-```
-
-React app create by create-react-app tool 
