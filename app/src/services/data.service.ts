@@ -14,6 +14,7 @@ import {
 /**
  * Actions/Services
  */
+import { CookieService } from 'ngx-cookie-service';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../reducers';
 import { State as BaseState } from "../reducers/base";
@@ -43,7 +44,7 @@ export class DataService {
   private _compActive : boolean = true;
 
 
-  constructor( private _http : HttpClient, private _store : Store<fromRoot.State> ) {
+  constructor( private _cookieService : CookieService, private _http : HttpClient, private _store : Store<fromRoot.State> ) {
 
 
     this._setupBaseSub();
@@ -81,6 +82,26 @@ export class DataService {
     let isResponseHeaderExists = false;
 
 
+    //need something here...
+
+    let headers = new HttpHeaders();
+
+    if (this._baseState && this._baseState.loggedIn && this._cookieService.get('sa_access_token')) {
+
+      headers = headers.append('authorization', 'jwt ' + this._cookieService.get('sa_access_token'));
+
+    }
+
+    if (override && this._cookieService.get('sa_access_token')) {
+
+      let headers = new HttpHeaders();
+      headers = headers.append('authorization', 'jwt ' + this._cookieService.get('sa_access_token'));
+      (Object as any).assign(options, { 'headers': headers });
+
+      console.log('i am here ....', headers);
+
+    }
+
     let req = new HttpRequest(options[ 'method' ], url, options[ 'body' ], {
       headers: options[ 'headers' ],
       withCredentials: options[ 'withCredentials' ],
@@ -90,14 +111,10 @@ export class DataService {
     });
 
 
-    if (this._baseState && this._baseState.loggedIn) {
-
-      options[ 'headers' ].set('authorization', 'jwt ' + this._baseState.authToken);
 
 
-    }
 
-    console.log('i am here boom.....', req, options);
+
     return Observable.create(observer => {
       this._http.request(req).subscribe(
         ( event : HttpEvent<any> ) => {

@@ -74,13 +74,11 @@ export class SellerItemComponent {
 
   ngOnInit() {
 
+    this._generateForm();
     this._determineOptions();
 
   }
 
-  ngAfterViewInit() {
-    this._generateForm();
-  }
 
   ngOnDestroy() {
 
@@ -119,7 +117,7 @@ export class SellerItemComponent {
   private _generateForm() : void {
 
     this.itemFormControl = this._fb.group({
-      title: [
+      productName: [
         '',
         [ Validators.required ]
       ],
@@ -127,11 +125,20 @@ export class SellerItemComponent {
         '',
         [ Validators.required ]
       ],
-      location: [
+      address: [
         '',
         [ Validators.required ]
+      ],
+      price: [
+        '',
+        [ Validators.required ]
+      ],
+      goodFaithMoney: [
+        ''
       ]
     });
+
+    this.formGenerated = true;
 
   }
 

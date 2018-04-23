@@ -22,7 +22,7 @@ const baseRoutes : Routes = [
         path: 'main',
         loadChildren: '../seller/sellerDashboard.module#SellerDashboardModule',
         data: {
-          preLoad: true
+          preLoad: false
         }
       },
       // {
@@ -36,7 +36,7 @@ const baseRoutes : Routes = [
         path: 'item/:id',
         loadChildren: '../buyer/buyerDashboard.module#BuyerDashboardModule',
         data: {
-          preLoad: true,
+          preLoad: false,
         }
       },
       {

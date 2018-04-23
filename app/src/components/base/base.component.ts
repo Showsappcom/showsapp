@@ -2,8 +2,7 @@
  * Required Angular Imports
  */
 import { Component, ViewChild } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { MatDrawer } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
 
 
 /**
@@ -20,11 +19,6 @@ import { Observable } from 'rxjs/Observable';
 
 
 /**
- * Required Constants
- */
-
-
-/**
  * Models/Interfaces
  */
 import { MessageModel } from '../../models/messageModels/messageEvent.model';
@@ -36,6 +30,12 @@ import { MessageModel } from '../../models/messageModels/messageEvent.model';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 
+
+/**
+ * Services
+ */
+import { AuthService } from '../../services/auth.service';
+import * as BaseActions from "../../actions/base";
 
 /**
  * @class ActivateComponent
@@ -52,7 +52,10 @@ import * as fromRoot from '../../reducers';
 export class BaseComponent {
 
 
-
+  /**
+   * @type {boolean} _compActive - determines if a comp is active
+   */
+  private _compActive : boolean = true;
   /**
    * @type {Subscription} _messageEventSub - provides a subscription to message events
    */
@@ -65,14 +68,15 @@ export class BaseComponent {
   public toolBarTitle : string = 'Dashboard';
 
 
-
   /**
    * Provides element reference to the side navigation
+   * @param {AuthService} _authService - auth service
    * @param {MessageEvent} _msgEvent - message event provider
    * @param {Router} _router - router provider
    * @param {Store<fromRoot.State>} _store - store provider
    */
-  constructor( private _msgEvent : MessageEvent,
+  constructor( private _authService : AuthService,
+               private _msgEvent : MessageEvent,
                private _router : Router,
                private _store : Store<fromRoot.State> ) {
 
@@ -98,11 +102,11 @@ export class BaseComponent {
   ngOnDestroy() : void {
 
 
+    // if (this._messageEventSub) {
+    //   this._messageEventSub.unsubscribe();
+    // }
 
-    if (this._messageEventSub) {
-      this._messageEventSub.unsubscribe();
-    }
-
+    this._clearSubs();
 
     window.removeEventListener('resize', null);
 
@@ -110,6 +114,9 @@ export class BaseComponent {
   }
 
 
+  private _clearSubs() : void {
+    this._compActive = false;
+  }
 
   /**
    * static method that updates the body style to allow overflow
@@ -127,23 +134,41 @@ export class BaseComponent {
    */
   private _setupMessageEventListener() : void {
 
-    this._messageEventSub = this._msgEvent.on().subscribe(( msg : MessageModel ) => {
+    this._msgEvent.on().takeWhile(() => {
+      return this._compActive;
+    }).subscribe(( msg : MessageModel ) => {
 
       this.toolBarTitle = msg.data.title;
 
     });
   }
 
+  /**
+   * Setup a message event subscription
+   * @returns void
+   */
+  public logout() : void {
+
+    this._authService.logOut().takeWhile(() => {
+      return this._compActive;
+    }).subscribe((resp) => {
+
+      console.log('i will be done here ...', resp);
+
+      this._store.dispatch(new BaseActions.Update({
+        authToken: '',
+        loggedIn: false,
+        loggedInUser: '',
+        theme: 'shows-app-theme',
+        language: 'english'
+      }));
+
+      this._router.navigate([ '/login' ]);
 
 
 
+    });
 
-
-
-
-
-
-
-
+  }
 
 }

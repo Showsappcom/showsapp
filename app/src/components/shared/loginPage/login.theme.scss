@@ -12,7 +12,7 @@
   $backgroundColour: map-get($backgroundPallet, background);
   $foreGroundColour: map-get($foregroundPallet, base);
 
-  mat-form-field{
+  mat-form-field {
     margin-bottom: 10px;
   }
 
@@ -20,7 +20,9 @@
     width: 100vw;
     height: 100vh;
     background-color: $themeColour;
-    background-image: url('../../shared/assets/backgrounds/material-design-hd-wallpaper-no-0560-1920x1920.png') !important;
+    //background-image: url('../../shared/assets/backgrounds/material-design-hd-wallpaper-no-0560-1920x1920.png') !important;
+    background-image: url('../../shared/assets/backgrounds/background.jpg') !important;
+    overflow-y: auto;
     background-size: cover;
     top: 0;
 
@@ -38,9 +40,11 @@
         @include flexbox();
         @include flex-direction(column);
         @include align-items(center);
+        min-height: 138px;
+
         //width: 100%;
 
-        .shows-app-mission{
+        .shows-app-mission {
           @include flexbox();
           @include flex-direction(column);
           @include align-items(center);
@@ -71,6 +75,7 @@
           @include flex-direction(column);
           @include align-items(center);
           margin-top: 25px;
+          width: 300px;
         }
 
       }
@@ -94,8 +99,8 @@
       background-color: $backgroundColour;
       margin: auto;
       max-width: 500px;
-      min-height: 500px;
-
+      //min-height: 500px;
+      height: 100%;
       @media (max-width: 600px) {
         min-height: 100%;
         max-width: 100%;
@@ -183,20 +188,30 @@
     @include align-items(center);
     width: 300px;
 
-    .request-container {
+    .have-account-container {
+      margin-top: 25px;
+    }
+
+    .request-container, .email-container {
       @include flexbox();
       @include flex-direction(column);
       @include align-items(center);
       width: 100%;
 
+    }
 
+    .login-form {
+      @include flexbox();
+      @include flex-direction(column);
+      @include align-items(center);
+      width: 100%;
 
-      .login-form {
+      mat-form-field {
         width: 100%;
       }
-      .have-account-container {
-        margin-top: 25px;
-      }
+
+      margin-bottom: 20px;
+
     }
   }
 

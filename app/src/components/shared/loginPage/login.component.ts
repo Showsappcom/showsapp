@@ -16,6 +16,7 @@ import { State as BaseState } from "../../../reducers/base";
 /**
  * Required Services
  */
+import { MessageEvent } from "../../../services/messageEvent.service";
 import { ModalsEvent } from '../../../services/modalsEvent.service';
 import { ToastEvent } from '../../../services/toastEvent.service';
 import { LoginService } from '../../../services/login.service';
@@ -74,12 +75,14 @@ export class LoginComponent {
   /**
    * @param {FormBuilder} _formBuilder - provides the form builder provider
    * @param {LoginService} _loginService - provides the modal event namespace
+   * @param {MessageEvent} _msgEvent - provides the message event namespace
    * @param {ModalsEvent} _modalsEvent - provides the modal event namespace
    * @param {Store<fromRoot.State>} _store - prodvides the application store
    * @param {ToastEvent} _toastEvent - provides toast event
    */
   constructor( private _formBuilder : FormBuilder,
                private _loginService : LoginService,
+               private _msgEvent : MessageEvent,
                private _modalsEvent : ModalsEvent,
                private _store : Store<fromRoot.State>,
                private _toastEvent : ToastEvent ) {
@@ -117,6 +120,14 @@ export class LoginComponent {
 
       console.log('the state::: is :::::', state);
       this._baseState = state;
+
+      if (this._baseState.loggedIn) {
+
+        this._msgEvent.fire({
+          msg: 'loggedIn'
+        });
+
+      }
 
     });
 

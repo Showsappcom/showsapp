@@ -30,6 +30,18 @@ import { SELLER_ITEM_LIST as SellerItems } from '../../configurations/mocks/mock
 export class SellerDashboardComponent {
 
 
+
+
+  /**
+   * @type {boolean} dataReturned- provides an item list
+   */
+  public dataReturned : boolean = false;
+
+  /**
+   * @type {boolean} errorGettingData- boolean to determine if error happened
+   */
+  public errorGettingData : boolean = false;
+
   /**
    * @type {any} offerList- provides an offer list
    */
@@ -67,22 +79,25 @@ export class SellerDashboardComponent {
 
   private _getSellersItems() : void {
     let offerList = [];
-    let temp = JSON.parse(JSON.stringify(SellerItems));
-    this.sellersItems = temp;
+    // let temp = JSON.parse(JSON.stringify(SellerItems));
+    this.sellersItems = [];
 
-    console.log('the sellers items are ::::', this.sellersItems, SellerItems);
-    this.sellersItems.forEach(( node ) => {
-      offerList = [
-        ...offerList,
-        ...node.offers.forEach(( offer ) => {
-          return { ...offer, objectId: node.id, title: node.title };
+    // console.log('the sellers items are ::::', this.sellersItems, SellerItems);
+    // this.sellersItems.forEach(( node ) => {
+    //   offerList = [
+    //     ...offerList,
+    //     ...node.offers.forEach(( offer ) => {
+    //       return { ...offer, objectId: node.id, title: node.title };
+    //
+    //     })
+    //   ];
+    // });
 
-        })
-      ];
-    });
+    // this.offerList = offerList;
+    this.dataReturned = true;
+    this.errorGettingData = false;
 
     this.offerList = offerList;
-
     console.log('offerList:::', this.offerList);
 
 

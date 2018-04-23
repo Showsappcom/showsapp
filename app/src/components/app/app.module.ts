@@ -51,7 +51,9 @@ import { ToastComponent } from '../shared/toast/toast.component';
 /**
  * Services and Events
  */
+import { AuthService } from '../../services/auth.service';
 import { Broadcaster } from '../../services/broadcaster.service';
+import { CookieService } from 'ngx-cookie-service';
 import { DataService } from '../../services/data.service';
 import { MessageEvent } from '../../services/messageEvent.service';
 import { ModalsEvent, CustomModalsEvent } from '../../services/modalsEvent.service';
@@ -86,7 +88,9 @@ import { ToastEvent } from '../../services/toastEvent.service';
     ModalsModule
   ],
   providers: [
+    AuthService,
     Broadcaster,
+    CookieService,
     CustomModalsEvent,
     CustomPreloadingStrategy,
     DataService,

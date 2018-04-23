@@ -1,5 +1,20 @@
 @import '../../shared/styles/_mixins';
 
+.content-container {
+  @include flexbox();
+  @include flex-direction(column);
+  height: 100%;
+
+  .info-container {
+    @include flexbox();
+    @include flex-direction(column);
+    @include justify-content(center);
+    @include align-items(center);
+    width: 100%;
+    min-height: 200px;
+  }
+}
+
 .title-row {
   @include flexbox();
   @include flex-direction(row);
@@ -15,6 +30,7 @@
   @include flexbox();
   @include flex-direction(row);
   height: 100%;
+  overflow-y: auto;
   .item-list {
     @include transition(width 0.3s ease-in);
     width: 300px;
