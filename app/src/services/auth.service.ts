@@ -68,7 +68,7 @@ export class AuthService {
   public checkToken() : any {
 
     let access_token : string = this._cookieService.get('sa_access_token');
-    console.log('the access token is', access_token);
+    // console.log('the access token is', access_token);
 
 
     if (access_token) {
@@ -112,7 +112,7 @@ export class AuthService {
   public updateToken( token : string ) : void {
     this._cookieService.set('sa_access_token', token);
 
-    console.log('the token is simply', this._cookieService.get('sa_access_token'));
+    // console.log('the token is simply', this._cookieService.get('sa_access_token'));
 
 
   }

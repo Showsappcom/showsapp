@@ -81,26 +81,25 @@ export class DataService {
   public sendData( url : string, options : Object, override : boolean = false, justSend : boolean = false ) : Observable<any> {
     let isResponseHeaderExists = false;
 
-
-    //need something here...
-
     let headers = new HttpHeaders();
 
     if (this._baseState && this._baseState.loggedIn && this._cookieService.get('sa_access_token')) {
 
       headers = headers.append('authorization', 'jwt ' + this._cookieService.get('sa_access_token'));
+      (Object as any).assign(options, { 'headers': headers });
 
     }
 
     if (override && this._cookieService.get('sa_access_token')) {
 
-      let headers = new HttpHeaders();
       headers = headers.append('authorization', 'jwt ' + this._cookieService.get('sa_access_token'));
-      (Object as any).assign(options, { 'headers': headers });
 
-      console.log('i am here ....', headers);
+      // console.log('i am here ....', headers);
 
     }
+
+    (Object as any).assign(options, { 'headers': headers });
+
 
     let req = new HttpRequest(options[ 'method' ], url, options[ 'body' ], {
       headers: options[ 'headers' ],
@@ -109,10 +108,6 @@ export class DataService {
       responseType: options[ 'responseType' ],
       reportProgress: options[ 'reportProgress' ] ? options[ 'reportProgress' ] : null
     });
-
-
-
-
 
 
     return Observable.create(observer => {

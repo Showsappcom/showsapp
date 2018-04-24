@@ -29,8 +29,10 @@ import { SELLER_ITEM_LIST as SellerItems } from '../../configurations/mocks/mock
 
 export class SellerDashboardComponent {
 
-
-
+  /**
+   * @type {boolean} _compActive- provides a reference if the comp is active
+   */
+  private _compActive : boolean = true;
 
   /**
    * @type {boolean} dataReturned- provides an item list
@@ -70,8 +72,14 @@ export class SellerDashboardComponent {
 
   ngOnDestroy() {
 
+    this._clearSubs();
+
   }
 
+
+  private _clearSubs() {
+    this._compActive = false;
+  }
 
   private _addListener() : void {
 
@@ -80,7 +88,6 @@ export class SellerDashboardComponent {
   private _getSellersItems() : void {
     let offerList = [];
     // let temp = JSON.parse(JSON.stringify(SellerItems));
-    this.sellersItems = [];
 
     // console.log('the sellers items are ::::', this.sellersItems, SellerItems);
     // this.sellersItems.forEach(( node ) => {
@@ -93,6 +100,17 @@ export class SellerDashboardComponent {
     //   ];
     // });
 
+    this._sellerService.getSellerData().takeWhile(() => {
+      return this._compActive;
+    }).subscribe(( data : any ) => {
+      console.log('@@@@@@@@@@@@@@@::::::');
+      console.log('@@@@@@@@@@@@@@@::::::');
+      console.log('the data is::::::', data.results);
+      console.log('@@@@@@@@@@@@@@@::::::');
+      console.log('@@@@@@@@@@@@@@@::::::');
+      this.sellersItems = data.results;
+
+    });
     // this.offerList = offerList;
     this.dataReturned = true;
     this.errorGettingData = false;
@@ -103,6 +121,11 @@ export class SellerDashboardComponent {
 
   }
 
+
+  public navigateTo( id : string ) : void {
+    this._router.navigate([ '/app/product/' + id ]);
+
+  }
 
   public addItem() : void {
     this._router.navigate([ '/app/create' ]);

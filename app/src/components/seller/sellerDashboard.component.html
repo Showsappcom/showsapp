@@ -7,20 +7,20 @@
     </button>
   </div>
   <div class="main-container">
-    <div class="item-list" *ngIf="dataReturned && sellersItems.length > 0">
+    <div class="item-list" *ngIf="dataReturned && sellersItems && sellersItems.length > 0">
       <mat-card class="mat-card-ref" *ngFor="let item of sellersItems">
-        <mat-card-title><span class="primary-color">{{item.title}}</span> - ${{item.cost}}</mat-card-title>
+        <mat-card-title><span class="primary-color">{{item.name}}</span> - ${{item.price}}</mat-card-title>
         <mat-card-subtitle><span class="accent-color">{{item.offers.length}} Offers</span></mat-card-subtitle>
         <mat-card-content>
           {{item.description}}
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button color="primary">VIEW OFFERS</button>
-          <button mat-button color="primary">EDIT ITEM</button>
+          <button mat-button color="primary" (click)="navigateTo(item.id)">VIEW OFFERS</button>
+          <!--<button mat-button color="primary">EDIT ITEM</button>-->
         </mat-card-actions>
       </mat-card>
     </div>
-    <div *ngIf="dataReturned && sellersItems.length === 0" class="info-container">
+    <div *ngIf="dataReturned && sellersItems && sellersItems.length === 0" class="info-container">
         <mat-icon class="x-large" (click)="addItem()" color="primary" style="margin-bottom: 20px;">add_circle</mat-icon>
         <span>Please add an item to continue</span>
     </div>

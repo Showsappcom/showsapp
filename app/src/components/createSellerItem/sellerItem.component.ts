@@ -60,6 +60,7 @@ export class SellerItemComponent {
   /**
    * @param {FormBuilder} _fb, form builder provider
    * @param {ActivatedRoute} _route, route provider
+   * @param {Router} _router, provides router
    * @param {SellerItemService} _sellerItemService, seller item service
    * @param {Store<fromRoot.State>} _store, store provider
    */
@@ -117,7 +118,7 @@ export class SellerItemComponent {
   private _generateForm() : void {
 
     this.itemFormControl = this._fb.group({
-      productName: [
+      name: [
         '',
         [ Validators.required ]
       ],
@@ -131,11 +132,18 @@ export class SellerItemComponent {
       ],
       price: [
         '',
-        [ Validators.required ]
+        [ Validators.required, Validators.min(1), Validators.max(1000000) ]
       ],
-      goodFaithMoney: [
-        ''
+      good_faith_money: [
+        '0'
+      ],
+      longitude: [
+        '0'
+      ],
+      latitude: [
+        '0'
       ]
+
     });
 
     this.formGenerated = true;
@@ -144,7 +152,12 @@ export class SellerItemComponent {
 
   public processItemAction() : void {
     if (this.createItem) {
-      console.log('I will save item action ;......')
+
+      this._sellerItemService.saveItem(this.itemFormControl.value).takeWhile(() => {
+        return this._compActive;
+      }).subscribe(( res : any ) => {
+        console.log('the res for create item is...', res);
+      });
 
     } else {
       console.log('I will edit item action ;......')
@@ -156,5 +169,6 @@ export class SellerItemComponent {
     this._router.navigate([ 'app/main' ]);
 
   }
+
 
 }

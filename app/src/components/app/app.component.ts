@@ -118,9 +118,9 @@ export class AppComponent implements OnInit {
   }
 
 
-  private _setupMessageSub():void{
-    this._msgEvent.on().subscribe((msg: any)=>{
-      if(msg && msg['msg'] === 'loggedIn'){
+  private _setupMessageSub() : void {
+    this._msgEvent.on().subscribe(( msg : any ) => {
+      if (msg && msg[ 'msg' ] === 'loggedIn') {
         this._routeToPath('/app/main');
       }
     })
@@ -166,11 +166,11 @@ export class AppComponent implements OnInit {
    */
   private _processLandingPage() : void {
 
-    console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
-    console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
-    console.log('the base state is::::', this._baseState);
-    console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
-    console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
+    // console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
+    // console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
+    // console.log('the base state is::::', this._baseState);
+    // console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
+    // console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
     if (this._currentRoute === '/login' && this._baseState.loggedIn) {
       this._routeToPath('/app/main');
 
@@ -188,11 +188,12 @@ export class AppComponent implements OnInit {
       return this._compActive;
 
     }).subscribe(( state : BaseState ) => {
-      console.log('the state is::::::::::::::::::::::::', state);
+      // console.log('the state is::::::::::::::::::::::::', state);
       this._baseState = state;
       if (this._baseState.loggedIn) {
         this._authService.updateToken(this._baseState.authToken);
-        this._routeToPath('app/main');
+        console.log('the requested route is:::', this._routeRequested, this._currentRoute);
+        this._routeToPath(this._currentRoute);
       }
     });
   }
@@ -330,13 +331,15 @@ export class AppComponent implements OnInit {
       if (this._currentRoute !== event[ 'url' ]) {
         this._currentRoute = event[ 'url' ];
       }
-
+      
 
       if (event instanceof RoutesRecognized) {
 
+        // console.log('the route is:::', event.url);
         if (event && event.url !== '/login' && event.url !== '/app/main') {
           this._routeRequested = event.url;
         }
+
 
 
         console.log('the current and requested routes are :::::', this._currentRoute, this._routeRequested);

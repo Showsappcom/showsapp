@@ -20,10 +20,7 @@ import { MatCardModule } from '@angular/material/card';
  * Custom Components
  */
 import { SellerDashboardComponent } from './sellerDashboard.component';
-/**
- * Seller Service
- */
-import { SellerService } from '../../services/seller.service';
+
 
 @NgModule({
   imports: [
@@ -42,7 +39,7 @@ import { SellerService } from '../../services/seller.service';
   ],
   declarations: [ SellerDashboardComponent ],
   exports: [ SellerDashboardComponent ],
-  providers: [ SellerService ],
+  providers: [],
   schemas: []
 })
 export class SellerDashboardModule {}

@@ -20,7 +20,7 @@ import * as base from '../actions/base';
 /**
  * Required Models
  */
-import { SellerItemObject } from '../models/items/item.model';
+import { OfferItemObject } from '../models/items/item.model';
 
 
 /**
@@ -42,30 +42,41 @@ import { COMMON_CONSTANTS as COMMON_CONST } from "../configurations/constants/co
  * @class SellerItemService
  */
 @Injectable()
-export class SellerItemService {
+export class NegotiationService {
 
 
   /**
    * @type {string} _BASE_URL - Provides based url
    */
   private _BASE_URL : string = APP_SETUP.devEnvironment ? 'http://staging.aws.showsapp.com:8888/' : location.origin;
+
   /**
-   * @type {string} _activateURL - Provides activation url url
+   * @type {string} _counterOffer - Provides counter  url
    */
-  private _saveItem : string = this._BASE_URL + 'api/v1/markets/create_item/';
+  private _counterOffer : string = this._BASE_URL + 'api/v1/markets/accept_offer/';
+
+  /**
+   * @type {string} _acceptOffer - Provides accept url
+   */
+  private _acceptOffer : string = this._BASE_URL + 'api/v1/markets/accept_offer/';
+
+  /**
+   * @type {string} _addToWaitList - Provides add to wait list  url
+   */
+  private _addToWaitList : string = this._BASE_URL + 'api/v1/markets/accept_offer/';
 
   constructor( private _dataService : DataService, private _store : Store<fromRoot.State>, private _toastEvent : ToastEvent ) {
 
   }
 
-  public saveItem( item : SellerItemObject ) : any {
+  public acceptOffer( offer : OfferItemObject ) : any {
 
 
     let requestOptions = {
       method: 'POST',
-      body: item,
+      body: offer,
       withCredentials: true
-    }, url = this._saveItem;
+    }, url = this._acceptOffer;
 
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
@@ -78,7 +89,7 @@ export class SellerItemService {
 
       this._toastEvent.fire({
         type: COMMON_CONST.ERROR,
-        message: 'There was an error getting your items please try agin'
+        message: 'There was an error accepting the offer please try again'
       });
 
       return Observable.throw(error || COMMON_CONST.SERVER_ERROR);
@@ -88,9 +99,32 @@ export class SellerItemService {
 
   }
 
-  public editItem() : any {
+  public counterOffer( offer : OfferItemObject ) : any {
 
 
+    let requestOptions = {
+      method: 'POST',
+      body: offer,
+      withCredentials: true
+    }, url = this._counterOffer;
+
+
+    return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
+
+      console.log('the response is:::::::::', res);
+
+      return res;
+
+    }).catch(( error : any ) => {
+
+      this._toastEvent.fire({
+        type: COMMON_CONST.ERROR,
+        message: 'There was an error accepting the offer please try again'
+      });
+
+      return Observable.throw(error || COMMON_CONST.SERVER_ERROR);
+
+    });
   }
 
 }

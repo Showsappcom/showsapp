@@ -10,9 +10,9 @@
       <form novalidate [formGroup]="itemFormControl">
 
         <mat-form-field>
-          <input matInput required placeholder="Product Name" type="text" formControlName="productName"
+          <input matInput required placeholder="Product Name" type="text" formControlName="name"
                  id="productName" tabindex="0"/>
-          <mat-error *ngIf="itemFormControl.get('productName').hasError('required')">
+          <mat-error *ngIf="itemFormControl.get('name').hasError('required')">
             Product name is required
           </mat-error>
         </mat-form-field>
@@ -33,9 +33,17 @@
         <mat-form-field>
           <span matPrefix>$ &nbsp;</span>
           <input matInput placeholder="Price" formControlName="price">
+          <span matSuffix>.00</span>
           <mat-error *ngIf="itemFormControl.get('price').hasError('required')">
             Please provide a price
           </mat-error>
+          <mat-error *ngIf="itemFormControl.get('price').hasError('required')">
+            Please provide a price that is greater than 0
+          </mat-error>
+          <mat-error *ngIf="itemFormControl.get('price').hasError('required')">
+            Please provide a price that is less than 1000000
+          </mat-error>
+
         </mat-form-field>
       </form>
     </div>

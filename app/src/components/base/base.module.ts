@@ -20,8 +20,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
  */
 import { BaseComponent } from './base.component';
 import { BaseRoutingModule } from './base-routing.module';
-// import { LeftNavigationModule } from '../navigation/left/leftNavigation.module';
 
+/**
+ * Seller Service
+ */
+import { SellerService } from '../../services/seller.service';
+// import { LeftNavigationModule } from '../navigation/left/leftNavigation.module';
 
 
 @NgModule({
@@ -34,7 +38,10 @@ import { BaseRoutingModule } from './base-routing.module';
   ],
   declarations: [ BaseComponent ],
   exports: [ BaseComponent ],
-  providers: [ MatDrawer ],
+  providers: [
+    MatDrawer,
+    SellerService
+  ],
   schemas: []
 })
 /**
