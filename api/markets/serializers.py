@@ -53,6 +53,14 @@ class OfferSerializer(serializers.ModelSerializer):
         fields = ('id', 'sa_user', 'item', 'message', 'value', 'good_faith_money_paid', 'on_hold', 'created_at')
 
 
+class DetailedOfferSerializer(serializers.ModelSerializer):
+    item = ItemSerializer()
+    class Meta:
+        model = Offer
+        fields = ('id', 'sa_user', 'item', 'message', 'value', 'good_faith_money_paid', 'on_hold', 'created_at')
+
+
+
 class CreateOfferSerializer(serializers.Serializer):
     item = serializers.IntegerField(allow_null=False, write_only=True, required=True)
     message = serializers.CharField(allow_null=True, allow_blank=True, write_only=True)

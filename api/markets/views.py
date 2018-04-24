@@ -123,6 +123,35 @@ class MyItems(generics.ListAPIView):
         serializer = self.get_serializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
+class MyOffers(generics.ListAPIView):
+    """
+    A protected API to list the offers for the buyer
+    """
+    pagination_class = StandardResultsSetPagination
+    authentication_classes = (JSONWebTokenAuthentication, )
+    permission_classes = (IsAuthenticated,)
+
+    queryset = Item.objects.all()
+    serializer_class = DetailedOfferSerializer
+
+    def get_queryset(self):
+        user = self.request.user.sa_user
+        offers = user.offers.all().order_by('id')
+
+        return offers
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True, context={'request': request})
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True, context={'request': request})
+        return Response(serializer.data)
+
 class MyItem(generics.ListAPIView):
     """
     A protected API to get or delete an item by id for the seller
