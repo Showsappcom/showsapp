@@ -39,7 +39,13 @@ def jwt_payload_handler(user, hijack=False):
 
 
 def jwt_response_payload_handler(token, user=None, request=None):
-    return {
-        'token': token,
-        'user': SAUserSerializer(user.sa_user).data
-    }    
+    print(request.path)
+    if request.path == '/api/v1/accounts/token-verify/':
+        return {
+            'token': token
+        }
+    else:
+        return {
+            'token': token,
+            'user': SAUserSerializer(user.sa_user).data
+        }
