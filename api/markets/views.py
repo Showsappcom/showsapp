@@ -34,13 +34,11 @@ class CreateItem(generics.CreateAPIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
 
+
 class PlaceOffer(generics.CreateAPIView):
     """
-    A protected API to create an offer on an item.
+    An open API to create an offer on an item.
     """
-    authentication_classes = (JSONWebTokenAuthentication, )
-    permission_classes = (IsAuthenticated,)
-
     serializer_class = CreateOfferSerializer
     def post(self, request, format=None):
         serializer = CreateOfferSerializer(data=request.data, context={'request': request})
@@ -48,6 +46,7 @@ class PlaceOffer(generics.CreateAPIView):
             offer = serializer.save()
             return Response(OfferSerializer(offer).data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class AcceptDeclineOffer(generics.CreateAPIView):
     """

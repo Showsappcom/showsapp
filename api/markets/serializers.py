@@ -1,9 +1,10 @@
-from rest_framework import serializers
+from rest_framework import serializers, exceptions
 from markets.models import WaitingListSubscription, Item, Offer
-from accounts.serializers import AccountSerializer, SAUserSerializer
+from accounts.serializers import AccountSerializer, SAUserSerializer, SignupSerializer
 from django.db.models import Q
 import stripe
 from notifications.mailers import NewOfferNotification
+from django.contrib.auth.models import User
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -64,17 +65,37 @@ class DetailedOfferSerializer(serializers.ModelSerializer):
 class CreateOfferSerializer(serializers.Serializer):
     item = serializers.IntegerField(allow_null=False, write_only=True, required=True)
     message = serializers.CharField(allow_null=True, allow_blank=True, write_only=True)
+    email = serializers.CharField(allow_null=False, allow_blank=False, required=True)
     value = serializers.FloatField(allow_null=False, write_only=True, required=True)
 
     def create(self, validated_data):
-        sa_user = self.context['request'].user.sa_user
+        user = self.context['request'].user
+        email = validated_data.get('email')
         item_id = validated_data.get('item')
         message = validated_data.get('message')
         value = validated_data.get('value')
-
         item = Item.objects.get(pk=item_id)
+        on_hold = False
 
-        on_hold = item.requires_good_faith_money
+        if user.is_anonymous:
+            on_hold = True
+            signup = SignupSerializer(data={
+                'email': email,
+                'password': 'ldjlfajsd;lfajdslkfajdslkfj',
+                'first_name': '',
+                'last_name': '',
+                'name': ''
+            })
+            print(signup.is_valid())
+            if signup.is_valid():
+                sa_user = signup.save()
+            elif signup.errors.get('email') != None:
+                sa_user = User.objects.filter(username__iexact=email)[0].sa_user
+                if not sa_user.activated:
+                    raise exceptions.APIException('Should verify the accout first.')
+
+        else:
+            sa_user = user.sa_user
 
         offer = Offer.objects.create(
             item=item,
@@ -84,7 +105,8 @@ class CreateOfferSerializer(serializers.Serializer):
             sa_user=sa_user
         )
 
-        NewOfferNotification(sa_user, item, offer).send()
+        if not on_hold:
+            NewOfferNotification(sa_user, item, offer).send()
         return offer
 
 class AcceptDeclineOfferSerializer(serializers.Serializer):
@@ -99,10 +121,10 @@ class AcceptDeclineOfferSerializer(serializers.Serializer):
         try:
             offer = Offer.objects.get(pk=offer_id)
         except:
-            raise exceptions.ValidationError('Could not find an offer with the given id') 
+            raise exceptions.ValidationError('Could not find an offer with the given id')
 
         if item.sa_user != sa_user:
-            raise exceptions.ValidationError('Unauthorized to perform this action.') 
+            raise exceptions.ValidationError('Unauthorized to perform this action.')
 
         offer.accepted = accept
 

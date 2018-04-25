@@ -1,10 +1,11 @@
 from rest_framework import serializers, exceptions
-from accounts.models import *
+from rest_framework.validators import UniqueValidator
+from accounts.models import Account, SAUser
 from django.db.models import Q
 from utils.email_verification_token_generator import make_token
 from utils.utils import reset_password
 from notifications.mailers import WelcomeNotification, PasswordResetNotification
-
+from django.contrib.auth.models import User
 
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,7 +20,8 @@ class SAUserSerializer(serializers.ModelSerializer):
 
 
 class SignupSerializer(serializers.Serializer):
-    email = serializers.CharField(allow_null=False, allow_blank=False, write_only=True)
+    email = serializers.EmailField(allow_null=False, allow_blank=False, write_only=True,
+        validators=[UniqueValidator(queryset=User.objects.all())])
     password = serializers.CharField(allow_null=False, allow_blank=False, write_only=True)
     name = serializers.CharField(allow_null=True, allow_blank=True, write_only=True, required=False)
     first_name = serializers.CharField(allow_null=True, allow_blank=True, write_only=True, required=False)
@@ -34,17 +36,19 @@ class SignupSerializer(serializers.Serializer):
         last_name = validated_data.get('last_name')
         name = validated_data.get('name')
 
-        users_results = User.objects.filter(username__iexact=email)
-        if users_results.exists():
-            raise exceptions.ValidationError('User already exists.')
-
         try:
-            auth_user = User.objects.create(first_name=first_name, last_name=last_name, email=email, username=email)
+            auth_user = User.objects.create(first_name=first_name,
+                                            last_name=last_name,
+                                            email=email,
+                                            username=email)
             auth_user.set_password(password)
             auth_user.save()
             account = Account.objects.create(name=name)
-
-            sa_user = SAUser.objects.create(first_name=first_name, last_name=last_name, user=auth_user, account=account, email=email)
+            sa_user = SAUser.objects.create(first_name=first_name,
+                                            last_name=last_name,
+                                            user=auth_user,
+                                            account=account,
+                                            email=email)
 
             # create a token
             token = make_token(sa_user.user, email, timestamp=None)
@@ -83,7 +87,7 @@ class ActivateSerializer(serializers.Serializer):
             sa_user.activated = True       
             sa_user.save()
 
-            ### updating and activating the auth user
+            # updating and activating the auth user
             user.is_active = True
             user.save()
         except:
