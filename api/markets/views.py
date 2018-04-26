@@ -63,6 +63,7 @@ class AcceptDeclineOffer(generics.CreateAPIView):
             return Response(OfferSerializer(offer).data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
+
 class JoinWaitingList(generics.CreateAPIView):
     """
     A protected API to join the waiting list on an item.
@@ -78,6 +79,7 @@ class JoinWaitingList(generics.CreateAPIView):
             return Response(WaitingListSubscriptionSerializer(subscription).data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class PayGFM(generics.CreateAPIView):
     """
     A protected API to pay a GFM for an on-hold offer and release it.
@@ -92,6 +94,7 @@ class PayGFM(generics.CreateAPIView):
             return Response(OfferSerializer(offer).data)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)      
+
 
 class MyItems(generics.ListAPIView):
     """
@@ -122,6 +125,26 @@ class MyItems(generics.ListAPIView):
         serializer = self.get_serializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
+
+class ItemBySlug(generics.ListAPIView):
+    """
+    An open API to get an item by seller id and item slug
+    """
+    serializer_class = ItemSerializer
+
+    def get(self, request, seller_id, slug, *args, **kwargs):
+        """
+        An open API to get an item by seller id and item slug
+        """
+
+        items = Item.objects.filter(slug=slug, sa_user__id=seller_id)
+        if items.exists():
+            serializer = self.get_serializer(items[0], context={'request': request})
+            return Response(serializer.data)
+        else:
+            return Response({}, status=404)
+
+
 class MyOffers(generics.ListAPIView):
     """
     A protected API to list the offers for the buyer
@@ -150,6 +173,7 @@ class MyOffers(generics.ListAPIView):
 
         serializer = self.get_serializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
+
 
 class MyItem(generics.ListAPIView):
     """
@@ -183,6 +207,7 @@ class MyItem(generics.ListAPIView):
             return Response(serializer.data)
         else:
             return Response({}, status=404)
+
 
 def item(request,id):
     item = Item.objects.get(pk=id)
