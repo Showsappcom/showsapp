@@ -99,14 +99,14 @@ export class NegotiationService {
 
   }
 
-  public counterOffer( offer : OfferItemObject ) : any {
+  public declineOffer( offer : OfferItemObject ) : any {
 
 
     let requestOptions = {
       method: 'POST',
       body: offer,
       withCredentials: true
-    }, url = this._counterOffer;
+    }, url = this._acceptOffer;
 
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
@@ -119,7 +119,7 @@ export class NegotiationService {
 
       this._toastEvent.fire({
         type: COMMON_CONST.ERROR,
-        message: 'There was an error accepting the offer please try again'
+        message: 'There was an error declining the offer please try again'
       });
 
       return Observable.throw(error || COMMON_CONST.SERVER_ERROR);

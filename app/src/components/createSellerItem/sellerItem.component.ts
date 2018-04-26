@@ -157,6 +157,7 @@ export class SellerItemComponent {
         return this._compActive;
       }).subscribe(( res : any ) => {
         console.log('the res for create item is...', res);
+        this.close();
       });
 
     } else {

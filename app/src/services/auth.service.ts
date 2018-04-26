@@ -29,6 +29,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { DataService } from './data.service';
 import { Observable } from 'rxjs/Observable';
 import { ToastEvent } from './toastEvent.service';
+import { setTimeout } from "timers";
 
 /**
  * A service that provides a data abstraction to activate a user.
@@ -117,15 +118,53 @@ export class AuthService {
 
   }
 
+
+  private _checkTokenDeleted() : boolean {
+    return this._cookieService.check('sa_access_token');
+  }
+
+
   public logOut() : any {
 
-    return  Observable.create(observer => {
-      // console.log('i am deleting the token');
+    return Observable.create(observer => {
       this._cookieService.delete('sa_access_token');
-      // console.log('lets have a check here ...', this._cookieService.check('sa_access_token'), this._cookieService.get('sa_access_token'));
 
-      observer.next('done');
-      observer.complete();
+      for (let i = 0, iLen = 5; i < iLen; i++) {
+
+        if (this._cookieService.check('sa_access_token')) {
+          this._cookieService.delete('sa_access_token');
+        } else {
+          break;
+        }
+
+      }
+
+
+
+
+      if (this._cookieService.check('sa_access_token')) {
+        console.log('TOKEN STILL HERE');
+        this._cookieService.delete('sa_access_token');
+
+      }
+
+      setTimeout(() => {
+        if(this._cookieService.check('sa_access_token')){
+          observer.next('error');
+          observer.complete();
+
+          this._toastEvent.fire({
+            type: COMMON_CONST.ERROR,
+            message: 'Error logging out please try again'
+          });
+        }else{
+          observer.next('done');
+          observer.complete();
+        }
+
+
+      }, 100);
+
 
     });
 

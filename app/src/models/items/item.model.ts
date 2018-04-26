@@ -11,7 +11,7 @@ export interface SellerItemObject {
 
 export interface OfferItemObject {
   offer : string;
-  accept: string;
+  accept: boolean;
 }
 
 

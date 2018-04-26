@@ -155,15 +155,18 @@ export class BaseComponent {
 
       console.log('i will be done here ...', resp);
 
-      this._store.dispatch(new BaseActions.Update({
-        authToken: '',
-        loggedIn: false,
-        loggedInUser: '',
-        theme: 'shows-app-theme',
-        language: 'english'
-      }));
+      if(resp !== 'error'){
+        this._store.dispatch(new BaseActions.Update({
+          authToken: '',
+          loggedIn: false,
+          loggedInUser: '',
+          theme: 'shows-app-theme',
+          language: 'english'
+        }));
 
-      this._router.navigate([ '/login' ]);
+        this._router.navigate([ '/login' ]);
+      }
+
 
 
 

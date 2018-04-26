@@ -17,13 +17,15 @@
   }
 
   .item-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+    //position: absolute;
+    //top: 0;
+    //left: 0;
+    //height: 100%;
+    //width: 100%;
+    @include flexbox();
+    @include flex-direction(column);
     padding: 20px;
-    background-color: $backgroundColour;
+    //background-color: $backgroundColour;
 
     .title-row {
       @include flexbox();
@@ -33,10 +35,44 @@
 
       }
     }
+    button {
+      width: 80px;
+    }
+
   }
 
+  .view-item-container {
+
+    //position: absolute;
+    //top: 0;
+    //left: 0;
+    //height: 100%;
+    //width: 100%;
+    @include flexbox();
+    @include flex-direction(column);
+    padding: 20px;
+    height: 100%;
+    //background-color: $backgroundColour;
+
+    .title-row {
+      @include flexbox();
+
+      .title {
+        @include flex-grow(1);
+
+      }
+    }
+
+    .item-content-container {
+      @include flexbox();
+      @include flex-direction(column);
+      @include flex-grow(1);
+      @include justify-content(center);
+      @include align-items(center);
+    }
+  }
   .form-container {
-    form {
+    form, .seller-item-container {
       @include flexbox();
       @include flex-direction(column);
 
@@ -44,6 +80,15 @@
         max-width: 400px;
       }
     }
+
+  }
+  .empty-offer-container {
+
+    @include flexbox();
+    @include flex-direction(column);
+    @include justify-content(center);
+    @include align-items(center);
+    min-height: 200px;
   }
 
 }

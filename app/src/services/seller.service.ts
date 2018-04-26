@@ -14,14 +14,14 @@ import * as fromRoot from '../reducers';
 /**
  * Configurations
  */
-import { APP_SETUP } from "../configurations/app.configuration";
-import { COMMON_CONSTANTS as COMMON_CONST } from "../configurations/constants/common.constant";
+import { APP_SETUP } from '../configurations/app.configuration';
+import { COMMON_CONSTANTS as COMMON_CONST } from '../configurations/constants/common.constant';
 
 /**
  * Required Services
  */
 import { DataService } from './data.service';
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 import { ToastEvent } from '../services/toastEvent.service';
 
 /**
@@ -39,6 +39,7 @@ export class SellerService {
   /**
    * @type {string} _activateURL - Provides activation url url
    */
+  private _archiveItem : string = this._BASE_URL + 'api/v1/markets/myitems/';
   private _getItems : string = this._BASE_URL + 'api/v1/markets/myitems/';
 
 
@@ -68,13 +69,66 @@ export class SellerService {
 
       this._toastEvent.fire({
         type: COMMON_CONST.ERROR,
-        message: 'There was an error getting your items please try agin'
+        message: 'There was an error getting your items please try again'
       });
 
       return Observable.throw(error || COMMON_CONST.SERVER_ERROR);
 
     });
 
+  }
+
+  public getSellerItem( id : string ) : any {
+
+    let requestOptions = {
+      method: 'GET',
+      body: {},
+      withCredentials: true
+    }, url = this._getItems+id;
+
+    return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
+
+      console.log('the response is:::::::::', res);
+
+      return res;
+
+    }).catch(( error : any ) => {
+
+      this._toastEvent.fire({
+        type: COMMON_CONST.ERROR,
+        message: 'There was an error getting your items please try again'
+      });
+
+      return Observable.throw(error || COMMON_CONST.SERVER_ERROR);
+
+    });
+  }
+
+  public archiveItem( id : string ) {
+
+
+    let requestOptions = {
+      method: 'DELETE',
+      withCredentials: true
+    }, url = this._archiveItem + id;
+
+
+    return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
+
+      console.log('the response is:::::::::', res);
+
+      return res;
+
+    }).catch(( error : any ) => {
+
+      this._toastEvent.fire({
+        type: COMMON_CONST.ERROR,
+        message: 'There was an error deleting your items please try again'
+      });
+
+      return Observable.throw(error || COMMON_CONST.SERVER_ERROR);
+
+    });
   }
 
 }

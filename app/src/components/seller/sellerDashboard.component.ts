@@ -4,10 +4,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+
 /**
  * Custom Services
  */
+import { ModalsEvent } from '../../services/modalsEvent.service';
 import { SellerService } from '../../services/seller.service';
+import { ToastEvent } from '../../services/toastEvent.service';
 
 
 /**
@@ -15,10 +18,12 @@ import { SellerService } from '../../services/seller.service';
  */
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import * as BaseActions from '../../actions/base';
 
 
-import { SELLER_ITEM_LIST as SellerItems } from '../../configurations/mocks/mockItemList';
+/**
+ * Constants
+ */
+import { COMMON_CONSTANTS as COMMON_CONST } from '../../configurations/constants/common.constant';
 
 @Component({
   templateUrl: './sellerDashboard.component.html',
@@ -54,10 +59,16 @@ export class SellerDashboardComponent {
    */
   public sellersItems : any;
 
+  /**
+   * @type {object} _objectToDelete- provides a reference to what to delete
+   */
+  private _objectToDelete : object;
 
-  constructor( private _router : Router,
+  constructor( private _modalEvent : ModalsEvent,
+               private _router : Router,
                private _sellerService : SellerService,
-               private _store : Store<fromRoot.State>
+               private _store : Store<fromRoot.State>,
+               private _toastEvent : ToastEvent
   ) {
 
   }
@@ -67,6 +78,7 @@ export class SellerDashboardComponent {
 
     console.log('INIT IS HERE......');
     this._getSellersItems();
+    this._setupModalListener();
 
   }
 
@@ -76,14 +88,24 @@ export class SellerDashboardComponent {
 
   }
 
+  private _setupModalListener() : void {
+    this._modalEvent.on().takeWhile(() => {
+      return this._compActive
+    }).subscribe(( event : any ) => {
+
+      if (event[ 'action' ] === 'delete') {
+        console.log('the event is::::', event);
+        this.archiveItem(this._objectToDelete[ 'id' ], this._objectToDelete[ 'index' ]);
+      }
+
+    });
+
+  }
 
   private _clearSubs() {
     this._compActive = false;
   }
 
-  private _addListener() : void {
-
-  }
 
   private _getSellersItems() : void {
     let offerList = [];
@@ -122,6 +144,35 @@ export class SellerDashboardComponent {
   }
 
 
+  public openConfirmationModal( id : string, index : number ) : void {
+
+    this._objectToDelete = {
+      id: id,
+      index: index
+    };
+
+    this._modalEvent.fire({
+      action: COMMON_CONST.POPOVER.OPEN,
+      type: 'DeleteConfirmation'
+    });
+
+  }
+
+  public archiveItem( id : string, index : number ) : void {
+
+
+    this._sellerService.archiveItem(id).takeWhile(() => {
+      return this._compActive;
+    }).subscribe(( data : any ) => {
+
+      console.log('the response is::::', data);
+      this.sellersItems.splice(index, 1);
+      this._modalEvent.fire({ action: COMMON_CONST.POPOVER.CLOSE, type: 'DeleteConfirmation' });
+
+
+    })
+  }
+
   public navigateTo( id : string ) : void {
     this._router.navigate([ '/app/product/' + id ]);
 
@@ -131,5 +182,19 @@ export class SellerDashboardComponent {
     this._router.navigate([ '/app/create' ]);
   }
 
+  // public clipBoardCopied(url: string) : void {
+  //   // let linkText = document.getElementById('item-'+id);
+  //
+  //   /* Select the text field */
+  //
+  //
+  //   /* Copy the text inside the text field */
+  //   document.execCommand("Copy");
+  //
+  //   this._toastEvent.fire({
+  //     type: 'info',
+  //     message: 'link copied to clipboard'
+  //   })
+  // }
 
 }

@@ -1,5 +1,8 @@
 @import '../../shared/styles/_mixins';
 
+.embed-link{
+  margin: 10px 0;
+}
 .content-container {
   @include flexbox();
   @include flex-direction(column);
@@ -24,7 +27,19 @@
   .title {
     @include flex-grow(1);
   }
+
 }
+
+
+.card-title-row{
+  @include flexbox();
+  @include flex-direction(row);
+  .card-title {
+    @include flex-grow(1);
+    @include flex-wrap(wrap);
+  }
+}
+
 
 .main-container {
   @include flexbox();

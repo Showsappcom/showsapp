@@ -148,7 +148,8 @@ export class AppComponent implements OnInit {
           // console.log('the data is:', this._baseState);
 
           this._store.dispatch(new BaseActions.Update({
-            ...this._baseState, loggedIn: true, authToken: data.token, loggedInUser: data[ 'user' ][ 'email' ]
+            ...this._baseState, loggedIn: true, authToken: data.token, loggedInUser:''
+            // ...this._baseState, loggedIn: true, authToken: data.token, loggedInUser: data[ 'user' ][ 'email' ]
           }));
           // this._routeToPath('/app/main');
           this._processLandingPage();
@@ -331,7 +332,7 @@ export class AppComponent implements OnInit {
       if (this._currentRoute !== event[ 'url' ]) {
         this._currentRoute = event[ 'url' ];
       }
-      
+
 
       if (event instanceof RoutesRecognized) {
 

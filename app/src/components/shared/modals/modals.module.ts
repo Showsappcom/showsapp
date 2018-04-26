@@ -25,9 +25,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
  * Popover wrapper
  */
 import { PopoverComponent } from './popover/popover.component';
-
-
-
+import { DeletePopoverComponent } from './popover/delete/deletePopover.component';
 
 
 /**
@@ -55,12 +53,15 @@ import { RetryModule } from '../retry/retry.module';
   ],
   schemas: [],
   declarations: [
+    DeletePopoverComponent,
     PopoverComponent
   ],
   exports: [
+    DeletePopoverComponent,
     PopoverComponent
   ],
   entryComponents: [
+    DeletePopoverComponent,
     PopoverComponent
 
   ],
