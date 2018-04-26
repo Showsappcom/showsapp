@@ -7,10 +7,13 @@ from notifications.mailers import NewOfferNotification
 from django.contrib.auth.models import User
 
 class ItemSerializer(serializers.ModelSerializer):
+    url = serializers.SerializerMethodField('_url')
+    def _url(self, obj):
+        return '%s/%s' %(obj.sa_user.id, obj.slug)
     class Meta:
         model = Item
         fields = ('id', 'name', 'description', 'slug', 'price', 'good_faith_money',
-        'requires_good_faith_money', 'latitude','longitude','address', 'created_at')
+        'requires_good_faith_money', 'latitude','longitude','url','address', 'created_at')
 
 class CreateItemSerializer(serializers.Serializer):
     name = serializers.CharField(allow_null=False, allow_blank=False, write_only=True, required=True)
@@ -192,6 +195,9 @@ class PayGFMSerializer(serializers.Serializer):
 class DetailedItemSerializer(serializers.ModelSerializer):
     offers = serializers.SerializerMethodField('_offers')
     waiting_list = serializers.SerializerMethodField('_waiting_list')
+    url = serializers.SerializerMethodField('_url')
+    def _url(self, obj):
+        return '%s/%s' %(obj.sa_user.id, obj.slug)
 
     def _offers(self, obj):
         return OfferSerializer(obj.offers.filter(on_hold=False), many=True).data
@@ -203,4 +209,4 @@ class DetailedItemSerializer(serializers.ModelSerializer):
         model = Item
         fields = ('id', 'name', 'description', 'slug', 'price',
                   'good_faith_money', 'requires_good_faith_money',
-                  'offers', 'waiting_list', 'created_at')
+                  'url', 'offers', 'waiting_list', 'created_at')
