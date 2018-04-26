@@ -5,6 +5,7 @@ import {
   NgModule
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 
@@ -12,15 +13,20 @@ import { RouterModule } from '@angular/router';
  * Material Imports
  */
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 
 /**
  * Custom Components
  */
-import { SellerDashboardComponent } from './sellerDashboard.component';
+import { SellerItemComponent } from './sellerItem.component';
+/**
+ * Seller Service
+ */
+import { SellerItemService } from '../../services/sellerItem.service';
 
 
 @NgModule({
@@ -28,20 +34,22 @@ import { SellerDashboardComponent } from './sellerDashboard.component';
     CommonModule,
     MatButtonModule,
     MatCardModule,
-    MatDialogModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatListModule,
+    ReactiveFormsModule,
     RouterModule.forChild(
       [
         {
-          path: '', component: SellerDashboardComponent, pathMatch: 'full'
+          path: '', component: SellerItemComponent, pathMatch: 'full'
         }
       ]),
 
   ],
-  declarations: [ SellerDashboardComponent ],
-  exports: [ SellerDashboardComponent ],
-  providers: [],
+  declarations: [ SellerItemComponent ],
+  exports: [ SellerItemComponent ],
+  providers: [ SellerItemService ],
   schemas: []
 })
-export class SellerDashboardModule {}
+export class SellerItemModule {}

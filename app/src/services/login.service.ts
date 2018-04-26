@@ -45,7 +45,7 @@ export class LoginService {
   private _BASE_URL : string = APP_SETUP.devEnvironment ? 'http://staging.aws.showsapp.com:8888/' : location.origin;
   private _loginURL : string = this._BASE_URL + 'api/v1/accounts/login/';
   private _registerURL : string = this._BASE_URL + 'api/v1/accounts/signup/';
-  private _retrievePassword : string = this._BASE_URL + 'api/v1/accounts/password_reset/';
+  private _retrievePasswordURL : string = this._BASE_URL + 'api/v1/accounts/password_reset/';
 
   constructor( private _dataService : DataService, private _store : Store<fromRoot.State>, private _toastEvent : ToastEvent ) {
 
@@ -62,7 +62,6 @@ export class LoginService {
     }, url = this._registerURL;
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
-
 
 
       console.log('the response is simply::::', res);
@@ -116,15 +115,15 @@ export class LoginService {
 
   }
 
-  public retrievePassword(email: string): any{
+  public retrievePassword( emailString : string ) : any {
     let requestOptions = {
       method: 'POST',
-      body: email,
+      body: { email: emailString },
       withCredentials: true
-    }, url = this._loginURL;
+    }, url = this._retrievePasswordURL;
 
     console.log('the url is::::', url);
-    console.log('the email is::: ', email);
+    console.log('the email is::: ', emailString);
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
 

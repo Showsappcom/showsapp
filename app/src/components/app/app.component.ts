@@ -19,6 +19,8 @@ import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef } from '@angular/materia
 /**
  * Required Events
  */
+import { AuthService } from '../../services/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 import { MessageEvent } from '../../services/messageEvent.service';
 import { ToastEvent } from '../../services/toastEvent.service';
 
@@ -40,6 +42,7 @@ import { State as BaseState } from '../../reducers/base';
  */
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
+import * as BaseActions from '../../actions/base';
 
 
 @Component({
@@ -57,6 +60,7 @@ export class AppComponent implements OnInit {
    */
   @HostBinding('class') componentCssClass = 'eaton';
 
+  private _baseState : BaseState;
 
   /**
    * @type {boolean} _compActive - stores the current route
@@ -77,6 +81,8 @@ export class AppComponent implements OnInit {
 
   /**
    * Constructor
+   * @param {AuthService} _authService - provides auth service
+   * @param {CookieService} _cookieService - provides cookie service
    * @param {MatSnackBar} snackBar - Reference to snackbar
    * @param {MessageEvent} _msgEvent - message event provider
    * @param {OverlayContainer} overlayContainer - Reference to overlay container
@@ -84,7 +90,9 @@ export class AppComponent implements OnInit {
    * @param {Store<fromRoot.State>} _store - provider for the application store
    * @param {ToastEvent} _toastEvent - Provides a namespace for toast event pub/sub
    */
-  constructor( private _msgEvent : MessageEvent,
+  constructor( private _authService : AuthService,
+               private _cookieService : CookieService,
+               private _msgEvent : MessageEvent,
                private _router : Router,
                private _store : Store<fromRoot.State>,
                private _toastEvent : ToastEvent,
@@ -96,14 +104,79 @@ export class AppComponent implements OnInit {
 
   /**
    * Angular life cycle method
-   * @returns void
    */
-  ngOnInit() : void {
+  ngOnInit() {
+
 
     this._setDefaultTheme();
+    this._setupMessageSub();
     this._setupUserSub();
     this._setupRouteSub();
     this._setupToastSub();
+    this._verifyCookiesEnabled();
+
+  }
+
+
+  private _setupMessageSub() : void {
+    this._msgEvent.on().subscribe(( msg : any ) => {
+      if (msg && msg[ 'msg' ] === 'loggedIn') {
+        this._routeToPath('/app/main');
+      }
+    })
+  }
+
+  /**
+   * Checks if cookies are enabled
+   * @returns void
+   */
+  private _verifyCookiesEnabled() : void {
+    if (navigator && !navigator.cookieEnabled) {
+
+      setTimeout(() => {
+        this._processToast({
+          type: 'error',
+          message: 'This site uses cookies please enable them'
+        });
+      }, 0);
+    } else {
+
+      this._authService.checkToken().takeWhile(() => {
+        return this._compActive;
+      }).subscribe(( data : any ) => {
+          // console.log('the data is:', data);
+          // console.log('the data is:', this._baseState);
+
+          this._store.dispatch(new BaseActions.Update({
+            ...this._baseState, loggedIn: true, authToken: data.token, loggedInUser:''
+            // ...this._baseState, loggedIn: true, authToken: data.token, loggedInUser: data[ 'user' ][ 'email' ]
+          }));
+          // this._routeToPath('/app/main');
+          this._processLandingPage();
+        },
+        () => {
+          console.log('need to login again');
+          this._routeToPath('/login');
+        });
+    }
+  }
+
+  /**
+   * Function to process landing page.
+   * @returns void
+   */
+  private _processLandingPage() : void {
+
+    // console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
+    // console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
+    // console.log('the base state is::::', this._baseState);
+    // console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
+    // console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
+    if (this._currentRoute === '/login' && this._baseState.loggedIn) {
+      this._routeToPath('/app/main');
+
+    }
+
 
   }
 
@@ -112,13 +185,16 @@ export class AppComponent implements OnInit {
    * @returns void
    */
   private _setupUserSub() : void {
-    this._store.let(fromRoot.getBaseState).takeWhile(()=>{
+    this._store.let(fromRoot.getBaseState).takeWhile(() => {
       return this._compActive;
 
     }).subscribe(( state : BaseState ) => {
-      console.log('the state is::::::::::::::::::::::::', state);
-      if (state.loggedIn) {
-        this._routeToPath('app/main');
+      // console.log('the state is::::::::::::::::::::::::', state);
+      this._baseState = state;
+      if (this._baseState.loggedIn) {
+        this._authService.updateToken(this._baseState.authToken);
+        console.log('the requested route is:::', this._routeRequested, this._currentRoute);
+        this._routeToPath(this._currentRoute);
       }
     });
   }
@@ -136,6 +212,70 @@ export class AppComponent implements OnInit {
 
 
   /**
+   * Process Toast Request
+   * @param {ToastMsgModel} toastModel, provides incoming toast config
+   * @returns void
+   */
+  private _processToast( toastModel : ToastMsgModel ) : void {
+    if (toastModel.type !== 'close') {
+      let snackBarRef : MatSnackBarRef<ToastComponent>, snackConfigModel : MatSnackBarConfig;
+      if (toastModel.type === 'success') {
+
+
+        snackConfigModel = {
+          data: toastModel,
+          duration: toastModel.duration ? toastModel.duration : null,
+          panelClass: [
+            'success-snack',
+            'mat-elevation-z8'
+          ]
+        };
+
+
+      } else if (toastModel.type === 'error') {
+
+
+        snackConfigModel = {
+          data: toastModel,
+          duration: toastModel.duration ? toastModel.duration : null,
+          panelClass: [
+            'error-snack',
+            'mat-elevation-z8'
+          ]
+        };
+
+      } else {
+        snackConfigModel = {
+          data: toastModel,
+          duration: toastModel.duration ? toastModel.duration : null,
+          panelClass: [
+            'mat-elevation-z8'
+          ]
+        };
+      }
+
+
+      snackBarRef = this.snackBar.openFromComponent(ToastComponent, snackConfigModel);
+
+
+      snackBarRef.onAction().subscribe(( action ) => {
+
+        console.log('the action was', action);
+        // snackBarRef.dismiss();
+        this._closeToast();
+
+      });
+
+    } else {
+
+
+      this._closeToast();
+
+    }
+
+  }
+
+  /**
    * Setup a toast sub to update the toast component effectively
    * @returns void
    */
@@ -145,63 +285,7 @@ export class AppComponent implements OnInit {
 
       console.log('the toastModel is', toastModel);
 
-      if (toastModel.type !== 'close') {
-        let snackBarRef : MatSnackBarRef<ToastComponent>, snackConfigModel : MatSnackBarConfig;
-        if (toastModel.type === 'success') {
-
-
-          snackConfigModel = {
-            data: toastModel,
-            duration: toastModel.duration ? toastModel.duration : null,
-            panelClass: [
-              'success-snack',
-              'mat-elevation-z8'
-            ]
-          };
-
-
-        } else if (toastModel.type === 'error') {
-
-
-          snackConfigModel = {
-            data: toastModel,
-            duration: toastModel.duration ? toastModel.duration : null,
-            panelClass: [
-              'error-snack',
-              'mat-elevation-z8'
-            ]
-          };
-
-        } else {
-          snackConfigModel = {
-            data: toastModel,
-            duration: toastModel.duration ? toastModel.duration : null,
-            panelClass: [
-              'mat-elevation-z8'
-            ]
-          };
-        }
-
-
-        snackBarRef = this.snackBar.openFromComponent(ToastComponent, snackConfigModel);
-
-
-        snackBarRef.onAction().subscribe(( action ) => {
-
-          console.log('the action was', action);
-          // snackBarRef.dismiss();
-          this._closeToast();
-
-        });
-
-      } else {
-
-
-        this._closeToast();
-
-      }
-
-
+      this._processToast(toastModel);
     });
 
 
@@ -252,11 +336,16 @@ export class AppComponent implements OnInit {
 
       if (event instanceof RoutesRecognized) {
 
+        // console.log('the route is:::', event.url);
         if (event && event.url !== '/login' && event.url !== '/app/main') {
           this._routeRequested = event.url;
         }
 
+
+
+        console.log('the current and requested routes are :::::', this._currentRoute, this._routeRequested);
       }
+
 
     });
   }
