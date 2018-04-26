@@ -6,6 +6,7 @@ from utils.email_verification_token_generator import make_token
 from utils.utils import reset_password
 from notifications.mailers import WelcomeNotification, PasswordResetNotification
 from django.contrib.auth.models import User
+from notifications.mailers import NewOfferNotification
 
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
@@ -72,12 +73,17 @@ class ActivateSerializer(serializers.Serializer):
 
         try:
             account = Account.objects.filter(activation_token=token)[0]
+            sa_user = account.sa_users.all()[0]
+            offers = sa_user.offers.filter(on_hold=True)
+
+            for offer in offers:
+                print(offer)
+                NewOfferNotification(offer.item.sa_user, offer.item, offer).send()
+            offers.update(on_hold=False)
         except:
             raise exceptions.ValidationError('Could not find an account.')
 
         try:
-            sa_user = account.sa_users.all()[0]
-
             # getting auth user
             user = sa_user.user
 

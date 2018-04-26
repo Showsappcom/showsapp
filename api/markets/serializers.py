@@ -75,10 +75,9 @@ class CreateOfferSerializer(serializers.Serializer):
         message = validated_data.get('message')
         value = validated_data.get('value')
         item = Item.objects.get(pk=item_id)
-        on_hold = False
+        on_hold = True
 
         if user.is_anonymous:
-            on_hold = True
             signup = SignupSerializer(data={
                 'email': email,
                 'password': 'ldjlfajsd;lfajdslkfajdslkfj',
@@ -95,6 +94,7 @@ class CreateOfferSerializer(serializers.Serializer):
                     raise exceptions.APIException('Should verify the accout first.')
 
         else:
+            on_hold = False
             sa_user = user.sa_user
 
         offer = Offer.objects.create(
@@ -106,7 +106,7 @@ class CreateOfferSerializer(serializers.Serializer):
         )
 
         if not on_hold:
-            NewOfferNotification(sa_user, item, offer).send()
+            NewOfferNotification(item.sa_user, item, offer).send()
         return offer
 
 class AcceptDeclineOfferSerializer(serializers.Serializer):
