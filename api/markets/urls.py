@@ -17,7 +17,7 @@ urlpatterns = [
     path('myitems/<int:id>', MyItem.as_view(), name='myitems'),
     path('place_offer/', PlaceOffer.as_view(), name="place_offer"),
     path('accept_offer/', AcceptDeclineOffer.as_view(), name="accept_offer"),
-    path('join_waiing_list/', JoinWaitingList.as_view(), name="join_waiing_list"),
+    path('join_waiting_list/', JoinWaitingList.as_view(), name="join_waiting_list"),
     path('pay_gfm/', PayGFM.as_view(), name="pay_gfm"),
     path('item/<int:id>/', item, name='item'),
 ]
