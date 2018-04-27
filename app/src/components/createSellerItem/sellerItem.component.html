@@ -1,0 +1,62 @@
+<div class="item-container">
+  <div class="title-row">
+    <h2 class="title">{{createItem ? 'Create Item' : 'Edit Item'}}</h2>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="item-content-container">
+    <div class="form-container">
+      <form novalidate [formGroup]="itemFormControl">
+
+        <mat-form-field>
+          <input matInput required placeholder="Product Name" type="text" formControlName="name"
+                 id="productName" tabindex="0"/>
+          <mat-error *ngIf="itemFormControl.get('name').hasError('required')">
+            Product name is required
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput required placeholder="Major Intersection" type="text" formControlName="address"
+                 id="addressField" tabindex="0"/>
+          <mat-error *ngIf="itemFormControl.get('address').hasError('required')">
+            Please provide an address
+          </mat-error>
+          <mat-hint class="right-align">Closest Intersection</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+  <textarea matInput placeholder="Description" matTextareaAutosize matAutosizeMinRows="0"
+            matAutosizeMaxRows="10" formControlName="description"></textarea>
+          <mat-error *ngIf="itemFormControl.get('description').hasError('required')">
+            Please provide a description
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <span matPrefix>$ &nbsp;</span>
+          <input matInput placeholder="Price" formControlName="price" type="number">
+          <span matSuffix>.00</span>
+          <mat-error *ngIf="itemFormControl.get('price').hasError('required')">
+            Please provide a price
+          </mat-error>
+          <mat-error *ngIf="itemFormControl.get('price').hasError('min')">
+            Please provide a price that is greater than 0
+          </mat-error>
+          <mat-error *ngIf="itemFormControl.get('price').hasError('max')">
+            Please provide a price that is less than 1000000
+          </mat-error>
+
+        </mat-form-field>
+      </form>
+    </div>
+
+  </div>
+  <button mat-button [disabled]="!itemFormControl.valid" color="primary" (click)="processItemAction()">{{createItem ?
+    'ADD ITEM' : 'SAVE'}}
+  </button>
+</div>
+
+
+
+
+
+

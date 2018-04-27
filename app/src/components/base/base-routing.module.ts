@@ -22,21 +22,30 @@ const baseRoutes : Routes = [
         path: 'main',
         loadChildren: '../seller/sellerDashboard.module#SellerDashboardModule',
         data: {
-          preLoad: true
+          preLoad: false
         }
       },
-      // {
-      //   path: 'activate/:activationCode',
-      //   loadChildren: '../activate/activate.module#ActivateModule',
-      //   data: {
-      //     preLoad: true
-      //   }
-      // },
       {
-        path: 'item/:id',
-        loadChildren: '../buyer/buyerDashboard.module#BuyerDashboardModule',
+        path: 'product/:id',
+        loadChildren: '../viewSellerItem/viewSellerItem.module#ViewSellerItemModule',
         data: {
-          preLoad: true
+          preLoad: true,
+        }
+      },
+      {
+        path: 'create',
+        loadChildren: '../createSellerItem/sellerItem.module#SellerItemModule',
+        data: {
+          preLoad: false,
+          create: true
+        }
+      },
+      {
+        path: 'edit/:id',
+        loadChildren: '../createSellerItem/sellerItem.module#SellerItemModule',
+        data: {
+          preLoad: false,
+          create: false
         }
       },
       {

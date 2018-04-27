@@ -16,7 +16,7 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/takeWhile';
 
 /* lodash library for util functions */
-import 'lodash';
+// import 'lodash';
 import 'hammerjs';
 
 

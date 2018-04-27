@@ -41,7 +41,8 @@ const appRoutes : Routes = [
   {
     path: 'app',
     loadChildren: '../base/base.module#BaseModule',
-    canLoad: [ ActivationViaAuthenticationGuard ]
+    canLoad: [ ActivationViaAuthenticationGuard ],
+    canActivate: [ ActivationViaAuthenticationGuard ]
   },
   {
     path: '**',

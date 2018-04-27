@@ -36,57 +36,57 @@
                                           (click)="loginView = !loginView">Request Access</a></span>
 
         </div>
-
       </div>
     </div>
     <div *ngIf="!loginView && !forgotPasswordView" class="request-form-container" (keydown.enter)="register()">
+      <!--<div class="request-container"></div>-->
+      <form novalidate [formGroup]="requestFormControl" class="login-form" >
+        <mat-form-field>
+          <input matInput  placeholder="First Name" type="text" formControlName="firstName"
+                 id="firstNameInput" tabindex="1"/>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Last Name" type="text" formControlName="lastName"
+                 id="lastNameInput" tabindex="2"/>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput required placeholder="E-mail" type="email" formControlName="email"
+                 id="emailInput" tabindex="3"/>
+          <mat-error *ngIf="requestFormControl.get('email').hasError('email')">
+            E-mail is required
+          </mat-error>
+          <!--<mat-hint>{{loginLabels.placeholders.username}}</mat-hint>-->
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput required placeholder="Password" type="password" formControlName="requestPassword"
+                 id="passwordOne" tabindex="4"
+          />
+          <mat-error *ngIf="requestFormControl.get('requestPassword').hasError('required')">
+            Password is required
+          </mat-error>
+          <!--<mat-hint>{{loginLabels.placeholders.password}}</mat-hint>-->
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput required placeholder="Verify Password" type="password" formControlName="requestPasswordVerify"
+                 id="passwordTwo" tabindex="5"
+          />
+          <mat-error *ngIf="requestFormControl.get('requestPasswordVerify').hasError('required')">
+            Password is required
+          </mat-error>
+          <!--<mat-hint>{{loginLabels.placeholders.password}}</mat-hint>-->
+        </mat-form-field>
+      </form>
       <div class="request-container">
-        <form novalidate [formGroup]="requestFormControl" class="login-form" >
-          <mat-form-field>
-            <input matInput  placeholder="First Name" type="text" formControlName="firstName"
-                   id="firstNameInput" tabindex="1"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Last Name" type="text" formControlName="lastName"
-                   id="lastNameInput" tabindex="2"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput required placeholder="E-mail" type="email" formControlName="email"
-                   id="emailInput" tabindex="3"/>
-            <mat-error *ngIf="requestFormControl.get('email').hasError('email')">
-              E-mail is required
-            </mat-error>
-            <!--<mat-hint>{{loginLabels.placeholders.username}}</mat-hint>-->
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput required placeholder="Password" type="password" formControlName="requestPassword"
-                   id="passwordOne" tabindex="4"
-            />
-            <mat-error *ngIf="requestFormControl.get('requestPassword').hasError('required')">
-              Password is required
-            </mat-error>
-            <!--<mat-hint>{{loginLabels.placeholders.password}}</mat-hint>-->
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput required placeholder="Verify Password" type="password" formControlName="requestPasswordVerify"
-                   id="passwordTwo" tabindex="5"
-            />
-            <mat-error *ngIf="requestFormControl.get('requestPasswordVerify').hasError('required')">
-              Password is required
-            </mat-error>
-            <!--<mat-hint>{{loginLabels.placeholders.password}}</mat-hint>-->
-          </mat-form-field>
-        </form>
         <button mat-raised-button class="sa-raised-btn" color="primary" (click)="register()"
                 [disabled]="!requestFormControl.valid">REGISTER
         </button>
-        <div class="have-account-container">
-          <span>Have an account? <a class="primary-color" (click)="loginView = !loginView">Login</a></span>
-        </div>
+      </div>
+      <div class="have-account-container">
+        <span>Have an account? <a class="primary-color" (click)="loginView = !loginView">Login</a></span>
       </div>
     </div>
     <div *ngIf="forgotPasswordView" class="request-form-container">
-      <div class="request-container">
+      <div class="email-container">
         <form novalidate [formGroup]="forgotEmailFormGroup" class="login-form">
           <mat-form-field>
             <input matInput required placeholder="E-mail" type="email" formControlName="forgotEmail"

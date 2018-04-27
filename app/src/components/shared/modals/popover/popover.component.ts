@@ -1,11 +1,18 @@
+/**
+ * Angular Imports
+ */
 import { Component, ChangeDetectorRef, OnInit, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
+
+/**
+ * Material Imports
+ */
 import { MatDialog, MatDialogConfig, DialogPosition } from '@angular/material';
 
-// Services
+/**
+ * Services
+ */
 import { ModalsEvent } from '../../../../services/modalsEvent.service';
-
-
-
+import { DeletePopoverComponent } from "./delete/deletePopover.component";
 
 
 @Component({
@@ -14,10 +21,11 @@ import { ModalsEvent } from '../../../../services/modalsEvent.service';
   selector: 'popover-wrapper'
 })
 
+
+
 export class PopoverComponent {
 
 
-  @Output() notifyLogout : EventEmitter<any> = new EventEmitter();
 
   // Subscriptions
   private _modalsEventSubscription : any;
@@ -38,7 +46,7 @@ export class PopoverComponent {
    * Initialization - lifecycle method
    * @returns void
    */
-  private ngOnInit() : void {
+  private ngOnInit() {
 
     this._subscribeModalEvents();
 
@@ -48,7 +56,7 @@ export class PopoverComponent {
    * Destroy - lifecycle method
    * @returns void
    */
-  private ngOnDestroy() : void {
+  private ngOnDestroy() {
     if (this._modalsEventSubscription) {
       this._modalsEventSubscription.unsubscribe();
     }
@@ -61,20 +69,12 @@ export class PopoverComponent {
    */
   private _openModal( event : Event ) : void {
 
-    if (event[ 'module' ] === 'show_modal') {
+    console.log('i will open modal here', event);
+    if(event['type']=== 'DeleteConfirmation'){
+      this.dialogRef = this.dialog.open(DeletePopoverComponent);
 
-      // this.dialogRef = this.dialog.open(OverridePopOverComponent, {
-      //   data: event,
-      //   disableClose: true
-      // });
-
-    } else {
-      console.log('modal doesn\'t exits');
-      // this.dialogRef = this.dialog.open(SystemSettingsPopOverComponent, {
-      //   data: event,
-      //   disableClose: true
-      // });
     }
+
   }
 
   /**
@@ -98,9 +98,6 @@ export class PopoverComponent {
         this._closeModal();
       }
 
-      if (event[ 'overrideLogout' ] === 'true') {
-        this._logout();
-      }
     });
   }
 
@@ -111,22 +108,6 @@ export class PopoverComponent {
   private _closeModal( result? : Object ) {
     this.dialog.closeAll();
   }
-
-  /**
-   * @private
-   * Used to display logout
-   * @returns void
-   */
-  private _logout() : void {
-
-    this.notifyLogout.emit({ override: true });
-
-  }
-
-  private _switchView( event : any ) : void {
-    this._openModal(event);
-  }
-
 
 
 }

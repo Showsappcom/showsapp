@@ -1,0 +1,61 @@
+<div class="item-container" *ngIf="!dataReturned">
+  <div class="empty-offer-container">
+    <mat-icon class="x-large">local_offer</mat-icon>
+    <div>Getting Details</div>
+  </div>
+</div>
+<div class="item-container" *ngIf="dataReturned">
+  <div class="title-row">
+    <h2 class="title"><span class="primary-color">{{item.title}}</span> - ${{item.price}}.00</h2>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="item-content-container">
+    <div class="form-container">
+      <div class="seller-item-container">
+        <!--<mat-form-field>-->
+        <!--<input matInput required placeholder="Major Intersection" type="text" [value]="item.address"-->
+        <!--id="addressField" tabindex="0" readonly/>-->
+        <!--</mat-form-field>-->
+        <!--<mat-form-field>-->
+        <!--<textarea matInput matTextareaAutosize matAutosizeMinRows="0"-->
+        <!--matAutosizeMaxRows="10"  placeholder="Description" type="text" [value]="item.description"-->
+        <!--id="productName" tabindex="0" readonly></textarea>-->
+        <!--</mat-form-field>-->
+        <!--<mat-form-field>-->
+        <!--<span matPrefix>$ &nbsp;</span>-->
+        <!--<input matInput placeholder="Price" [value]="item.price" type="number" readonly>-->
+        <!--<span matSuffix>.00</span>-->
+        <!--</mat-form-field>-->
+      </div>
+    </div>
+    <div class="offer-container" *ngIf="item.offers.length > 0">
+      <mat-card class="mat-card-ref" *ngFor="let offer of item.offers; let i = index">
+        <mat-card-title class="card-title-row">
+          <div class="card-title"><span class="primary-color">${{offer.value}}</span></div>
+        </mat-card-title>
+        <mat-card-content>
+          {{offer.message}}
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary" (click)="acceptOffer(offer.id)">ACCEPT</button>
+          <button mat-button color="primary" (click)="declineOffer(offer.id)">DECLINE</button>
+          <!--<button mat-button color="primary">EDIT ITEM</button>-->
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="empty-offer-container" *ngIf="item.offers.length === 0">
+      <mat-icon color="primary" class="x-large">local_offer</mat-icon>
+      <div class="empty-offer-info">This item currently has no offers</div>
+    </div>
+
+
+  </div>
+</div>
+
+
+
+
+
+

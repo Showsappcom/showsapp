@@ -1,22 +1,50 @@
-<div class="main-container">
-  <div class="item-list" *ngIf="!itemSelected">
-    <mat-card class="mat-card-ref" *ngFor="let item of sellersItems">
-      <mat-card-title><span class="primary-color">{{item.title}}</span> - ${{item.cost}}</mat-card-title>
-      <mat-card-subtitle><span class="accent-color">{{item.offers.length}} Offers</span></mat-card-subtitle>
-      <mat-card-content>
-        {{item.description}}
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button color="primary">VIEW OFFERS</button>
-        <button mat-button color="primary">EDIT ITEM</button>
-      </mat-card-actions>
-    </mat-card>
+<div class="content-container">
+  <div class="title-row">
+    <h2 class="title">Posted Items</h2>
+    <button mat-button color="primary" (click)="addItem()">
+      <mat-icon>add</mat-icon>
+      ADD ITEM
+    </button>
   </div>
-  <div class="selected-item" *ngIf="itemSelected">
-
-
+  <div class="main-container">
+    <div *ngIf="!dataReturned" class="info-container">
+      <mat-icon class="x-large">local_offer</mat-icon>
+      <div>Getting your items</div>
+    </div>
+    <div class="item-list" *ngIf="dataReturned && sellersItems && sellersItems.length > 0">
+      <mat-card class="mat-card-ref" *ngFor="let item of sellersItems; let i = index">
+        <mat-card-title class="card-title-row">
+          <div class="card-title"><span class="primary-color">{{item.name}}</span> - ${{item.price}}</div>
+          <button mat-icon-button color="primary" (click)="openConfirmationModal(item['id'], i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-title>
+        <mat-card-subtitle><span class="accent-color">www.showsapp.com/{{item.url}}</span></mat-card-subtitle>
+        <mat-card-content>
+          <!--<div class="embed-link"><span class="primary-color" id="item-{{item.id}}">www.showsapp.com/{{item.url}}</span>-->
+            <!--&lt;!&ndash;<button mat-icon-button (click)="clipBoardCopied(item.id)">&ndash;&gt;-->
+            <!--&lt;!&ndash;<mat-icon>content_copy</mat-icon>&ndash;&gt;-->
+            <!--&lt;!&ndash;</button>&ndash;&gt;-->
+          <!--</div>-->
+          <div>{{item.description}}</div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary" (click)="navigateTo(item.id)">VIEW OFFERS ({{item.offers.length}})</button>
+          <!--<button mat-button color="primary">EDIT ITEM</button>-->
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div *ngIf="dataReturned && sellersItems && sellersItems.length === 0" class="info-container">
+      <mat-icon class="x-large" (click)="addItem()" color="primary" style="margin-bottom: 20px;">add_circle</mat-icon>
+      <span>Please add an item to continue</span>
+    </div>
+    <div *ngIf="errorGettingData" class="info-container">
+      <mat-icon class="x-large">refresh</mat-icon>
+      <button mat-raised-button color="primary">RETRY</button>
+    </div>
   </div>
 </div>
+
 
 
 

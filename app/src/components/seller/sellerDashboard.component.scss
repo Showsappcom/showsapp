@@ -1,9 +1,51 @@
 @import '../../shared/styles/_mixins';
 
+.embed-link{
+  margin: 10px 0;
+}
+.content-container {
+  @include flexbox();
+  @include flex-direction(column);
+  height: 100%;
+
+  .info-container {
+    @include flexbox();
+    @include flex-direction(column);
+    @include justify-content(center);
+    @include align-items(center);
+    width: 100%;
+    min-height: 200px;
+  }
+}
+
+.title-row {
+  @include flexbox();
+  @include flex-direction(row);
+  @include align-items(center);
+  padding: 0 20px;
+
+  .title {
+    @include flex-grow(1);
+  }
+
+}
+
+
+.card-title-row{
+  @include flexbox();
+  @include flex-direction(row);
+  .card-title {
+    @include flex-grow(1);
+    @include flex-wrap(wrap);
+  }
+}
+
+
 .main-container {
   @include flexbox();
   @include flex-direction(row);
   height: 100%;
+  overflow-y: auto;
   .item-list {
     @include transition(width 0.3s ease-in);
     width: 300px;
@@ -16,9 +58,9 @@
     }
   }
 
-  .item-list{
+  .item-list {
     @include flex-grow(1);
-    padding: 20px;
+    padding: 0 20px;
 
     mat-card {
       width: 100%;
