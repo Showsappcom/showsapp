@@ -8,7 +8,7 @@ import {
 
 import * as fromRoot from '../reducers';
 import { Store } from '@ngrx/store';
-import { State as BaseState } from "../reducers/base";
+import { State as BaseState } from '../reducers/base';
 
 
 @Injectable()
@@ -17,7 +17,7 @@ export class ActivationViaAuthenticationGuard implements CanLoad {
   private _loggedIn : boolean = false;
 
   constructor( private router : Router,
-               private _store : Store<fromRoot.State>, ) {
+               private _store : Store<fromRoot.State> ) {
 
     this._store.let(fromRoot.getBaseState).subscribe(( state : BaseState ) => {
       this._loggedIn = state.loggedIn;

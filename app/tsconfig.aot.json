@@ -27,6 +27,8 @@
     "src/components/base/base.module.ts",
     "src/components/buyer/buyerDashboard.module.ts",
     "src/components/seller/sellerDashboard.module.ts",
+    "src/components/createSellerItem/sellerItem.module.ts",
+    "src/components/viewSellerItem/viewSellerItem.module.ts",
     "src/vendor.ts",
     "src/polyfills.ts"
   ],

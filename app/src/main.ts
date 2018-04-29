@@ -11,12 +11,12 @@ import { AppModule } from './components/app/app.module';
 import './shared/styles/_styles.scss';
 
 
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'aot_production' ) {
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'aot_production') {
   enableProdMode();
 }
 
 
-function init(){
+function init() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       console.log('!!!!!!!!!!i am here ....');

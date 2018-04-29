@@ -39,7 +39,7 @@ export class ViewSellerItemComponent {
   /**
    * @type {boolean} dataReturned - provides reference when the data is returned
    */
-  public dataReturned: boolean = false;
+  public dataReturned : boolean = false;
   /**
    * @type {string} _itemId - provides reference of item id
    */
@@ -101,7 +101,7 @@ export class ViewSellerItemComponent {
 
       this._getOffers();
 
-    })
+    });
 
 
   }
@@ -115,7 +115,7 @@ export class ViewSellerItemComponent {
       this.item[ 'price' ] = data[ 'price' ];
       this.item[ 'title' ] = data[ 'name' ];
       this.dataReturned = true;
-    })
+    });
 
 
   }

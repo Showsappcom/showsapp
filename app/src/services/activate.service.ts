@@ -28,6 +28,12 @@ import { DataService } from './data.service';
 import { Observable } from 'rxjs/Observable';
 import { ToastEvent } from './toastEvent.service';
 
+
+/**
+ * Required Models
+ */
+import { PasswordModel } from '../models/login/login.model';
+
 /**
  * A service that provides a data abstraction to activate a user.
  * @class ActivateService
@@ -44,6 +50,14 @@ export class ActivateService {
    * @type {string} _activateURL - Provides activation url url
    */
   private _activateURL : string = this._BASE_URL + 'api/v1/accounts/activate/';
+  /**
+   * @type {string} _activateURL - Provides activation url url
+   */
+  private _validateURL : string = this._BASE_URL + 'api/v1/accounts/activate/';
+  /**
+   * @type {string} _activateURL - Provides activation url url
+   */
+  private _setNewPasswordURL : string = this._BASE_URL + 'api/v1/accounts/set_new_password/';
 
 
   /**
@@ -76,6 +90,78 @@ export class ActivateService {
 
     console.log('the url is::::', url);
     console.log('the activation code is::: ', activationCode);
+
+    return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
+
+      return res;
+
+    }).catch(( error : any ) => {
+
+      this._toastEvent.fire({
+        type: COMMON_CONST.ERROR,
+        message: 'There was an error with your request please try again'
+      });
+
+      return Observable.throw(error || COMMON_CONST.SERVER_ERROR);
+
+    });
+
+  }
+
+  /**
+   * Method to activate a user
+   * @param {string} activationCode - activation token
+   * @return any
+   */
+  public validateEmail( activationCode : string ) : any {
+
+    console.log('i will activate here', activationCode);
+
+    let requestOptions = {
+      method: 'POST',
+      body: {
+        token: activationCode
+      },
+      withCredentials: true
+    }, url = this._validateURL;
+
+    console.log('the url is::::', url);
+    console.log('the activation code is::: ', activationCode);
+
+    return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
+
+      return res;
+
+    }).catch(( error : any ) => {
+
+      this._toastEvent.fire({
+        type: COMMON_CONST.ERROR,
+        message: 'There was an error with your request please try again'
+      });
+
+      return Observable.throw(error || COMMON_CONST.SERVER_ERROR);
+
+    });
+
+  }
+
+  /**
+   * Method to activate a user
+   * @param {string} activationCode - activation token
+   * @return any
+   */
+  public setNewPassword( emailObject : PasswordModel ) : any {
+
+    console.log('i will activate here', emailObject);
+
+    let requestOptions = {
+      method: 'POST',
+      body: emailObject,
+      withCredentials: true
+    }, url = this._setNewPasswordURL;
+
+    console.log('the url is::::', url);
+    console.log('the activation code is::: ', emailObject);
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
 

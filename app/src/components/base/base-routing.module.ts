@@ -29,7 +29,7 @@ const baseRoutes : Routes = [
         path: 'product/:id',
         loadChildren: '../viewSellerItem/viewSellerItem.module#ViewSellerItemModule',
         data: {
-          preLoad: true,
+          preLoad: true
         }
       },
       {

@@ -105,7 +105,7 @@ export class SellerItemComponent {
       console.log('the params are::::::::', params);
       this._itemId = params[ 'id' ];
 
-    })
+    });
 
 
   }
@@ -132,7 +132,11 @@ export class SellerItemComponent {
       ],
       price: [
         '',
-        [ Validators.required, Validators.min(1), Validators.max(1000000) ]
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(1000000)
+        ]
       ],
       good_faith_money: [
         '0'
@@ -161,7 +165,7 @@ export class SellerItemComponent {
       });
 
     } else {
-      console.log('I will edit item action ;......')
+      console.log('I will edit item action ;......');
 
     }
   }

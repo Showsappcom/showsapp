@@ -84,7 +84,7 @@ export class SellerService {
       method: 'GET',
       body: {},
       withCredentials: true
-    }, url = this._getItems+id;
+    }, url = this._getItems + id;
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
 

@@ -123,7 +123,7 @@ export class AppComponent implements OnInit {
       if (msg && msg[ 'msg' ] === 'loggedIn') {
         this._routeToPath('/app/main');
       }
-    })
+    });
   }
 
   /**
@@ -148,16 +148,29 @@ export class AppComponent implements OnInit {
           // console.log('the data is:', this._baseState);
 
           this._store.dispatch(new BaseActions.Update({
-            ...this._baseState, loggedIn: true, authToken: data.token, loggedInUser:''
+            ...this._baseState, loggedIn: true, authToken: data.token, loggedInUser: ''
             // ...this._baseState, loggedIn: true, authToken: data.token, loggedInUser: data[ 'user' ][ 'email' ]
           }));
           // this._routeToPath('/app/main');
           this._processLandingPage();
         },
         () => {
-          console.log('need to login again');
-          this._routeToPath('/login');
+          console.log('@@@need to login again', this._currentRoute);
+          // console.log('@@@need to login again', window);
+          setTimeout(() => {
+            this._checkRoute();
+
+            // this._routeToPath('/login');
+          }, 0);
         });
+    }
+  }
+
+  private _checkRoute() : void {
+    console.log('this route @@@@@@@@@@@@@@@@@@@@@', this._currentRoute);
+    if (!this._currentRoute.match('reset') && !this._currentRoute.match('activate') && !this._currentRoute.match('email')) {
+
+      this._routeToPath('/login');
     }
   }
 
@@ -193,7 +206,8 @@ export class AppComponent implements OnInit {
       this._baseState = state;
       if (this._baseState.loggedIn) {
         this._authService.updateToken(this._baseState.authToken);
-        console.log('the requested route is:::', this._routeRequested, this._currentRoute);
+        console.log('the requested route is:::', this._routeRequested, this._currentRoute, window.location);
+
         this._routeToPath(this._currentRoute);
       }
     });
@@ -340,7 +354,6 @@ export class AppComponent implements OnInit {
         if (event && event.url !== '/login' && event.url !== '/app/main') {
           this._routeRequested = event.url;
         }
-
 
 
         console.log('the current and requested routes are :::::', this._currentRoute, this._routeRequested);

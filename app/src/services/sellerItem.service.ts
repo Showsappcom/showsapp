@@ -27,15 +27,15 @@ import { SellerItemObject } from '../models/items/item.model';
  * Required Services
  */
 import { DataService } from './data.service';
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 import { ToastEvent } from '../services/toastEvent.service';
 
 
 /**
  * Configuration
  */
-import { APP_SETUP } from "../configurations/app.configuration";
-import { COMMON_CONSTANTS as COMMON_CONST } from "../configurations/constants/common.constant";
+import { APP_SETUP } from '../configurations/app.configuration';
+import { COMMON_CONSTANTS as COMMON_CONST } from '../configurations/constants/common.constant';
 
 /**
  * A service that provides the data service for seller item
@@ -88,9 +88,9 @@ export class SellerItemService {
 
   }
 
-  public editItem() : any {
-
-
-  }
+  // public editItem() : any {
+  //
+  //
+  // }
 
 }

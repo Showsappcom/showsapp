@@ -36,8 +36,7 @@ import { SellerDashboardComponent } from './sellerDashboard.component';
         {
           path: '', component: SellerDashboardComponent, pathMatch: 'full'
         }
-      ]),
-
+      ])
   ],
   declarations: [ SellerDashboardComponent ],
   exports: [ SellerDashboardComponent ],

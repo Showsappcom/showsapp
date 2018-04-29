@@ -35,7 +35,7 @@ import * as fromRoot from '../../reducers';
  * Services
  */
 import { AuthService } from '../../services/auth.service';
-import * as BaseActions from "../../actions/base";
+import * as BaseActions from '../../actions/base';
 
 /**
  * @class ActivateComponent
@@ -151,11 +151,11 @@ export class BaseComponent {
 
     this._authService.logOut().takeWhile(() => {
       return this._compActive;
-    }).subscribe((resp) => {
+    }).subscribe(( resp ) => {
 
       console.log('i will be done here ...', resp);
 
-      if(resp !== 'error'){
+      if (resp !== 'error') {
         this._store.dispatch(new BaseActions.Update({
           authToken: '',
           loggedIn: false,
@@ -166,8 +166,6 @@ export class BaseComponent {
 
         this._router.navigate([ '/login' ]);
       }
-
-
 
 
     });

@@ -10,4 +10,10 @@ export interface RegisterModel {
   password : string;
 }
 
+export interface PasswordModel {
+  email : string;
+  password : string;
+  token : string;
+}
+
 

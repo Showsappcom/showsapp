@@ -31,8 +31,25 @@ const appRoutes : Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'reset/:activateCode',
+    component: ActivateComponent,
+    data: {
+      password: true
+    }
+  },
+  {
     path: 'activate/:activateCode',
-    component: ActivateComponent
+    component: ActivateComponent,
+    data: {
+      account: true
+    }
+  },
+  {
+    path: 'email/:activateCode',
+    component: ActivateComponent,
+    data: {
+      email: true
+    }
   },
   {
     path: 'login',

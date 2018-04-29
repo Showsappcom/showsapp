@@ -90,7 +90,7 @@ export class SellerDashboardComponent {
 
   private _setupModalListener() : void {
     this._modalEvent.on().takeWhile(() => {
-      return this._compActive
+      return this._compActive;
     }).subscribe(( event : any ) => {
 
       if (event[ 'action' ] === 'delete') {
@@ -170,7 +170,7 @@ export class SellerDashboardComponent {
       this._modalEvent.fire({ action: COMMON_CONST.POPOVER.CLOSE, type: 'DeleteConfirmation' });
 
 
-    })
+    });
   }
 
   public navigateTo( id : string ) : void {

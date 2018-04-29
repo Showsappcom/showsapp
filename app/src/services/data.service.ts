@@ -17,7 +17,7 @@ import {
 import { CookieService } from 'ngx-cookie-service';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../reducers';
-import { State as BaseState } from "../reducers/base";
+import { State as BaseState } from '../reducers/base';
 
 
 /**

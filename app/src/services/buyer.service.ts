@@ -34,8 +34,9 @@ export class BuyerService {
 
   }
 
-  public getSellerData() : void {
+  public getSellerData() : any {
 
+    console.log('i will user this service soon');
 
   }
 

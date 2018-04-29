@@ -82,10 +82,10 @@ import { ToastEvent } from '../../services/toastEvent.service';
     HttpClientModule,
     MatButtonModule,
     MatSnackBarModule,
+    ModalsModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducer),
-    ToastModule,
-    ModalsModule
+    ToastModule
   ],
   providers: [
     AuthService,

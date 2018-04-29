@@ -46,7 +46,7 @@ import { NegotiationService } from '../../services/negotiation.service';
         {
           path: '', component: ViewSellerItemComponent, pathMatch: 'full'
         }
-      ]),
+      ])
 
   ],
   declarations: [ ViewSellerItemComponent ],

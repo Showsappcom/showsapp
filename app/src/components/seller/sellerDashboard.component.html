@@ -14,7 +14,7 @@
     <div class="item-list" *ngIf="dataReturned && sellersItems && sellersItems.length > 0">
       <mat-card class="mat-card-ref" *ngFor="let item of sellersItems; let i = index">
         <mat-card-title class="card-title-row">
-          <div class="card-title"><span class="primary-color">{{item.name}}</span> - ${{item.price}}</div>
+          <div class="card-title"><span>{{item.name}}</span> - ${{item.price}}</div>
           <button mat-icon-button color="primary" (click)="openConfirmationModal(item['id'], i)">
             <mat-icon>delete</mat-icon>
           </button>

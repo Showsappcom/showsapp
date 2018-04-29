@@ -24,10 +24,12 @@ export class BuyerDashboardComponent {
 
   ngOnInit() {
 
+    console.log('i will init here');
   }
 
 
   private _getDataForUser() : void {
+    console.log('i will get data here');
 
   }
 

@@ -19,8 +19,8 @@ import * as BaseActions from '../actions/base';
 /**
  * Constants Configuration
  */
-import { APP_SETUP } from "../configurations/app.configuration";
-import { COMMON_CONSTANTS as COMMON_CONST } from "../configurations/constants/common.constant";
+import { APP_SETUP } from '../configurations/app.configuration';
+import { COMMON_CONSTANTS as COMMON_CONST } from '../configurations/constants/common.constant';
 
 /**
  * Required Services
@@ -29,7 +29,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { DataService } from './data.service';
 import { Observable } from 'rxjs/Observable';
 import { ToastEvent } from './toastEvent.service';
-import { setTimeout } from "timers";
+import { setTimeout } from 'timers';
 
 /**
  * A service that provides a data abstraction to activate a user.
@@ -140,8 +140,6 @@ export class AuthService {
       }
 
 
-
-
       if (this._cookieService.check('sa_access_token')) {
         console.log('TOKEN STILL HERE');
         this._cookieService.delete('sa_access_token');
@@ -149,7 +147,7 @@ export class AuthService {
       }
 
       setTimeout(() => {
-        if(this._cookieService.check('sa_access_token')){
+        if (this._cookieService.check('sa_access_token')) {
           observer.next('error');
           observer.complete();
 
@@ -157,7 +155,7 @@ export class AuthService {
             type: COMMON_CONST.ERROR,
             message: 'Error logging out please try again'
           });
-        }else{
+        } else {
           observer.next('done');
           observer.complete();
         }
