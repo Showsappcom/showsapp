@@ -28,6 +28,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
  */
 import { ActivateModule } from '../activate/activate.module';
 import { BaseModule } from '../base/base.module';
+import { BuyerDashboardModule } from '../buyer/buyerDashboard.module';
+import { CookieModule } from 'ngx-cookie';
 import { LoginModule } from '../shared/loginPage/login.module';
 import { LoadingModule } from '../shared/loading/loading.module';
 import { ModalsModule } from '../shared/modals/modals.module';
@@ -76,6 +78,8 @@ import { ToastEvent } from '../../services/toastEvent.service';
     BaseModule,
     BrowserAnimationsModule,
     BrowserModule,
+    BuyerDashboardModule,
+    CookieModule.forRoot(),
     FormsModule,
     LoadingModule,
     LoginModule,
@@ -90,7 +94,6 @@ import { ToastEvent } from '../../services/toastEvent.service';
   providers: [
     AuthService,
     Broadcaster,
-    CookieService,
     CustomModalsEvent,
     CustomPreloadingStrategy,
     DataService,

@@ -41,14 +41,6 @@ const baseRoutes : Routes = [
         }
       },
       {
-        path: 'edit/:id',
-        loadChildren: '../createSellerItem/sellerItem.module#SellerItemModule',
-        data: {
-          preLoad: false,
-          create: false
-        }
-      },
-      {
         path: '**',
         redirectTo: '/login'
       }

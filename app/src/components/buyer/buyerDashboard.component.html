@@ -1,8 +1,68 @@
-<section class="item-list"></section>
-<section class="main-container">
-  <mat-card class="mat-card-ref">
-  </mat-card>
-</section>
+<mat-sidenav-container class="side-nav-container">
+  <mat-toolbar color="primary" class="mat-elevation-z6">
+    <mat-toolbar-row>ShowsApp</mat-toolbar-row>
+  </mat-toolbar>
+  <div class="base-container">
+    <div class="main-content">
+      <div class="content-container">
+        <div *ngIf="!dataReturned" class="info-container centre-content full-height">
+          <mat-icon class="x-large">local_offer</mat-icon>
+          <div>Getting the item ...</div>
+        </div>
+        <div *ngIf="errorGettingData" class="info-container centre-content full-height">
+          <mat-icon class="x-large">refresh</mat-icon>
+          <button mat-raised-button color="primary">RETRY</button>
+        </div>
+        <mat-card *ngIf="dataReturned">
+          <div class="mat-card-title">
+            <span class="primary-color">{{sellerItem.name}}</span> - ${{sellerItem.price}}.00
+          </div>
+          <div class="mat-card-container">
+            <div class="mat-card-ref">
+              <mat-form-field  class="read-only">
+            <textarea matInput readonly placeholder="Description" matTextareaAutosize matAutosizeMinRows="0"
+                      matAutosizeMaxRows="10" [value]="sellerItem.description"></textarea>
+              </mat-form-field>
+              <mat-form-field  class="read-only">
+                <input matInput readonly [value]="sellerItem.address" placeholder="Major Intersection">
+              </mat-form-field>
+            </div>
+            <div class="mat-card-ref offer-container left-aligned">
+
+              <div class="spinner-offer-container">
+                <div class="spinner-container">
+                  <div class="spinner-text">
+                    {{spinnerValue}}%
+                  </div>
+                  <mat-progress-spinner
+                    [color]="spinnerColour"
+                    mode="determinate"
+                    diameter="110"
+                    strokeWidth="10"
+                    [value]="spinnerValue">
+                  </mat-progress-spinner>
+                </div>
+                <form novalidate [formGroup]="offerControl">
+                  <mat-form-field>
+                    <input matInput placeholder="Offer" formControlName="offer">
+                    <span matPrefix style="margin-right:5px;">$</span>
+                    <span matSuffix>.00</span>
+                    <mat-error *ngIf="offerControl.get('offer').hasError('required')">Offer is required</mat-error>
+                  </mat-form-field>
+                </form>
+              </div>
+              <div class="explanation-container" >
+                Your offer has a {{spinnerValue}}% chance of being accepted by the seller
+              </div>
+              <button mat-button color="primary" [disabled]="!offerControl.valid" (click)="sendOffer()">SEND OFFER</button>
+
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</mat-sidenav-container>
 
 
 

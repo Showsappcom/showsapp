@@ -6,7 +6,10 @@
     </button>
   </div>
   <div class="item-content-container">
-    <div class="form-container">
+    <div class="form-container" *ngIf="itemCreated">
+      Your item was created, please copy and paste this link into your seller site:  <span class="primary-color">{{itemLink}}</span>
+    </div>
+    <div class="form-container" *ngIf="!itemCreated">
       <form novalidate [formGroup]="itemFormControl">
 
         <mat-form-field>
@@ -33,25 +36,25 @@
         </mat-form-field>
         <mat-form-field>
           <span matPrefix>$ &nbsp;</span>
-          <input matInput placeholder="Price" formControlName="price" type="number">
+          <input matInput placeholder="Price" formControlName="price" type="string">
           <span matSuffix>.00</span>
           <mat-error *ngIf="itemFormControl.get('price').hasError('required')">
             Please provide a price
           </mat-error>
-          <mat-error *ngIf="itemFormControl.get('price').hasError('min')">
-            Please provide a price that is greater than 0
+          <mat-error *ngIf="itemFormControl.get('price').hasError('number')">
+            Please provide a price that is greater than 0 and less than 1000000
           </mat-error>
-          <mat-error *ngIf="itemFormControl.get('price').hasError('max')">
-            Please provide a price that is less than 1000000
-          </mat-error>
-
         </mat-form-field>
       </form>
     </div>
 
   </div>
-  <button mat-button [disabled]="!itemFormControl.valid" color="primary" (click)="processItemAction()">{{createItem ?
+  <button *ngIf="!itemCreated" mat-button [disabled]="!itemFormControl.valid" color="primary"
+          (click)="processItemAction()">{{createItem ?
     'ADD ITEM' : 'SAVE'}}
+  </button>
+  <button *ngIf="itemCreated" mat-button color="primary"
+          (click)="close()">CLOSE
   </button>
 </div>
 

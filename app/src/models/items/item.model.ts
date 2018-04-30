@@ -15,5 +15,16 @@ export interface OfferItemObject {
 }
 
 
+export interface SellerItemModel {
+  name : string;
+  description : string;
+  price : string;
+  good_faith_money : string;
+  requires_good_faith_money? : boolean;
+  latitude? : number;
+  longitude? : number;
+  address : string;
+}
+
 
 

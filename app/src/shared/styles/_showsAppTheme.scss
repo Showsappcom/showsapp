@@ -57,6 +57,12 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
     @include flexbox();
     @include flex-direction(column);
   }
+
+  .read-only {
+    .mat-form-field-underline{
+      height: 0;
+    }
+  }
 }
 
 $dark-primary: mat-palette($mat-green, 300);

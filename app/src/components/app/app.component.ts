@@ -82,7 +82,6 @@ export class AppComponent implements OnInit {
   /**
    * Constructor
    * @param {AuthService} _authService - provides auth service
-   * @param {CookieService} _cookieService - provides cookie service
    * @param {MatSnackBar} snackBar - Reference to snackbar
    * @param {MessageEvent} _msgEvent - message event provider
    * @param {OverlayContainer} overlayContainer - Reference to overlay container
@@ -91,7 +90,6 @@ export class AppComponent implements OnInit {
    * @param {ToastEvent} _toastEvent - Provides a namespace for toast event pub/sub
    */
   constructor( private _authService : AuthService,
-               private _cookieService : CookieService,
                private _msgEvent : MessageEvent,
                private _router : Router,
                private _store : Store<fromRoot.State>,
@@ -168,7 +166,7 @@ export class AppComponent implements OnInit {
 
   private _checkRoute() : void {
     console.log('this route @@@@@@@@@@@@@@@@@@@@@', this._currentRoute);
-    if (!this._currentRoute.match('reset') && !this._currentRoute.match('activate') && !this._currentRoute.match('email')) {
+    if (!this._currentRoute.match('reset') && !this._currentRoute.match('activate') && !this._currentRoute.match('email') && !this._currentRoute.match('item')) {
 
       this._routeToPath('/login');
     }

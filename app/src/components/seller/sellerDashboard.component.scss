@@ -23,7 +23,7 @@
   @include flexbox();
   @include flex-direction(row);
   @include align-items(center);
-  padding: 0 20px;
+  padding: 0 10px;
 
   .title {
     @include flex-grow(1);
@@ -60,7 +60,7 @@
 
   .item-list {
     @include flex-grow(1);
-    padding: 0 20px;
+    padding: 0 10px;
 
     mat-card {
       width: 100%;

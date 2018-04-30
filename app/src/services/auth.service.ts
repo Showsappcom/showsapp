@@ -25,7 +25,8 @@ import { COMMON_CONSTANTS as COMMON_CONST } from '../configurations/constants/co
 /**
  * Required Services
  */
-import { CookieService } from 'ngx-cookie-service';
+// import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie';
 import { DataService } from './data.service';
 import { Observable } from 'rxjs/Observable';
 import { ToastEvent } from './toastEvent.service';
@@ -69,10 +70,10 @@ export class AuthService {
   public checkToken() : any {
 
     let access_token : string = this._cookieService.get('sa_access_token');
-    // console.log('the access token is', access_token);
+    console.log('the access token is', access_token);
 
 
-    if (access_token) {
+    if (access_token && access_token !== null) {
 
       let requestOptions = {
         method: 'POST',
@@ -111,7 +112,7 @@ export class AuthService {
    * @return void
    */
   public updateToken( token : string ) : void {
-    this._cookieService.set('sa_access_token', token);
+    this._cookieService.put('sa_access_token', token);
 
     // console.log('the token is simply', this._cookieService.get('sa_access_token'));
 
@@ -120,34 +121,41 @@ export class AuthService {
 
 
   private _checkTokenDeleted() : boolean {
-    return this._cookieService.check('sa_access_token');
+    return this._cookieService.get('sa_access_token') !== null;
   }
 
 
   public logOut() : any {
 
     return Observable.create(observer => {
-      this._cookieService.delete('sa_access_token');
+      this._cookieService.remove('sa_access_token');
 
       for (let i = 0, iLen = 5; i < iLen; i++) {
 
-        if (this._cookieService.check('sa_access_token')) {
-          this._cookieService.delete('sa_access_token');
+        let cookieGet = this._cookieService.get('sa_access_token');
+        if (cookieGet && cookieGet !== null) {
+
+          this._cookieService.remove('sa_access_token');
+
         } else {
+
           break;
+
         }
 
       }
 
 
-      if (this._cookieService.check('sa_access_token')) {
-        console.log('TOKEN STILL HERE');
-        this._cookieService.delete('sa_access_token');
+      if (this._cookieService.get('sa_access_token')) {
+        this._cookieService.put('sa_access_token', null);
+        this._cookieService.remove('sa_access_token');
+        console.log('TOKEN STILL HERE', this._cookieService.get('sa_access_token'), this._cookieService.get('sa_access_token'));
 
       }
 
       setTimeout(() => {
-        if (this._cookieService.check('sa_access_token')) {
+        let testCookie = this._cookieService.get('sa_access_token')
+        if (testCookie && testCookie !== null) {
           observer.next('error');
           observer.complete();
 
