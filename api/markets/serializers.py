@@ -54,7 +54,7 @@ class CreateItemSerializer(serializers.Serializer):
 class OfferSerializer(serializers.ModelSerializer):
     class Meta:
         model = Offer
-        fields = ('id', 'sa_user', 'item', 'message', 'value', 'good_faith_money_paid', 'on_hold', 'created_at')
+        fields = ('id', 'sa_user', 'item', 'message', 'accepted', 'value', 'good_faith_money_paid', 'on_hold', 'created_at')
 
 
 class DetailedOfferSerializer(serializers.ModelSerializer):
@@ -126,7 +126,7 @@ class AcceptDeclineOfferSerializer(serializers.Serializer):
         except:
             raise exceptions.ValidationError('Could not find an offer with the given id')
 
-        if item.sa_user != sa_user:
+        if offer.item.sa_user != sa_user:
             raise exceptions.ValidationError('Unauthorized to perform this action.')
 
         offer.accepted = accept
