@@ -72,6 +72,8 @@ export class BuyerDashboardComponent {
 
   public spinnerValue : string = '0';
 
+  public needToValidateEmail : boolean = false;
+
   /**
    * @param {BuyerService} _buyerService, buyer item service
    * @param {FormBuilder} _fb, form builder provider
@@ -178,6 +180,12 @@ export class BuyerDashboardComponent {
       console.log('the data is :::', data);
       this.offerSent = true;
 
+    }, (err)=>{
+      console.log('the status iss', err);
+      if(err.status === 500 && err.error && err.error.detail && err.error.detail === 'Should verify the accout first.'){
+        this.offerSent = true;
+        this.needToValidateEmail = true;
+      }
     });
   }
 

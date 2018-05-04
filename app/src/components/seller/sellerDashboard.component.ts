@@ -113,6 +113,8 @@ export class SellerDashboardComponent {
   }
 
 
+
+
   private _getSellersItems() : void {
     let offerList = [];
     // let temp = JSON.parse(JSON.stringify(SellerItems));
@@ -137,6 +139,13 @@ export class SellerDashboardComponent {
       console.log('@@@@@@@@@@@@@@@::::::');
       console.log('@@@@@@@@@@@@@@@::::::');
       this.sellersItems = data.results;
+
+      this.sellersItems.forEach((item)=>{
+        item['offerAccepted'] = this._sellerService.determineOfferAccepted(item['offers'], 'accepted');
+      });
+
+      console.log('the sellersItems are ', this.sellersItems);
+
 
     });
     // this.offerList = offerList;

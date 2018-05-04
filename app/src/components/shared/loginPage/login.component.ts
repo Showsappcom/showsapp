@@ -73,6 +73,12 @@ export class LoginComponent {
 
 
   /**
+   * Provide a reference for the signingIn
+   */
+  public signingIn : boolean = false;
+
+
+  /**
    * @param {FormBuilder} _formBuilder - provides the form builder provider
    * @param {LoginService} _loginService - provides the modal event namespace
    * @param {MessageEvent} _msgEvent - provides the message event namespace
@@ -206,6 +212,7 @@ export class LoginComponent {
   public submitForm() : void {
 
 
+    this.signingIn = true;
     console.log('we will log in there');
     this._loginService.login({
       username: this.loginFormControl.get('username').value,
@@ -218,6 +225,8 @@ export class LoginComponent {
       this._store.dispatch(new BaseActions.Update({
         ...this._baseState, loggedIn: true, authToken: res.token
       }));
+    }, () => {
+      this.signingIn = false;
     });
     // this._store.dispatch()
   }

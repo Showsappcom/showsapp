@@ -120,6 +120,7 @@ export class BuyerService {
 
     }).catch(( error : any ) => {
 
+
       this._toastEvent.fire({
         type: COMMON_CONST.ERROR,
         message: 'There was an error getting the item please try again'
@@ -147,10 +148,19 @@ export class BuyerService {
 
     }).catch(( error : any ) => {
 
-      this._toastEvent.fire({
-        type: COMMON_CONST.ERROR,
-        message: 'There was an error sending your offer, please try again'
-      });
+
+      console.log('the error is :::', error);
+      if (error.status === 500 && error.error && error.error.detail && error.error.detail === 'Should verify the accout first.') {
+        this._toastEvent.fire({
+          type: COMMON_CONST.INFO,
+          message: 'Your offer is pending e-mail validation'
+        });
+      } else {
+        this._toastEvent.fire({
+          type: COMMON_CONST.ERROR,
+          message: 'There was an error sending your offer, please try again'
+        });
+      }
 
 
       return Observable.throw(error || COMMON_CONST.SERVER_ERROR);

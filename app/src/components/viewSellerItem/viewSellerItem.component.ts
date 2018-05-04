@@ -25,7 +25,7 @@ import { SELLER_ITEM_LIST as SellerItems } from '../../configurations/mocks/mock
 
 @Component({
   templateUrl: './viewSellerItem.component.html',
-  styleUrls: ['./viewSellerItem.component.scss']
+  styleUrls: [ './viewSellerItem.component.scss' ]
 })
 
 
@@ -46,14 +46,22 @@ export class ViewSellerItemComponent {
    */
   public _itemId : string;
 
+  public offerAcceptedOnItem : boolean = false;
+
   public item : object = {
     address: '',
     description: '',
     title: '',
     price: '',
     offers: [],
-    url: ''
+    url: '',
+    offerAccepted: false
   };
+
+  public orderByOptions : Array<object> = [
+    { value: 'price', viewValue: 'Price', icon: 'cash' },
+    { value: 'date', viewValue: 'Latest', icon: 'calendar' },
+  ];
 
   /**
    * @param {FormBuilder} _fb, form builder provider
@@ -115,7 +123,9 @@ export class ViewSellerItemComponent {
       console.log('the item is:::', data);
       this.item[ 'price' ] = data[ 'price' ];
       this.item[ 'title' ] = data[ 'name' ];
-      this.item['offers'] = data['offers'];
+      this.item[ 'offers' ] = data[ 'offers' ];
+
+      this.offerAcceptedOnItem = this._sellerService.determineOfferAccepted(this.item[ 'offers' ], 'accepted');
       this.dataReturned = true;
     });
 
@@ -130,6 +140,11 @@ export class ViewSellerItemComponent {
       return this._compActive;
     }).subscribe(( res : any ) => {
       console.log('the res for create item is...', res);
+
+      this.item[ 'offers' ] = this._sellerService.updateSellerItem(res[ 'id' ], res[ 'accepted' ], this.item[ 'offers' ]);
+
+      this.offerAcceptedOnItem = this._sellerService.determineOfferAccepted(this.item[ 'offers' ], 'accepted');
+
     });
   }
 
@@ -149,6 +164,10 @@ export class ViewSellerItemComponent {
   public close() : void {
     this._router.navigate([ 'app/main' ]);
 
+  }
+
+  public changeSort( option : string) {
+    this.item['offers'] = this._sellerService.updateOfferListSort(option, this.item['offers']);
   }
 
 

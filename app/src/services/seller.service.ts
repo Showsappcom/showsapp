@@ -131,4 +131,36 @@ export class SellerService {
     });
   }
 
+
+  public determineOfferAccepted( offerArray : Array<object>, key : string ) : boolean {
+
+    for (let i = 0, iLen = offerArray.length; i < iLen; i++) {
+      if (offerArray[ i ][ key ]) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public updateSellerItem( id : number, accepted : boolean, offerArray : Array<object> ) : Array<object> {
+
+    return offerArray.map(( node ) => {
+      if (node[ 'id' ] !== id) {
+        node[ 'accepted' ] = false;
+
+      } else if (node[ 'id' ] === id) {
+
+        node[ 'accepted' ] = accepted;
+
+      }
+
+      return node;
+    })
+
+  }
+
+  public updateOfferListSort(option: string, offerArray: Array<object>) : Array<object>{
+    return offerArray;
+  }
 }

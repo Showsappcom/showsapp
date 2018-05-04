@@ -12,15 +12,14 @@
         <mat-icon>close</mat-icon>
       </button>
     </div>
-    <!--<div>-->
-      <!--<mat-form-field>-->
-        <!--<mat-select placeholder="Sort By">-->
-          <!--<mat-option *ngFor="let option of orderByOptions" [value]="option.value">-->
-            <!--{{ option.viewValue }}-->
-          <!--</mat-option>-->
-        <!--</mat-select>-->
-      <!--</mat-form-field>-->
-    <!--</div>-->
+    <div>
+      <div class="order-by-container-row">
+        <button mat-icon-button><mat-icon class="material-icons" [matMenuTriggerFor]="menu">reorder</mat-icon></button><h3>Order By</h3>
+      </div>
+      <mat-menu #menu="matMenu">
+        <button *ngFor="let option of orderByOptions" mat-menu-item (click)="changeSort(option['value'])">{{option['viewValue']}}</button>
+      </mat-menu>
+    </div>
     <div class="item-content-container">
       <div class="form-container">
         <div class="seller-item-container">
@@ -43,21 +42,26 @@
       <div class="offer-container" *ngIf="item['offers'].length > 0">
         <mat-card class="mat-card-ref" style="margin:10px 0;" *ngFor="let offer of item['offers']; let i = index">
           <mat-card-title class="card-title-row">
-            <div class="card-title"><span class="primary-color">${{offer.value}} - Offer</span>
-            </div>
+            <mat-icon *ngIf="offerAcceptedOnItem" class="primary-color">{{offer.accepted ? 'check_circle' :'mood_bad' }}</mat-icon>
+            <div class="card-title"><span class="primary-color">${{offer.value}} - Offer </span></div>
           </mat-card-title>
           <mat-card-content>
             <h3>Buyer Message</h3>
             <p>{{offer.message && offer.message.length > 0 ? offer.message : 'Not submitted'}}</p>
           </mat-card-content>
-          <mat-card-actions>
+          <mat-card-actions *ngIf="!offerAcceptedOnItem">
             <button mat-button color="primary" (click)="acceptOffer(offer.id)">ACCEPT</button>
             <button mat-button color="primary" (click)="declineOffer(offer.id)">DECLINE</button>
-            <!--<button mat-button color="primary">EDIT ITEM</button>-->
+          </mat-card-actions>
+          <mat-card-actions *ngIf="offerAcceptedOnItem  && offer.accepted">
+            <button mat-button color="primary" (click)="declineOffer(offer.id)">CANCEL OFFER</button>
+          </mat-card-actions>
+          <mat-card-actions *ngIf="offerAcceptedOnItem  && !offer.accepted">
+            <button mat-button disabled color="primary">OFFER ACCEPTED</button>
           </mat-card-actions>
         </mat-card>
       </div>
-      <div class="empty-offer-container" *ngIf="item.offers.length === 0">
+      <div class="empty-offer-container" *ngIf="item['offers'] && item['offers'].length === 0">
         <mat-icon color="primary" class="x-large">local_offer</mat-icon>
         <div class="empty-offer-info">This item currently has no offers</div>
       </div>
