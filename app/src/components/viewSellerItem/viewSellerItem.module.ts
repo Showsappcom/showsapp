@@ -18,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 
 /**
@@ -39,6 +40,7 @@ import { NegotiationService } from '../../services/negotiation.service';
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatProgressBarModule,
     MatSelectModule,
     ReactiveFormsModule,
     RouterModule.forChild(

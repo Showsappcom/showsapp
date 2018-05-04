@@ -99,7 +99,7 @@ mat-toolbar-row {
   @include flex-wrap(wrap);
   .offer-container {
     @include flex-grow(1);
-    padding: 0 20px;
+    //padding: 0 20px;
 
   }
 
@@ -124,7 +124,7 @@ mat-toolbar-row {
     @include flexbox();
     mat-form-field {
       width: 150px;
-      margin: 0 0 0 20px;
+      margin: 0 20px 0 0;
     }
 
     form {

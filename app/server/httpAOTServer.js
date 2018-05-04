@@ -4,7 +4,7 @@ var http = require( 'http' );
 var fs = require( 'fs' );
 var app = express();
 //this is where I need to
-var path = '/Users/mackenzie/Documents/Projects/Personal/showsAppMain/app/target/aot';
+var path = '/Users/mackenzie/Documents/Projects/Personal/showsAppGitHub/app/target/aot';
 
 
 
@@ -12,7 +12,7 @@ var path = '/Users/mackenzie/Documents/Projects/Personal/showsAppMain/app/target
 app.use( express.static( path ) );
 app.get( '/*', function ( req, res ) {
   //console.log("req", req, res);
-  res.sendfile( '/Users/mackenzie/Documents/Projects/Personal/showsAppMain/app/target/aot/index.html' );
+  res.sendfile( '/Users/mackenzie/Documents/Projects/Personal/showsAppGitHub/app/target/aot/index.html' );
 } )
 
 var port = process.env.PORT || 5052;

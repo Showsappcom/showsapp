@@ -24,7 +24,8 @@ import * as BaseActions from '../../actions/base';
 import { SELLER_ITEM_LIST as SellerItems } from '../../configurations/mocks/mockItemList';
 
 @Component({
-  templateUrl: './viewSellerItem.component.html'
+  templateUrl: './viewSellerItem.component.html',
+  styleUrls: ['./viewSellerItem.component.scss']
 })
 
 
@@ -114,6 +115,7 @@ export class ViewSellerItemComponent {
       console.log('the item is:::', data);
       this.item[ 'price' ] = data[ 'price' ];
       this.item[ 'title' ] = data[ 'name' ];
+      this.item['offers'] = data['offers'];
       this.dataReturned = true;
     });
 

@@ -14,48 +14,70 @@
           <button mat-raised-button color="primary">RETRY</button>
         </div>
         <mat-card *ngIf="dataReturned">
-          <div class="mat-card-title">
+          <div class="mat-card-title" *ngIf="!offerSent">
             <span class="primary-color">{{sellerItem.name}}</span> - ${{sellerItem.price}}.00
           </div>
-          <div class="mat-card-container">
+          <div class="mat-card-container" *ngIf="!offerSent">
             <div class="mat-card-ref">
-              <mat-form-field  class="read-only">
+              <mat-form-field class="read-only">
             <textarea matInput readonly placeholder="Description" matTextareaAutosize matAutosizeMinRows="0"
                       matAutosizeMaxRows="10" [value]="sellerItem.description"></textarea>
               </mat-form-field>
-              <mat-form-field  class="read-only">
+              <mat-form-field class="read-only">
                 <input matInput readonly [value]="sellerItem.address" placeholder="Major Intersection">
               </mat-form-field>
             </div>
             <div class="mat-card-ref offer-container left-aligned">
-
-              <div class="spinner-offer-container">
-                <div class="spinner-container">
-                  <div class="spinner-text">
-                    {{spinnerValue}}%
-                  </div>
-                  <mat-progress-spinner
-                    [color]="spinnerColour"
-                    mode="determinate"
-                    diameter="110"
-                    strokeWidth="10"
-                    [value]="spinnerValue">
-                  </mat-progress-spinner>
-                </div>
-                <form novalidate [formGroup]="offerControl">
+              <form novalidate [formGroup]="offerControl">
+                <div>
                   <mat-form-field>
-                    <input matInput placeholder="Offer" formControlName="offer">
+                    <input matInput placeholder="Email" formControlName="email">
+                    <mat-error *ngIf="offerControl.get('email').hasError('email')">Not a valid email</mat-error>
+                    <mat-error *ngIf="offerControl.get('email').hasError('required')">Offer is required</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="spinner-offer-container">
+                  <mat-form-field>
+                    <input matInput placeholder="Offer" formControlName="value">
                     <span matPrefix style="margin-right:5px;">$</span>
                     <span matSuffix>.00</span>
-                    <mat-error *ngIf="offerControl.get('offer').hasError('required')">Offer is required</mat-error>
+                    <mat-error *ngIf="offerControl.get('value').hasError('required')">Offer is required</mat-error>
                   </mat-form-field>
-                </form>
-              </div>
-              <div class="explanation-container" >
-                Your offer has a {{spinnerValue}}% chance of being accepted by the seller
-              </div>
-              <button mat-button color="primary" [disabled]="!offerControl.valid" (click)="sendOffer()">SEND OFFER</button>
+                  <div class="spinner-container" style="margin-left:20px;">
+                    <div class="spinner-text">
+                      {{spinnerValue}}%
+                    </div>
+                    <mat-progress-spinner
+                      [color]="spinnerColour"
+                      mode="determinate"
+                      diameter="110"
+                      strokeWidth="10"
+                      [value]="spinnerValue">
+                    </mat-progress-spinner>
+                  </div>
+                </div>
+                <div>
+                  <mat-form-field>
+                      <textarea matInput placeholder="Buyer Message" matTextareaAutosize matAutosizeMinRows="1"
+                                matAutosizeMaxRows="5" formControlName="message"></textarea>
+                  </mat-form-field>
+                </div>
+              </form>
 
+              <div class="explanation-container">
+                Your offer is expected to have {{spinnerValue}}% chance of being accepted by the seller
+              </div>
+              <button mat-button color="primary" [disabled]="!offerControl.valid" (click)="sendOffer()">SEND OFFER
+              </button>
+            </div>
+          </div>
+          <div class="mat-card-title" *ngIf="offerSent">
+            <span class="primary-color">Offer Sent</span>
+          </div>
+          <div class="mat-card-container" *ngIf="offerSent">
+            <div class="mat-card-content">
+              <div style="margin-bottom: 5px;">Please check you e-mail to see if the sellers accepts it</div>
+              <div>Submit another <span class="primary-color" (click)="offerSent = !offerSent">Offer?</span></div>
             </div>
           </div>
         </mat-card>

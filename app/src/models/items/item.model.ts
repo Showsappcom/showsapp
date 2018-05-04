@@ -17,6 +17,7 @@ export interface OfferItemObject {
 
 export interface SellerItemModel {
   name : string;
+  id: number;
   description : string;
   price : string;
   good_faith_money : string;

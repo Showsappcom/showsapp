@@ -2,6 +2,7 @@
 @import "../../shared/styles/_mixins";
 
 @mixin seller-item($theme) {
+
   $whiteColour: white;
 
   $themePallet: map-get($theme, primary);
@@ -16,6 +17,10 @@
     margin-bottom: 10px;
   }
 
+  .view-container {
+    height: 100%;
+    overflow: auto;
+  }
   .item-container {
     position: absolute;
     top: 0;

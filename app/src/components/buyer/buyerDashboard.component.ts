@@ -13,6 +13,7 @@ import { BuyerService } from '../../services/buyer.service';
  * Models/Interfaces
  */
 import { SellerItemModel } from '../../models/items/item.model';
+import { CustomFormValidator } from "../../validators/customForm.validator";
 
 @Component({
   templateUrl: './buyerDashboard.component.html',
@@ -62,8 +63,13 @@ export class BuyerDashboardComponent {
    */
   public offerControl : FormGroup;
 
+  /**
+   * @type {boolean} offerSent - provides a boolean to dictate if an offer was sent.
+   */
+  public offerSent : boolean = false;
 
   public spinnerColour : string = 'primary';
+
   public spinnerValue : string = '0';
 
   /**
@@ -89,10 +95,19 @@ export class BuyerDashboardComponent {
   private _generateForm() : void {
 
     this.offerControl = this._fb.group({
-      offer: [
+      item: [ '' ],
+      value: [
         '',
         [ Validators.required ]
-      ]
+      ],
+      email: [
+        '',
+        [
+          Validators.required,
+          CustomFormValidator.EmailValidator()
+        ]
+      ],
+      message: [ '' ]
 
     });
 
@@ -108,7 +123,7 @@ export class BuyerDashboardComponent {
       return this._compActive;
     }).subscribe(val => {
       console.log('this val changed....', val);
-      this.spinnerValue = this._buyerService.getProbability(this.sellerItem.price, val.offer)
+      this.spinnerValue = this._buyerService.getProbability(this.sellerItem.price, val.value)
 
 
     });
@@ -120,7 +135,9 @@ export class BuyerDashboardComponent {
 
     if (this._sellerId && this._sellerId.length > 0 && this._slugId && this._slugId.length > 0) {
       this._buyerService.getSellerData(this._sellerId, this._slugId).takeWhile(() => {
+
         return this._compActive;
+
       }).subscribe(( data : any ) => {
         console.log('the data is::::::::::::::::::');
         console.log('the data is::::::::::::::::::');
@@ -130,6 +147,7 @@ export class BuyerDashboardComponent {
         console.log('the data is::::::::::::::::::');
         console.log('the data is::::::::::::::::::');
         this.sellerItem = data;
+        this.offerControl.get('item').setValue(data['id']);
         this.dataReturned = true;
       });
     }
@@ -154,10 +172,11 @@ export class BuyerDashboardComponent {
   }
 
   public sendOffer() : void {
-    this._buyerService.sendOffer().takeWhile(() => {
-
+    this._buyerService.sendOffer(this.offerControl.value).takeWhile(() => {
+      return this._compActive;
     }).subscribe(( data ) => {
       console.log('the data is :::', data);
+      this.offerSent = true;
 
     });
   }

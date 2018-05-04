@@ -44,6 +44,7 @@ export class BuyerService {
    * @type {string} _getItemURL - Provides activation url url
    */
   private _getItemURL : string = this._BASE_URL + 'api/v1/markets/item/';
+  private _postOfferURL : string = this._BASE_URL + 'api/v1/markets/place_offer/';
 
   constructor( private _store : Store<fromRoot.State>, private _dataService : DataService, private _toastEvent : ToastEvent ) {
 
@@ -131,7 +132,30 @@ export class BuyerService {
   }
 
   public sendOffer( object? : any ) : any {
-    return Observable.throw(COMMON_CONST.SERVER_ERROR);
+
+    let requestOptions = {
+      method: 'POST',
+      body: object,
+      withCredentials: true
+    }, url = this._postOfferURL;
+
+
+    return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
+
+
+      return res;
+
+    }).catch(( error : any ) => {
+
+      this._toastEvent.fire({
+        type: COMMON_CONST.ERROR,
+        message: 'There was an error sending your offer, please try again'
+      });
+
+
+      return Observable.throw(error || COMMON_CONST.SERVER_ERROR);
+
+    });
   }
 
 }
