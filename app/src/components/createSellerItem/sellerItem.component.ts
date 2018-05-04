@@ -5,6 +5,10 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+/**
+ * Constants
+ */
+import {APP_SETUP} from '../../configurations/app.configuration'
 
 /**
  * Custom Services
@@ -176,7 +180,7 @@ export class SellerItemComponent {
       }).subscribe(( res : any ) => {
         console.log('the res for create item is...', res);
         this.itemCreated = true;
-        this.itemLink = 'www.showsapp.com/item/' + res[ 'url' ];
+        this.itemLink = APP_SETUP.domain+'/item/' + res[ 'url' ];
         // this.close();
       });
 

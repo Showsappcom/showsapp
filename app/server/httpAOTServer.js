@@ -13,7 +13,7 @@ app.use( express.static( path ) );
 app.get( '/*', function ( req, res ) {
   //console.log("req", req, res);
   res.sendfile( '/Users/mackenzie/Documents/Projects/Personal/showsAppGitHub/app/target/aot/index.html' );
-} )
+} );
 
 var port = process.env.PORT || 5052;
 

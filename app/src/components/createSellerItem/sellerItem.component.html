@@ -1,13 +1,14 @@
 <div class="item-container">
   <div class="title-row">
-    <h2 class="title">{{createItem ? 'Create Item' : 'Edit Item'}}</h2>
+    <h2 class="title" *ngIf="!itemCreated">{{createItem ? 'Create Item' : 'Edit Item'}}</h2>
+    <h2 class="title" *ngIf="itemCreated">Item Created</h2>
     <button mat-icon-button (click)="close()">
       <mat-icon>close</mat-icon>
     </button>
   </div>
   <div class="item-content-container">
-    <div class="form-container" *ngIf="itemCreated">
-      Your item was created, please copy and paste this link into your seller site:  <span class="primary-color">{{itemLink}}</span>
+    <div class="form-container" *ngIf="itemCreated" style="margin-bottom:20px;">
+      Your item was created, please copy and paste this link into your seller site: <span class="primary-color">{{itemLink}}</span>
     </div>
     <div class="form-container" *ngIf="!itemCreated">
       <form novalidate [formGroup]="itemFormControl">

@@ -23,6 +23,7 @@ import * as fromRoot from '../../reducers';
 /**
  * Constants
  */
+import { APP_SETUP } from '../../configurations/app.configuration';
 import { COMMON_CONSTANTS as COMMON_CONST } from '../../configurations/constants/common.constant';
 
 @Component({
@@ -43,6 +44,11 @@ export class SellerDashboardComponent {
    * @type {boolean} dataReturned- provides an item list
    */
   public dataReturned : boolean = false;
+
+  /**
+   * @type {string} domain - provides the request domain
+   */
+  public domain : string = APP_SETUP.domain;
 
   /**
    * @type {boolean} errorGettingData- boolean to determine if error happened
