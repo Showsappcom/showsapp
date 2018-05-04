@@ -368,6 +368,7 @@ if ( ENV_DEVELOPMENT ) {
 
   config.devServer = {
     contentBase: './src',
+    compress: true,
     historyApiFallback: true,
     host: HOST,
     port: PORT,

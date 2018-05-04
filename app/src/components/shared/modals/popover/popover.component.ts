@@ -12,8 +12,11 @@ import { MatDialog, MatDialogConfig, DialogPosition } from '@angular/material';
  * Services
  */
 import { ModalsEvent } from '../../../../services/modalsEvent.service';
-import { DeletePopoverComponent } from "./delete/deletePopover.component";
 
+/**
+ * Custom Components
+ */
+import { DeletePopoverComponent } from './delete/deletePopover.component';
 
 @Component({
   templateUrl: './popover.component.html',
@@ -22,9 +25,7 @@ import { DeletePopoverComponent } from "./delete/deletePopover.component";
 })
 
 
-
 export class PopoverComponent {
-
 
 
   // Subscriptions
@@ -46,7 +47,7 @@ export class PopoverComponent {
    * Initialization - lifecycle method
    * @returns void
    */
-  private ngOnInit() {
+  ngOnInit() {
 
     this._subscribeModalEvents();
 
@@ -56,7 +57,7 @@ export class PopoverComponent {
    * Destroy - lifecycle method
    * @returns void
    */
-  private ngOnDestroy() {
+  ngOnDestroy() {
     if (this._modalsEventSubscription) {
       this._modalsEventSubscription.unsubscribe();
     }
@@ -70,7 +71,7 @@ export class PopoverComponent {
   private _openModal( event : Event ) : void {
 
     console.log('i will open modal here', event);
-    if(event['type']=== 'DeleteConfirmation'){
+    if (event[ 'type' ] === 'DeleteConfirmation') {
       this.dialogRef = this.dialog.open(DeletePopoverComponent);
 
     }

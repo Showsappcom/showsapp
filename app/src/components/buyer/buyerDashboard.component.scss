@@ -1,2 +1,151 @@
+@import "../../shared/styles/_mixins.scss";
 
+.side-nav-container {
+  @include flexbox();
+  @include flex-direction(row);
+
+  height: 100vh;
+  width: 100vw;
+
+  mat-toolbar-row {
+    padding: 0 20px;
+  }
+
+}
+
+.base-container {
+  @include flexbox();
+  @include flex-direction(row);
+  width: 100vw;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  mat-toolbar-row {
+    padding: 0 20px;
+  }
+
+  .main-content {
+    height: 100%;
+    width: 100%;
+
+    .content-container {
+      height: 100%;
+      width: 100%;
+      padding: 10px;
+
+      .full-height {
+        height: 100%;
+      }
+      .centre-content, &.centre-content {
+        @include flexbox();
+        @include flex-direction(column);
+        @include justify-content(center);
+        @include align-items(center);
+      }
+
+      .progress-loading {
+        margin-top: 20px;
+      }
+      .activation-failed, .activation-pending {
+        @include flexbox();
+        @include flex-direction(column);
+        @include justify-content(center);
+        @include align-items(center);
+
+        button, span {
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+  .base-content {
+  }
+}
+
+mat-toolbar-row {
+  padding-left: 0;
+}
+
+.form-control-container {
+  form {
+    @include flexbox();
+    @include flex-direction(column);
+  }
+
+  mat-form-field {
+    width: 300px;
+  }
+}
+
+.mat-card-ref {
+  @include flexbox();
+  @include flex-direction(column);
+  @include justify-content(flex-start);
+  @include align-items(flex-start);
+
+  mat-form-field {
+    width: 300px;
+  }
+
+  button {
+    margin: 0 0 20px 0;
+
+  }
+}
+
+.mat-card-container {
+  @include flexbox();
+  @include flex-wrap(wrap);
+  .offer-container {
+    @include flex-grow(1);
+    //padding: 0 20px;
+
+  }
+
+  .left-aligned {
+    @include justify-content(flex-start);
+    @include align-items(flex-start);
+  }
+
+  .spinner-text {
+    display: block;
+    position: relative;
+    top: 56px;
+    left: 26px;
+    font-size: 32px;
+    line-height: 0;
+  }
+  button {
+    margin-top: 20px
+  }
+
+  .spinner-offer-container {
+    @include flexbox();
+    mat-form-field {
+      width: 150px;
+      margin: 0 20px 0 0;
+    }
+
+    form {
+      @include flexbox();
+      @include justify-content(center);
+      @include align-items(center);
+    }
+
+
+  }
+
+}
+
+.read-only {
+  .mat-form-field-underline {
+    height: 0 !important;
+  }
+}
+
+
+.explanation-container {
+  margin-top: 20px;
+}
 

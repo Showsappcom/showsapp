@@ -10,17 +10,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../reducers';
 import * as BaseActions from '../../../actions/base';
-import { State as BaseState } from "../../../reducers/base";
+import { State as BaseState } from '../../../reducers/base';
 
 
 /**
  * Required Services
  */
-import { MessageEvent } from "../../../services/messageEvent.service";
+import { MessageEvent } from '../../../services/messageEvent.service';
 import { ModalsEvent } from '../../../services/modalsEvent.service';
 import { ToastEvent } from '../../../services/toastEvent.service';
 import { LoginService } from '../../../services/login.service';
-import { COMMON_CONSTANTS as COMMON_CONST } from "../../../configurations/constants/common.constant";
+import { COMMON_CONSTANTS as COMMON_CONST } from '../../../configurations/constants/common.constant';
 
 /**
  * constants
@@ -138,7 +138,7 @@ export class LoginComponent {
    * @returns void
    */
   private _clearSubs() : void {
-    this._compActive = false
+    this._compActive = false;
   }
 
 
@@ -217,7 +217,7 @@ export class LoginComponent {
       console.log('the response is ::', res, this._baseState);
       this._store.dispatch(new BaseActions.Update({
         ...this._baseState, loggedIn: true, authToken: res.token
-      }))
+      }));
     });
     // this._store.dispatch()
   }

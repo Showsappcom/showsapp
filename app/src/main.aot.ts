@@ -11,8 +11,7 @@ import './shared/styles/_styles.scss';
 enableProdMode();
 
 
-
-function init(){
+function init() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       console.log('!!!!!!!!!!i am here ....');

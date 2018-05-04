@@ -6,6 +6,7 @@ import { ActivationViaAuthenticationGuard } from '../../guards/routing.guard';
 
 /* Component */
 import { ActivateComponent } from '../activate/activate.component';
+import { BuyerDashboardComponent } from '../buyer/buyerDashboard.component';
 import { LoginComponent } from '../shared/loginPage/login.component';
 
 import { Observable } from 'rxjs/Observable';
@@ -31,8 +32,29 @@ const appRoutes : Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'item/:sellerId/:slugId',
+    component: BuyerDashboardComponent,
+  },
+  {
+    path: 'reset/:activateCode',
+    component: ActivateComponent,
+    data: {
+      password: true
+    }
+  },
+  {
     path: 'activate/:activateCode',
-    component: ActivateComponent
+    component: ActivateComponent,
+    data: {
+      account: true
+    }
+  },
+  {
+    path: 'email/:activateCode',
+    component: ActivateComponent,
+    data: {
+      email: true
+    }
   },
   {
     path: 'login',

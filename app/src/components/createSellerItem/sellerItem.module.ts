@@ -44,7 +44,7 @@ import { SellerItemService } from '../../services/sellerItem.service';
         {
           path: '', component: SellerItemComponent, pathMatch: 'full'
         }
-      ]),
+      ])
 
   ],
   declarations: [ SellerItemComponent ],

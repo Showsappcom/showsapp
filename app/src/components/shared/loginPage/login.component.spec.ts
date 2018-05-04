@@ -33,7 +33,7 @@ describe('Component: LoginComponent', () => {
           provide: Router,
           useClass: class {navigate = jasmine.createSpy('navigate');}
         },
-        { provide: Store, useValue: mockStore },
+        { provide: Store, useValue: mockStore }
       ]
     }).compileComponents();
 

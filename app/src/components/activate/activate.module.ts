@@ -5,6 +5,8 @@ import {
   NgModule
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+
 // import { RouterModule } from '@angular/router';
 
 /**
@@ -12,9 +14,11 @@ import { CommonModule } from '@angular/common';
  */
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 
@@ -34,16 +38,13 @@ import { ActivateService } from '../../services/activate.service';
     CommonModule,
     MatButtonModule,
     MatCardModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
-    MatToolbarModule//,
-    // RouterModule.forChild(
-    //   [
-    //     {
-    //       path: '', component: ActivateComponent, pathMatch: 'full'
-    //     }
-    //   ])
+    MatToolbarModule,
+    ReactiveFormsModule
   ],
   declarations: [ ActivateComponent ],
   exports: [ ActivateComponent ],

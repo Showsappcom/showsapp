@@ -1,8 +1,9 @@
 @import '../../shared/styles/_mixins';
 
-.embed-link{
+.embed-link {
   margin: 10px 0;
 }
+
 .content-container {
   @include flexbox();
   @include flex-direction(column);
@@ -22,7 +23,7 @@
   @include flexbox();
   @include flex-direction(row);
   @include align-items(center);
-  padding: 0 20px;
+  padding: 0 10px;
 
   .title {
     @include flex-grow(1);
@@ -30,16 +31,15 @@
 
 }
 
-
-.card-title-row{
+.card-title-row {
   @include flexbox();
   @include flex-direction(row);
+  margin-bottom: 5px;
   .card-title {
     @include flex-grow(1);
     @include flex-wrap(wrap);
   }
 }
-
 
 .main-container {
   @include flexbox();
@@ -60,12 +60,12 @@
 
   .item-list {
     @include flex-grow(1);
-    padding: 0 20px;
+    padding: 0 10px;
 
     mat-card {
       width: 100%;
 
-      margin-bottom: 25px;
+      margin-bottom: 10px;
     }
 
   }

@@ -11,6 +11,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
  */
 import { SellerItemService } from '../../services/sellerItem.service';
 
+/**
+ * Custom Validators
+ */
+import {CustomFormValidator} from '../../validators/customForm.validator';
 
 /**
  * Store
@@ -21,6 +25,7 @@ import * as BaseActions from '../../actions/base';
 
 
 import { SELLER_ITEM_LIST as SellerItems } from '../../configurations/mocks/mockItemList';
+
 
 @Component({
   templateUrl: './sellerItem.component.html'
@@ -53,9 +58,18 @@ export class SellerItemComponent {
   public itemFormControl : FormGroup;
 
   /**
+   * Provide a reference for if an item was created
+   */
+  public itemCreated : boolean = false;
+
+  /**
+   * Provide a reference for the item link
+   */
+  public itemLink : string;
+  /**
    * @type {string} _itemId - provides reference of item id
    */
-  public _itemId : string;
+  private _itemId : string;
 
   /**
    * @param {FormBuilder} _fb, form builder provider
@@ -105,7 +119,7 @@ export class SellerItemComponent {
       console.log('the params are::::::::', params);
       this._itemId = params[ 'id' ];
 
-    })
+    });
 
 
   }
@@ -132,7 +146,11 @@ export class SellerItemComponent {
       ],
       price: [
         '',
-        [ Validators.required, Validators.min(1), Validators.max(1000000) ]
+        [
+          Validators.required,
+          CustomFormValidator.NumberRangeValidator(1, 1000000)
+
+        ]
       ],
       good_faith_money: [
         '0'
@@ -157,11 +175,13 @@ export class SellerItemComponent {
         return this._compActive;
       }).subscribe(( res : any ) => {
         console.log('the res for create item is...', res);
-        this.close();
+        this.itemCreated = true;
+        this.itemLink = 'www.showsapp.com/item/' + res[ 'url' ];
+        // this.close();
       });
 
     } else {
-      console.log('I will edit item action ;......')
+      console.log('I will edit item action ;......');
 
     }
   }

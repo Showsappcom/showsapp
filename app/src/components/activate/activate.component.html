@@ -1,14 +1,30 @@
 <mat-sidenav-container class="side-nav-container">
   <mat-toolbar color="primary" class="mat-elevation-z6">
-    <mat-toolbar-row>
+    <mat-toolbar-row *ngIf="activationType === 'account'">
       Account Activation
+    </mat-toolbar-row>
+    <mat-toolbar-row *ngIf="activationType === 'email'">
+      Email Validation
+    </mat-toolbar-row>
+    <mat-toolbar-row *ngIf="activationType === 'password'">
+      Password Reset
     </mat-toolbar-row>
   </mat-toolbar>
   <div class="base-container">
     <div class="main-content">
       <div class="content-container">
-        <mat-card>
+        <mat-card *ngIf="activationType === 'account' || activationType === 'email'">
           <div class="mat-card-content centre-content">
+            <div class="activation-success" *ngIf="activationSuccessful">
+              <mat-icon color="primary" class="x-large">check_circle</mat-icon>
+              <div class="retry-message" *ngIf="activationType === 'account'">
+                Your account was activated please <span class="primary-color" (click)="goToLogin()">login</span> to
+                continue.
+              </div>
+              <div class="retry-message" *ngIf="activationType === 'email'">
+                Your email was validated and your offer submitted
+              </div>
+            </div>
             <div class="activation-pending" *ngIf="!retryActivation && !activationSuccessful">
               <mat-progress-spinner
                 class="example-margin"
@@ -16,18 +32,85 @@
                 mode="indeterminate">
               </mat-progress-spinner>
               <div class="progress-loading">
-              <span>
+               <span *ngIf="activationType === 'account'">
                 Please wait while we activate your account
-              </span>
+                </span>
+                <span *ngIf="activationType === 'email'">
+                Please wait while we validate your email
+                </span>
               </div>
             </div>
             <div class="activation-failed" *ngIf="retryActivation">
               <mat-icon color="primary" class="x-large">error_outline</mat-icon>
               <div class="retry-message">
-                <span>There was a problem with activating your account please try agin</span>
+                <span *ngIf="activationType === 'account'">There was a problem with activating your account please try again</span>
+                <span *ngIf="activationType === 'email'">There was a problem with validating your e-mail your account please try again</span>
               </div>
               <button mat-raised-button color="primary" (click)="retryAccountActivation()">RETRY</button>
             </div>
+          </div>
+        </mat-card>
+        <div class="activation-pending" *ngIf="activationPending">
+          <mat-progress-spinner
+            class="example-margin"
+            color="primary"
+            mode="indeterminate">
+          </mat-progress-spinner>
+          <div class="progress-loading">
+               <span *ngIf="activationType === 'password'">
+                Please wait while we set your password
+                </span>
+          </div>
+        </div>
+        <mat-card *ngIf="activationType === 'password'">
+          <div class="form-control-container">
+            <form novalidate [formGroup]="passwordFormControl">
+              <mat-error *ngIf="passwordFormControl.hasError('passwordNotMatching')">
+                Both passwords need to match
+              </mat-error>
+              <mat-form-field>
+                <input matInput required placeholder="E-mail" type="text" formControlName="email"
+                       id="emailField" tabindex="0"/>
+                <mat-error *ngIf="passwordFormControl.get('email').hasError('required')">
+                  Please provide an e-mail address
+                </mat-error>
+                <mat-error *ngIf="passwordFormControl.get('email').hasError('email')">
+                  Must be a valid e-mail address
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput required placeholder="Password" type="password" formControlName="password"
+                       id="passwordField" tabindex="0"/>
+                <mat-error *ngIf="passwordFormControl.get('password').hasError('required')">
+                  Password field is required
+
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput required placeholder="Confirm Password" type="password" formControlName="confirmPassword"
+                       id="confirmPasswordField" tabindex="0"/>
+                <mat-error *ngIf="passwordFormControl.get('confirmPassword').hasError('required')">
+                  Confirm password field is required
+                </mat-error>
+              </mat-form-field>
+
+            </form>
+            <button mat-button color="primary" [disabled]="!passwordFormControl.valid">UPDATE PASSWORD</button>
+          </div>
+          <div class="activation-success" *ngIf="activationSuccessful">
+            <mat-icon color="primary" class="x-large">check_circle</mat-icon>
+            <div class="retry-message">
+              Your password was updated please <span class="primary-color" (click)="goToLogin()">login</span> to
+              continue.
+            </div>
+
+          </div>
+          <div class="activation-failed" *ngIf="retryActivation">
+            <mat-icon color="primary" class="x-large">error_outline</mat-icon>
+            <div class="retry-message">
+              <span>There was a problem updating your password please try again</span>
+            </div>
+            <button mat-raised-button color="primary" (click)="retryAccountActivation()">RETRY</button>
           </div>
         </mat-card>
       </div>
