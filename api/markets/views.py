@@ -109,7 +109,7 @@ class MyItems(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user.sa_user
-        items = user.items.filter(active=True).order_by('id')
+        items = user.items.filter(active=True).order_by('-id')
 
         return items
 

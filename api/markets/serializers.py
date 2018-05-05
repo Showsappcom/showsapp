@@ -200,10 +200,10 @@ class DetailedItemSerializer(serializers.ModelSerializer):
         return '%s/%s' %(obj.sa_user.id, obj.slug)
 
     def _offers(self, obj):
-        return OfferSerializer(obj.offers.filter(on_hold=False), many=True).data
+        return OfferSerializer(obj.offers.filter(on_hold=False).order_by('-id'), many=True).data
 
     def _waiting_list(self, obj):
-        return WaitingListSubscriptionSerializer(obj.waiting_list_subscription.filter(active=True), many=True).data
+        return WaitingListSubscriptionSerializer(obj.waiting_list_subscription.filter(active=True).order_by('-id'), many=True).data
 
     class Meta:
         model = Item
