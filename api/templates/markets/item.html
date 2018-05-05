@@ -1,20 +1,22 @@
-<html>
-    <head>
-    </head>
-    <body>
-        {{ item.name }}
+{% extends './public_template_wrapper.html' %}
+{% load notifications_tags %}
+{% block custom_headers %}
 
-        <form action="/api/v1/markets/pay_gfm/" method="POST">
-            <script
-              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-              data-key="{{ stripe_pk }}"
-              data-amount="{{ value }}"
-              data-name="showsapp.com"
-              data-description="Widget"
-              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-              data-locale="auto"
-              data-currency="cad">
-            </script>
-          </form>
-    </body>
-</html>
+
+  <title>{{ item.name }} | ShowsApp.com</title>
+  <meta name="description" content="{{ item.description }}">
+  <meta name="keywords" content="{{ item.description }}">
+
+<!-- Open Graph data -->
+  <meta property="og:title" content="{{ item.name }} | ShowsApp.com" />
+  <!-- <meta property="fb:app_id" content="{% settings_value "FACEBOOK_APP_ID" %}" />  -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:url" content='{% settings_value "DOMAIN" %}/item/{{ item.sa_user.id }}/{{ item.slug }}' />
+  <!-- <meta property="og:image" content="{{ item.resized_photo_url }}" /> -->
+  <meta property="og:description" content="{{ item.description }}" />
+  <meta property="og:site_name" content="ShowsApp.com" />
+
+
+{% endblock %}
+
+
