@@ -6,7 +6,12 @@
         <h2>Shows App</h2>
       </div>
 
-      <div *ngIf="loginView && !forgotPasswordView" class="login-form-container" (keydown.enter)="submitForm()">
+      <div *ngIf="signingIn" class="sign-in-container">
+        <mat-progress-bar mode="query" color="primary"></mat-progress-bar>
+        <p>Signing In</p>
+      </div>
+      <div *ngIf="loginView && !forgotPasswordView  && !signingIn" class="login-form-container" (keydown.enter)="submitForm()">
+
         <form novalidate [formGroup]="loginFormControl" class="login-form">
           <mat-form-field>
             <input matInput required placeholder="Username" type="text" formControlName="username"

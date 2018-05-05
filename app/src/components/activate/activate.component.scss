@@ -65,15 +65,20 @@ mat-toolbar-row {
 }
 
 .form-control-container {
-  form{
+  form {
     @include flexbox();
     @include flex-direction(column);
   }
-
 
   mat-form-field {
     width: 300px;
   }
 }
 
-
+.activation-success, .activation-failed {
+  @include flexbox();
+  @include flex-direction(column);
+  @include align-items(center);
+  @include justify-content(center);
+  padding: 50px 0;
+}

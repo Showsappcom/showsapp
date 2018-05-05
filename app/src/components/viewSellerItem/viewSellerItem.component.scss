@@ -5,3 +5,18 @@
   overflow: auto;
 }
 
+.card-title-row, .order-by-container-row{
+  @include flexbox();
+  @include align-items(center);
+  mat-icon{
+    margin-right: 10px;
+  }
+  button{
+    min-width: 30px;
+    @include flexbox();
+    @include justify-content(center);
+    margin-right: 10px;
+  }
+}
+
+

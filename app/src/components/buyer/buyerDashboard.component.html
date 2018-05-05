@@ -71,13 +71,21 @@
               </button>
             </div>
           </div>
-          <div class="mat-card-title" *ngIf="offerSent">
+          <div class="mat-card-title" *ngIf="offerSent && !needToValidateEmail">
             <span class="primary-color">Offer Sent</span>
           </div>
-          <div class="mat-card-container" *ngIf="offerSent">
+          <div class="mat-card-container" *ngIf="offerSent && !needToValidateEmail">
             <div class="mat-card-content">
               <div style="margin-bottom: 5px;">Please check you e-mail to see if the sellers accepts it</div>
               <div>Submit another <span class="primary-color" (click)="offerSent = !offerSent">Offer?</span></div>
+            </div>
+          </div>
+          <div class="mat-card-title" *ngIf="offerSent && needToValidateEmail">
+            <span class="primary-color">Please Validate Email</span>
+          </div>
+          <div class="mat-card-container" *ngIf="offerSent && needToValidateEmail">
+            <div class="mat-card-content">
+              <div style="margin-bottom: 5px;">Please check you e-mail to validate your e-mail address once validated the offer will be sent</div>
             </div>
           </div>
         </mat-card>

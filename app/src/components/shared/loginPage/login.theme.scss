@@ -12,6 +12,17 @@
   $backgroundColour: map-get($backgroundPallet, background);
   $foreGroundColour: map-get($foregroundPallet, base);
 
+  .sign-in-container {
+
+    mat-progress-bar {
+      margin: 20px;
+      width: 300px;
+    }
+    p {
+      @include flexbox();
+      @include justify-content(center);
+    }
+  }
   mat-form-field {
     margin-bottom: 10px;
   }
