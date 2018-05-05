@@ -131,7 +131,7 @@ class AcceptDeclineOfferSerializer(serializers.Serializer):
 
         offer.accepted = accept
 
-        offer.save
+        offer.save()
 
         return offer
 
