@@ -123,9 +123,11 @@ export class ViewSellerItemComponent {
       console.log('the item is:::', data);
       this.item[ 'price' ] = data[ 'price' ];
       this.item[ 'title' ] = data[ 'name' ];
-      this.item[ 'offers' ] = data[ 'offers' ];
+      this.item[ 'offers' ] = this._sellerService.sortByPrice(data[ 'offers' ]);
+
 
       this.offerAcceptedOnItem = this._sellerService.determineOfferAccepted(this.item[ 'offers' ], 'accepted');
+
       this.dataReturned = true;
     });
 

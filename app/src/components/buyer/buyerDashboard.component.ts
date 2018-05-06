@@ -149,7 +149,8 @@ export class BuyerDashboardComponent {
         console.log('the data is::::::::::::::::::');
         console.log('the data is::::::::::::::::::');
         this.sellerItem = data;
-        this.offerControl.get('item').setValue(data['id']);
+        // this.sellerItem['accepted'] = true;
+        this.offerControl.get('item').setValue(data[ 'id' ]);
         this.dataReturned = true;
       });
     }
@@ -174,19 +175,21 @@ export class BuyerDashboardComponent {
   }
 
   public sendOffer() : void {
+
     this._buyerService.sendOffer(this.offerControl.value).takeWhile(() => {
       return this._compActive;
     }).subscribe(( data ) => {
       console.log('the data is :::', data);
       this.offerSent = true;
 
-    }, (err)=>{
+    }, ( err ) => {
       console.log('the status iss', err);
-      if(err.status === 500 && err.error && err.error.detail && err.error.detail === 'Should verify the accout first.'){
+      if (err.status === 500 && err.error && err.error.detail && err.error.detail === 'Should verify the accout first.') {
         this.offerSent = true;
         this.needToValidateEmail = true;
       }
     });
+
   }
 
 

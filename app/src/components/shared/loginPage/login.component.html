@@ -14,10 +14,10 @@
 
         <form novalidate [formGroup]="loginFormControl" class="login-form">
           <mat-form-field>
-            <input matInput required placeholder="Username" type="text" formControlName="username"
+            <input matInput required placeholder="Email" type="text" formControlName="username"
                    id="usernameInput" tabindex="1"/>
             <mat-error *ngIf="loginFormControl.get('username').hasError('required')">
-              Username is required
+              Email is required
             </mat-error>
             <!--<mat-hint>{{loginLabels.placeholders.username}}</mat-hint>-->
           </mat-form-field>
@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="!loginView && !forgotPasswordView" class="request-form-container" (keydown.enter)="register()">
+    <div *ngIf="!loginView && !forgotPasswordView" class="request-form-container request-details" (keydown.enter)="register()">
       <!--<div class="request-container"></div>-->
       <form novalidate [formGroup]="requestFormControl" class="login-form" >
         <mat-form-field>

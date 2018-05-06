@@ -7,19 +7,19 @@
   </div>
   <div class="item-container" *ngIf="dataReturned">
     <div class="title-row">
-      <h2 class="title"><span class="primary-color">{{item.title}}</span> - ${{item.price}}.00</h2>
-      <button mat-icon-button (click)="close()">
+      <h2 class="title"><span class="primary-color">{{item['title']}}</span> - ${{item['price']}}.00</h2>
+      <button mat-icon-button class="icon-button" (click)="close()">
         <mat-icon>close</mat-icon>
       </button>
     </div>
-    <div>
-      <div class="order-by-container-row">
-        <button mat-icon-button><mat-icon class="material-icons" [matMenuTriggerFor]="menu">reorder</mat-icon></button><h3>Order By</h3>
-      </div>
-      <mat-menu #menu="matMenu">
-        <button *ngFor="let option of orderByOptions" mat-menu-item (click)="changeSort(option['value'])">{{option['viewValue']}}</button>
-      </mat-menu>
-    </div>
+    <!--<div>-->
+      <!--<div class="order-by-container-row">-->
+        <!--<button mat-icon-button><mat-icon class="material-icons" [matMenuTriggerFor]="menu">reorder</mat-icon></button><h3>Order By</h3>-->
+      <!--</div>-->
+      <!--<mat-menu #menu="matMenu">-->
+        <!--<button *ngFor="let option of orderByOptions" mat-menu-item (click)="changeSort(option['value'])">{{option['viewValue']}}</button>-->
+      <!--</mat-menu>-->
+    <!--</div>-->
     <div class="item-content-container">
       <div class="form-container">
         <div class="seller-item-container">

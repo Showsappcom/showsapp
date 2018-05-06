@@ -3,52 +3,74 @@
 
 @mixin forms-theme($theme) {
 
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $warn: map-get($theme, warn);
-    $background: map-get($theme, background);
-    $foreground: map-get($theme, foreground);
-    $label-color: mat-color($foreground, secondary-text);
-    $font-size: 0.75rem;
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $label-color: mat-color($foreground, secondary-text);
+  $font-size: 0.75rem;
+  $warn-bg-color: map-get($warn, 200);
 
+  .offer-info-container {
 
-    .sa-form-label {
-        color: $label-color;
-        font-size: $font-size;
-    }
+    @include flexbox();
 
-    .sa-label-object{
-        //@include flexbox();
-        //label{
-        //  width: 0;
-        //}
-        mat-form-field{
-            top: -16px;
-        }
-        .lxi-label-object{}
-    }
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid;
 
-
-    button {
-
-        &.sa-raised-btn {
-            @include mat-elevation(0);
-
-            &:hover {
-
-                @include mat-elevation(2);
-            }
-            &:active {
-                @include mat-elevation(4);
-
-            }
-
-            &[disabled] {
-                @include mat-elevation(0);
-
-            }
-        }
+    &.item-available {
+      color: map-get($primary, 500);
+      //background-color: map-get($primary, 100);
 
     }
+
+    &.item-not-available {
+
+      color: map-get($warn, 500);
+      //background-color: $warn-bg-color;
+
+    }
+  }
+
+  .sa-form-label {
+    color: $label-color;
+    font-size: $font-size;
+  }
+
+  .sa-label-object {
+    //@include flexbox();
+    //label{
+    //  width: 0;
+    //}
+    mat-form-field {
+      top: -16px;
+    }
+    .lxi-label-object {
+    }
+  }
+
+  button {
+
+    &.sa-raised-btn {
+      @include mat-elevation(0);
+
+      &:hover {
+
+        @include mat-elevation(2);
+      }
+      &:active {
+        @include mat-elevation(4);
+
+      }
+
+      &[disabled] {
+        @include mat-elevation(0);
+
+      }
+    }
+
+  }
 
 }

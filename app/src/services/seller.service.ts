@@ -160,7 +160,18 @@ export class SellerService {
 
   }
 
-  public updateOfferListSort(option: string, offerArray: Array<object>) : Array<object>{
-    return offerArray;
+  public updateOfferListSort( option : string, offerArray : Array<object> ) : Array<object> {
+    return offerArray.sort(( a, b ) => {
+      return a[ 'value' ] - b[ 'value' ];
+    });
+  }
+
+  public sortByPrice( offerArray : Array<object> ) : Array<object> {
+
+    let offerTemp = offerArray.sort(( a, b ) => {
+      return Number(b[ 'value' ]) - Number(a[ 'value' ]);
+    });
+    console.log('the offer array is:::', offerTemp);
+    return offerTemp;
   }
 }

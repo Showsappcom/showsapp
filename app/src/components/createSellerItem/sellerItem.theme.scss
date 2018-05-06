@@ -37,6 +37,10 @@
     }
     button {
       min-width: 80px;
+
+      &.icon-button {
+        min-width: 1px;
+      }
     }
 
   }

@@ -12,6 +12,34 @@
   $backgroundColour: map-get($backgroundPallet, background);
   $foreGroundColour: map-get($foregroundPallet, base);
 
+  .shows-app-mission {
+
+    min-height: 106px;
+
+  }
+
+  .request-details {
+
+    min-height: 481px;
+
+  }
+  .email-container {
+
+    min-height: 121px;
+
+  }
+
+  .login-form {
+
+    min-height: 121px;
+
+  }
+
+  button {
+
+    min-height: 36px;
+  }
+
   .sign-in-container {
 
     mat-progress-bar {
@@ -46,6 +74,7 @@
       @include justify-content(center);
       @include align-items(center);
       padding: 20px;
+      overflow-y: auto;
 
       .shows-app-mission-statement {
         @include flexbox();
@@ -111,7 +140,7 @@
       margin: auto;
       max-width: 500px;
       //min-height: 500px;
-      height: 100%;
+      //height: 100%;
       @media (max-width: 600px) {
         min-height: 100%;
         max-width: 100%;

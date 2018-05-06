@@ -33,6 +33,7 @@
       height: 100%;
       width: 100%;
       padding: 10px;
+      overflow-y: auto;
 
       .full-height {
         height: 100%;
@@ -84,6 +85,10 @@ mat-toolbar-row {
   @include justify-content(flex-start);
   @include align-items(flex-start);
 
+  &.provide-space {
+    margin-right: 20px;
+  }
+
   mat-form-field {
     width: 300px;
   }
@@ -133,7 +138,6 @@ mat-toolbar-row {
       @include align-items(center);
     }
 
-
   }
 
 }
@@ -143,7 +147,6 @@ mat-toolbar-row {
     height: 0 !important;
   }
 }
-
 
 .explanation-container {
   margin-top: 20px;
