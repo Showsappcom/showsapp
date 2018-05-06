@@ -3,7 +3,7 @@ from markets.models import WaitingListSubscription, Item, Offer
 from accounts.serializers import AccountSerializer, SAUserSerializer, SignupSerializer
 from django.db.models import Q
 import stripe
-from notifications.mailers import NewOfferNotification
+from notifications.mailers import NewOfferNotification, OfferResolveNotification
 from django.contrib.auth.models import User
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -133,6 +133,7 @@ class AcceptDeclineOfferSerializer(serializers.Serializer):
 
         offer.save()
 
+        OfferResolveNotification(offer.sa_user, offer.item, offer).send()
         return offer
 
 class WaitingListSubscriptionSerializer(serializers.ModelSerializer):
