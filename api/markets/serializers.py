@@ -8,11 +8,17 @@ from django.contrib.auth.models import User
 
 class ItemSerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField('_url')
+    accepted = serializers.SerializerMethodField('_accepted')
+
     def _url(self, obj):
         return '%s/%s' %(obj.sa_user.id, obj.slug)
+
+    def _accepted(self, obj):
+        return obj.offers.filter(accepted=True).exists()
+
     class Meta:
         model = Item
-        fields = ('id', 'name', 'description', 'slug', 'price', 'good_faith_money',
+        fields = ('id', 'name', 'description', 'slug', 'price', 'good_faith_money', 'accepted',
         'requires_good_faith_money', 'latitude','longitude','url','address', 'created_at')
 
 class CreateItemSerializer(serializers.Serializer):
