@@ -42,7 +42,7 @@ import { UserCredentialsModel, RegisterModel } from '../models/login/login.model
 export class LoginService {
 
 
-  private _BASE_URL : string = APP_SETUP.devEnvironment ? 'http://staging.aws.showsapp.com:8888/' : location.origin;
+  private _BASE_URL : string = APP_SETUP.devEnvironment ? 'http://staging.aws.showsapp.com:8888/' : location.origin + '/';
   private _loginURL : string = this._BASE_URL + 'api/v1/accounts/login/';
   private _registerURL : string = this._BASE_URL + 'api/v1/accounts/signup/';
   private _retrievePasswordURL : string = this._BASE_URL + 'api/v1/accounts/password_reset/';

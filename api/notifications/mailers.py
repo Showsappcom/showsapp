@@ -44,3 +44,22 @@ class NewOfferNotification(NotificationBase):
         context = super(NewOfferNotification, self).create_context()
         context.update({'user': self.user, 'subject': self.subject, 'item':self.item, 'offer':self.offer})
         return context
+
+
+class OfferResolveNotification(NotificationBase):
+    def __init__(self, user, item, offer, template='./notifications/seller/offer_resolve.html', verb=Notification.Verb.OFFER_RESOLVE):
+        self.user = user
+        self.item = item
+        self.offer = offer
+        if offer.accepted == True:
+            self.subject = "The seller has accepted your offer on %s" %(item.name)
+        else:
+            self.subject = "The seller has declined your offer on %s" %(item.name)
+
+        self.need_settings = False
+        super(OfferResolveNotification, self).__init__(template, verb, user.user, level=Notification.LEVELS.SUCCESS)
+
+    def create_context(self):
+        context = super(OfferResolveNotification, self).create_context()
+        context.update({'user': self.user, 'subject': self.subject, 'item':self.item, 'offer':self.offer})
+        return context

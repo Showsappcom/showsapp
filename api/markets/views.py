@@ -109,7 +109,7 @@ class MyItems(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user.sa_user
-        items = user.items.filter(active=True).order_by('id')
+        items = user.items.filter(active=True).order_by('-id')
 
         return items
 
@@ -209,8 +209,12 @@ class MyItem(generics.ListAPIView):
             return Response({}, status=404)
 
 
-def item(request,id):
-    item = Item.objects.get(pk=id)
-    context = { "item": item, "stripe_pk": settings.STRIPE['PUBLISHABLE_KEY'], "value": item.good_faith_money * 100 }
+def item(request,seller_id, slug):
+    items = Item.objects.filter(slug=slug, sa_user__id=seller_id)
+    if items.exists():
+        context = { "item": items[0] }
+    else:
+        context = { "item": None }
+
     template = get_template('./markets/item.html')
     return HttpResponse(template.render(context,request))

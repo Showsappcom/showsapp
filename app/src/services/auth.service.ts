@@ -43,7 +43,7 @@ export class AuthService {
   /**
    * @type {string} _BASE_URL - Provides based url
    */
-  private _BASE_URL : string = APP_SETUP.devEnvironment ? 'http://staging.aws.showsapp.com:8888/' : location.origin;
+  private _BASE_URL : string = APP_SETUP.devEnvironment ? 'http://staging.aws.showsapp.com:8888/' : location.origin + '/';
   /**
    * @type {string} _activateURL - Provides activation url url
    */

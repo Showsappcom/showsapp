@@ -3,16 +3,22 @@ from markets.models import WaitingListSubscription, Item, Offer
 from accounts.serializers import AccountSerializer, SAUserSerializer, SignupSerializer
 from django.db.models import Q
 import stripe
-from notifications.mailers import NewOfferNotification
+from notifications.mailers import NewOfferNotification, OfferResolveNotification
 from django.contrib.auth.models import User
 
 class ItemSerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField('_url')
+    accepted = serializers.SerializerMethodField('_accepted')
+
     def _url(self, obj):
         return '%s/%s' %(obj.sa_user.id, obj.slug)
+
+    def _accepted(self, obj):
+        return obj.offers.filter(accepted=True).exists()
+
     class Meta:
         model = Item
-        fields = ('id', 'name', 'description', 'slug', 'price', 'good_faith_money',
+        fields = ('id', 'name', 'description', 'slug', 'price', 'good_faith_money', 'accepted',
         'requires_good_faith_money', 'latitude','longitude','url','address', 'created_at')
 
 class CreateItemSerializer(serializers.Serializer):
@@ -131,8 +137,9 @@ class AcceptDeclineOfferSerializer(serializers.Serializer):
 
         offer.accepted = accept
 
-        offer.save
+        offer.save()
 
+        OfferResolveNotification(offer.sa_user, offer.item, offer).send()
         return offer
 
 class WaitingListSubscriptionSerializer(serializers.ModelSerializer):
@@ -200,10 +207,10 @@ class DetailedItemSerializer(serializers.ModelSerializer):
         return '%s/%s' %(obj.sa_user.id, obj.slug)
 
     def _offers(self, obj):
-        return OfferSerializer(obj.offers.filter(on_hold=False), many=True).data
+        return OfferSerializer(obj.offers.filter(on_hold=False).order_by('-id'), many=True).data
 
     def _waiting_list(self, obj):
-        return WaitingListSubscriptionSerializer(obj.waiting_list_subscription.filter(active=True), many=True).data
+        return WaitingListSubscriptionSerializer(obj.waiting_list_subscription.filter(active=True).order_by('-id'), many=True).data
 
     class Meta:
         model = Item
