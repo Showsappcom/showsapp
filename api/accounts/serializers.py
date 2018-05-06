@@ -41,14 +41,16 @@ class SignupSerializer(serializers.Serializer):
             auth_user = User.objects.create(first_name=first_name,
                                             last_name=last_name,
                                             email=email,
-                                            username=email)
+                                            username=email,
+                                            is_active=False)
             auth_user.set_password(password)
             auth_user.save()
-            account = Account.objects.create(name=name)
+            account = Account.objects.create(name=name, activated=False)
             sa_user = SAUser.objects.create(first_name=first_name,
                                             last_name=last_name,
                                             user=auth_user,
                                             account=account,
+                                            activated=False,
                                             email=email)
 
             # create a token
