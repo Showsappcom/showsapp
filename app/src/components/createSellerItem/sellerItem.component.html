@@ -7,8 +7,10 @@
     </button>
   </div>
   <div class="item-content-container">
-    <div class="form-container" *ngIf="itemCreated" style="margin-bottom:20px;">
-      Your item was created, please copy and paste this link into your seller site: <span class="primary-color">{{itemLink}}</span>
+    <div class="form-container" *ngIf="itemCreated" style="margin-bottom:20px;" id="itemCreatedTxt">
+      <p id="createTxt">
+        Your item was created, please copy and paste this link into your seller site: <span class="primary-color">{{itemLink}}</span>
+      </p>
     </div>
     <div class="form-container" *ngIf="!itemCreated">
       <form novalidate [formGroup]="itemFormControl">
@@ -51,11 +53,11 @@
 
   </div>
   <button *ngIf="!itemCreated" mat-button [disabled]="!itemFormControl.valid" color="primary"
-          (click)="processItemAction()">{{createItem ?
+          (click)="processItemAction()" style="width: 120px">{{createItem ?
     'ADD ITEM' : 'SAVE'}}
   </button>
   <button *ngIf="itemCreated" mat-button color="primary"
-          (click)="close()">CLOSE
+          (click)="close()" style="width: 120px;">CLOSE
   </button>
 </div>
 
