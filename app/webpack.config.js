@@ -484,7 +484,7 @@ else if ( ENV_PRODUCTION_DESK_AOT || ENV_PRODUCTION_DESK_AOT_VIS ) {
       mangle: { screw_ie8: true }
     } ),
     new workboxPlugin.GenerateSW( {
-      cacheId: 'shows-app-pwa',
+      cacheId: 'showsapp-pwa',
       clientsClaim: true,
       directoryIndex: 'index.html',
       // globDirectory: DIST_DIR,
@@ -493,7 +493,7 @@ else if ( ENV_PRODUCTION_DESK_AOT || ENV_PRODUCTION_DESK_AOT_VIS ) {
       importWorkboxFrom: 'local',
       navigateFallback: '/index.html',
       precacheManifestFilename: 'sa-manifest.[manifestHash].js',
-      swDest: 'swapp.js',
+      swDest: 'swapppwa.js',
       skipWaiting: true,
     } )
   );

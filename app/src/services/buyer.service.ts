@@ -64,37 +64,33 @@ export class BuyerService {
 
       x = x * 100;
 
-      if (x > 98) {
-
-        return '99';
-
-      } else if (x >= 100){
+      if (x >= 100) {
 
         return '100';
 
       } else {
 
 
-        if(x >= 60 && x <= 87){
+        if (x >= 60 && x <= 87) {
 
           let optionCubedDouble = Number((0.0013 * Math.pow(x, 3)) - (0.3668 * Math.pow(x, 2)) + 34.548 * x - 1003.4);
 
           optionCubedDouble = Math.trunc(optionCubedDouble);
 
-          if(optionCubedDouble > 100){
+          if (optionCubedDouble >= 100) {
 
             return '100';
-          }else{
-            return ''+ Math.trunc(optionCubedDouble);
+          } else {
+            return '' + Math.trunc(optionCubedDouble);
 
           }
 
 
-        }else if(x >= 88 && x < 99){
+        } else if (x >= 88 && x < 99) {
 
           return '' + Math.trunc(x);
 
-        }else{
+        } else {
 
           let optionCubed = Math.trunc((0.0003 * Math.pow(x, 3)) - (0.0238 * Math.pow(x, 2)) + 0.6125 * x - 1.5308);
           // let optionY = (-1*primaryTerm*xFourth)+(3*secondTerm*xThird)+(-0.0002*xSquared)+(0.0052*x);
@@ -107,7 +103,7 @@ export class BuyerService {
 
 
           console.log('option Cubed', optionCubed);
-          if (optionCubed > 99) {
+          if (optionCubed >= 100) {
 
             return '100';
 
