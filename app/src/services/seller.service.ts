@@ -160,6 +160,7 @@ export class SellerService {
 
   }
 
+
   public updateOfferListSort( option : string, offerArray : Array<object> ) : Array<object> {
     return offerArray.sort(( a, b ) => {
       return a[ 'value' ] - b[ 'value' ];

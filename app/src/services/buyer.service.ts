@@ -85,14 +85,14 @@ export class BuyerService {
 
             return '100';
           }else{
-            return ''+ optionCubedDouble;
+            return ''+ Math.trunc(optionCubedDouble);
 
           }
 
 
         }else if(x >= 88 && x < 99){
 
-          return '' + x;
+          return '' + Math.trunc(x);
 
         }else{
 

@@ -14,17 +14,17 @@ enableProdMode();
 function init() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      // console.log('!!!!!!!!!!i am here ....');
-      // navigator.serviceWorker.register('/sw.js').then(registration => {
-      //   console.log('SW registered: ', registration);
-      //   platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
-      //
-      // }).catch(registrationError => {
-      //   console.log('SW registration failed: ', registrationError);
-      //   platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
-      //
-      // });
-      platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
+      console.log('!!!!!!!!!!i am here ....');
+      navigator.serviceWorker.register('/swapp.js').then(registration => {
+        console.log('SW registered: ', registration);
+        platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
+
+      }).catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
+        platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
+
+      });
+      // platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
 
     });
   }

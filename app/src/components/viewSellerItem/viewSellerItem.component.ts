@@ -156,8 +156,12 @@ export class ViewSellerItemComponent {
       offer: id,
       accept: false
     }).takeWhile(() => {
+
       return this._compActive;
     }).subscribe(( res : any ) => {
+      this.item[ 'offers' ] = this._sellerService.updateSellerItem(res[ 'id' ], res[ 'accepted' ], this.item[ 'offers' ]);
+      this.offerAcceptedOnItem = this._sellerService.determineOfferAccepted(this.item[ 'offers' ], 'accepted');
+
       console.log('the res for create item is...', res);
     });
   }
