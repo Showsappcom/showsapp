@@ -86,6 +86,9 @@ class CreateOfferSerializer(serializers.Serializer):
         item = Item.objects.get(pk=item_id)
         on_hold = True
 
+        if item.active == False:
+            raise exceptions.APIException('The item is no longer available.')
+
         if user.is_anonymous:
             signup = SignupSerializer(data={
                 'email': email,
