@@ -11,32 +11,49 @@ import './shared/styles/_styles.scss';
 enableProdMode();
 
 
+function isIOS() {
+
+  let iDevices = [
+    'iPad Simulator',
+    'iPhone Simulator',
+    'iPod Simulator',
+    'iPad',
+    'iPhone',
+    'iPod'
+  ];
+
+  if (!!navigator.platform) {
+    while (iDevices.length) {
+      if (navigator.platform === iDevices.pop()) { return true; }
+    }
+  }
+
+  return false;
+}
+
 function init() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       console.log('!!!!!!!!!!i am here ....');
 
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/swapppwa.js').then(registration => {
-          console.log('SW registered: ', registration);
-          platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
-
-        }).catch(registrationError => {
-          console.log('SW registration failed: ', registrationError);
-          platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
-
-        });
-      } else {
-        
+      navigator.serviceWorker.register('/swapppwa.js').then(registration => {
+        console.log('SW registered: ', registration);
         platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
 
-      }
+      }).catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
+        platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
+
+      });
 
       // platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
 
 
-
     });
+  } else {
+
+    platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
+
   }
 }
 
