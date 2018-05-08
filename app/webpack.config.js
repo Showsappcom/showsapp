@@ -487,16 +487,54 @@ else if ( ENV_PRODUCTION_DESK_AOT || ENV_PRODUCTION_DESK_AOT_VIS ) {
       cacheId: 'showsapp-pwa',
       clientsClaim: true,
       directoryIndex: 'index.html',
+      runtimeCaching: [ {
+        urlPattern: /api/,
+        handler: 'networkFirst',
+        options: {
+          // Fall back to the cache after 10 seconds.
+          networkTimeoutSeconds: 10,
+          // Use a custom cache name for this route.
+          cacheName: 'my-api-cache',
+          // Configure custom cache expiration.
+          expiration: {
+            maxEntries: 5,
+            maxAgeSeconds: 60
+          },
+          cacheableResponse: {
+            statuses: [ 0, 200 ],
+          },
+          broadcastUpdate: {
+            channelName: 'showsapp-update-channel',
+          },
+        },
+
+      },
+        {
+          // To match cross-origin requests, use a RegExp that matches
+          // the start of the origin:
+          urlPattern: new RegExp( '^https://cors\.example\.com/' ),
+          handler: 'staleWhileRevalidate',
+          options: {
+            cacheableResponse: {
+              statuses: [ 0, 200 ]
+            }
+          }
+        }
+      ],
       // globDirectory: DIST_DIR,
       // globPatterns: [ '**/*.{html,js,css}' ],
       // importsDirectory: 'assets',
       importWorkboxFrom: 'local',
-      navigateFallback: '/index.html',
-      precacheManifestFilename: 'sa-manifest.[manifestHash].js',
-      swDest: 'swapppwa.js',
-      skipWaiting: true,
+      // navigateFallback: '/index.html',
+      precacheManifestFilename:
+        'sa-manifest.[manifestHash].js',
+      swDest:
+        'swapppwa.js',
+      skipWaiting:
+        true
     } )
-  );
+  )
+  ;
 }
 
 

@@ -26,10 +26,14 @@ function init() {
           platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
 
         });
-      }else{
+      } else {
+        
         platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
 
       }
+
+      // platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
+
 
 
     });

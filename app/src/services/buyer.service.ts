@@ -19,15 +19,15 @@ import * as base from '../actions/base';
 /**
  * Configuration
  */
-import { APP_SETUP } from "../configurations/app.configuration";
-import { COMMON_CONSTANTS as COMMON_CONST } from "../configurations/constants/common.constant";
+import { APP_SETUP } from '../configurations/app.configuration';
+import { COMMON_CONSTANTS as COMMON_CONST } from '../configurations/constants/common.constant';
 
 /**
  * Required Services
  */
 import { DataService } from './data.service';
-import { Observable } from "rxjs/Observable";
-import { ToastEvent } from "./toastEvent.service";
+import { Observable } from 'rxjs/Observable';
+import { ToastEvent } from './toastEvent.service';
 
 /**
  * A service that provides translations

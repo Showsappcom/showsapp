@@ -1,9 +1,9 @@
 /**
  * Angular Imports
  */
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /**
  * Services
@@ -13,7 +13,7 @@ import { BuyerService } from '../../services/buyer.service';
  * Models/Interfaces
  */
 import { SellerItemModel } from '../../models/items/item.model';
-import { CustomFormValidator } from "../../validators/customForm.validator";
+import { CustomFormValidator } from '../../validators/customForm.validator';
 
 @Component({
   templateUrl: './buyerDashboard.component.html',
@@ -125,7 +125,7 @@ export class BuyerDashboardComponent {
       return this._compActive;
     }).subscribe(val => {
       console.log('this val changed....', val);
-      this.spinnerValue = this._buyerService.getProbability(this.sellerItem.price, val.value)
+      this.spinnerValue = this._buyerService.getProbability(this.sellerItem.price, val.value);
 
 
     });

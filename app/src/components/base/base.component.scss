@@ -9,7 +9,7 @@
 
   mat-toolbar-row {
     padding: 0 10px;
-    span{
+    span {
       @include flex-grow(1);
 
     }
@@ -36,6 +36,7 @@
     .router-container {
       height: 100%;
       width: 100%;
+      overflow-y: auto;
     }
   }
   .base-content {

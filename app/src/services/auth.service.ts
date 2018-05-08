@@ -154,7 +154,7 @@ export class AuthService {
       }
 
       setTimeout(() => {
-        let testCookie = this._cookieService.get('sa_access_token')
+        let testCookie = this._cookieService.get('sa_access_token');
         if (testCookie && testCookie !== null) {
           observer.next('error');
           observer.complete();

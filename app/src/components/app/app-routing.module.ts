@@ -33,7 +33,7 @@ const appRoutes : Routes = [
   },
   {
     path: 'item/:sellerId/:slugId',
-    component: BuyerDashboardComponent,
+    component: BuyerDashboardComponent
   },
   {
     path: 'reset/:activateCode',

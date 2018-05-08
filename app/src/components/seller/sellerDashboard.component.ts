@@ -113,10 +113,9 @@ export class SellerDashboardComponent {
   }
 
 
-
-
   private _getSellersItems() : void {
     let offerList = [];
+    this.dataReturned = false;
     // let temp = JSON.parse(JSON.stringify(SellerItems));
 
     // console.log('the sellers items are ::::', this.sellersItems, SellerItems);
@@ -140,8 +139,8 @@ export class SellerDashboardComponent {
       console.log('@@@@@@@@@@@@@@@::::::');
       this.sellersItems = data.results;
 
-      this.sellersItems.forEach((item)=>{
-        item['offerAccepted'] = this._sellerService.determineOfferAccepted(item['offers'], 'accepted');
+      this.sellersItems.forEach(( item ) => {
+        item[ 'offerAccepted' ] = this._sellerService.determineOfferAccepted(item[ 'offers' ], 'accepted');
       });
 
       console.log('the sellersItems are ', this.sellersItems);
@@ -149,11 +148,11 @@ export class SellerDashboardComponent {
 
     });
     // this.offerList = offerList;
-    this.dataReturned = true;
     this.errorGettingData = false;
 
     this.offerList = offerList;
     console.log('offerList:::', this.offerList);
+    this.dataReturned = true;
 
 
   }

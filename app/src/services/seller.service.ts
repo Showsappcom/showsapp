@@ -156,7 +156,7 @@ export class SellerService {
       }
 
       return node;
-    })
+    });
 
   }
 

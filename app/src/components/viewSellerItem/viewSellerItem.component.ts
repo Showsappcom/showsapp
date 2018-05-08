@@ -60,7 +60,7 @@ export class ViewSellerItemComponent {
 
   public orderByOptions : Array<object> = [
     { value: 'price', viewValue: 'Price', icon: 'cash' },
-    { value: 'date', viewValue: 'Latest', icon: 'calendar' },
+    { value: 'date', viewValue: 'Latest', icon: 'calendar' }
   ];
 
   /**

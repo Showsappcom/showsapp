@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /**
  * Constants
  */
-import {APP_SETUP} from '../../configurations/app.configuration'
+import { APP_SETUP } from '../../configurations/app.configuration';
 
 /**
  * Custom Services
@@ -18,7 +18,7 @@ import { SellerItemService } from '../../services/sellerItem.service';
 /**
  * Custom Validators
  */
-import {CustomFormValidator} from '../../validators/customForm.validator';
+import { CustomFormValidator } from '../../validators/customForm.validator';
 
 /**
  * Store
@@ -180,7 +180,7 @@ export class SellerItemComponent {
       }).subscribe(( res : any ) => {
         console.log('the res for create item is...', res);
         this.itemCreated = true;
-        this.itemLink = APP_SETUP.domain+'/item/' + res[ 'url' ];
+        this.itemLink = APP_SETUP.domain + '/item/' + res[ 'url' ];
         // this.close();
       });
 
