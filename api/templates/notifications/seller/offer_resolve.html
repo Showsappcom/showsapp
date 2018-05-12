@@ -22,7 +22,7 @@
 
 {% else %}
 <p>Unfortunately, the seller has declined your offer of ${{ offer.value }} for {{ item.name }}.</p>
-<p>Would you like to make a new offer? Click this <a href="{% settings_value "FRONTEND_DOMAIN" %}/item/{{ item.sa_user.id }}/{{ item.slug }}">link</a></p>
+<p>Would you like to make a new offer? Click this <a href="{% settings_value "FRONTEND_DOMAIN" %}item/{{ item.sa_user.id }}/{{ item.slug }}">link</a></p>
 
 {% endif %}
 
