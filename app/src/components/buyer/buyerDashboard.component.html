@@ -20,8 +20,10 @@
           <div class="offer-info-container" [ngClass]="{'item-available': !sellerItem.accepted , 'item-not-available' : sellerItem.accepted}">
             <mat-icon style="margin-right:10px" *ngIf="!sellerItem.accepted && sellerItem.active">check_circle</mat-icon>
             <span *ngIf="!sellerItem.accepted && sellerItem.active">This item is still available</span>
-            <mat-icon style="margin-right:10px" *ngIf="sellerItem.accepted || !sellerItem.active">error</mat-icon>
-            <span *ngIf="sellerItem.accepted  || !sellerItem.active">This item has been sold pending pickup. Enter your email and offer to be automatically notified if the buyer falls through</span>
+            <mat-icon style="margin-right:10px" *ngIf="sellerItem.accepted && sellerItem.active">error</mat-icon>
+            <span *ngIf="sellerItem.accepted  && sellerItem.active">This item has been sold pending pickup. Enter your email and offer to be automatically notified if the buyer falls through</span>
+            <mat-icon style="margin-right:10px" *ngIf="!sellerItem.active">error</mat-icon>
+            <span *ngIf="!sellerItem.active">This item is no longer available, and not accepting more offers.</span>            
           </div>
           <div class="mat-card-container" *ngIf="!offerSent">
             <div class="mat-card-ref provide-space">
