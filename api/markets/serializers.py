@@ -19,7 +19,7 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ('id', 'name', 'description', 'slug', 'price', 'good_faith_money', 'accepted',
-        'requires_good_faith_money', 'latitude','longitude','url','address', 'created_at')
+        'active', 'requires_good_faith_money', 'latitude','longitude','url','address', 'created_at')
 
 class CreateItemSerializer(serializers.Serializer):
     name = serializers.CharField(allow_null=False, allow_blank=False, write_only=True, required=True)
@@ -43,7 +43,7 @@ class CreateItemSerializer(serializers.Serializer):
         address = validated_data.get('address')
 
         item = Item.objects.create(
-            name=name, 
+            name=name,
             description=description,
             price=price,
             good_faith_money=good_faith_money,
@@ -103,7 +103,7 @@ class CreateOfferSerializer(serializers.Serializer):
             elif signup.errors.get('email') != None:
                 sa_user = User.objects.filter(username__iexact=email)[0].sa_user
                 if not sa_user.activated:
-                    raise exceptions.APIException('Should verify the accout first.')
+                    raise exceptions.APIException('Should verify the account first.')
 
         else:
             on_hold = False
@@ -217,6 +217,6 @@ class DetailedItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('id', 'name', 'description', 'slug', 'price',
+        fields = ('id', 'name', 'description', 'slug', 'price', 'active',
                   'good_faith_money', 'requires_good_faith_money',
                   'url', 'offers', 'waiting_list', 'created_at')

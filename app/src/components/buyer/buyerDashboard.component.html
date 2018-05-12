@@ -18,7 +18,7 @@
             <span class="primary-color">{{sellerItem.name}}</span> - ${{sellerItem.price}}.00
           </div>
           <div class="offer-info-container" [ngClass]="{'item-available': !sellerItem.accepted , 'item-not-available' : sellerItem.accepted}">
-            <mat-icon style="margin-right:10px" *ngIf="!sellerItem.accepted">check_circle</mat-icon>
+            <mat-icon style="margin-right:10px" *ngIf="!sellerItem.accepted && sellerItem.active">check_circle</mat-icon>
             <span *ngIf="!sellerItem.accepted">This item is still available</span>
             <mat-icon style="margin-right:10px" *ngIf="sellerItem.accepted">error</mat-icon>
             <span *ngIf="sellerItem.accepted">This item has been sold pending pickup. Enter your email and offer to be automatically notified if the buyer falls through</span>

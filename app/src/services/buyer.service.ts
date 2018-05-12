@@ -188,7 +188,7 @@ export class BuyerService {
       } else {
         this._toastEvent.fire({
           type: COMMON_CONST.ERROR,
-          message: 'There was an error sending your offer, please try again'
+          message: error.error.detail
         });
       }
 
