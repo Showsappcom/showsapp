@@ -6,9 +6,12 @@ from django.views.generic import RedirectView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 from accounts.views import Signup, Activate, PasswordResetView, SetNewPassword
+from rest_framework_jwt.views import ObtainJSONWebToken
+from accounts.jwt import CustomJWTSerializer
 
 urlpatterns = [
-    url(r'^login/', obtain_jwt_token),
+    # url(r'^login/', obtain_jwt_token),
+    url(r'^login/', ObtainJSONWebToken.as_view(serializer_class=CustomJWTSerializer)),
     url(r'^token-refresh/', refresh_jwt_token),
     url(r'^token-verify/', verify_jwt_token),
     url(r'^signup/', Signup.as_view(), name="signup"),

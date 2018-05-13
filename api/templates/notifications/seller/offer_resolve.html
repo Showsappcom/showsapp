@@ -2,27 +2,26 @@
 {% load notifications_tags %}
 
 {% block subject %}
+{{ subject }}
 {% endblock %}
 {% block body %}
 
 {% if offer.accepted %}
-    <p>Congratulations! The seller has accepted your offer of ${{ offer.value }} for {{ item.name }}.</p>
+    Congratulations! The seller has accepted your offer of <b>${{ offer.value }}</b> for <b>{{ item.name }}</b>.<br/><br/>
 
     <b>The seller’s contact info:</b><br/>
 
-    Email: {{ item.sa_user.email }} <br/>
+    Email: {{ item.sa_user.email }} <br/><br/>
 
-
-    <p>Please contact the seller directly so that you can schedule the item pickup.</p>
-
-
+    Please contact the seller directly so that you can schedule the item pickup.<br/><br/>
 
     <b>Are you a seller?</b><br/>
-    <p>Use ShowsApp to manage buyers across all the marketplaces you sell in. Click the “Create Link” button in your dashboard, enter a few details about your item, click the “copy” button, and paste in any marketplaces you want to sell your item. ShowsApp will aggregate all the offers and notify you, while automating a wait list in case the first buyer falls through. Saves you time and frustration, and always free to use.</p>
+    Use ShowsApp to manage buyers across all the marketplaces you sell in. Click the “Create Link” button in your dashboard, enter a few details about your item, click the “copy” button, and paste in any marketplaces you want to sell your item. ShowsApp will aggregate all the offers and notify you, while automating a wait list in case the first buyer falls through. Saves you time and frustration, and always free to use.<br/><br/>
 
 {% else %}
-<p>Unfortunately, the seller has declined your offer of ${{ offer.value }} for {{ item.name }}.</p>
-<p>Would you like to make a new offer? Click this <a href="{% settings_value "FRONTEND_DOMAIN" %}/item/{{ item.sa_user.id }}/{{ item.slug }}">link</a></p>
+   Unfortunately, the seller has declined your offer of <b>${{ offer.value }}</b> for <b>{{ item.name }}</b>.<br/><br/>
+
+<p>Would you like to make a new offer? Click on the button below.<br/><br/>
 
 {% endif %}
 
@@ -30,4 +29,12 @@
 Click <a href="{% settings_value "FRONTEND_DOMAIN" %}">here</a> to add ShowsApp to your phone’s home screen. 
 
 
+{% endblock %}
+
+{% block cta %}
+ {% if offer.accepted %}
+   href="mailto:{{ item.sa_user.email }}">Contact Seller
+ {% else %}
+   href="{% settings_value "FRONTEND_DOMAIN" %}item/{{ item.sa_user.id }}/{{ item.slug }}">Place new offer!
+ {% endif %}
 {% endblock %}

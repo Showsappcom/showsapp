@@ -5,15 +5,15 @@
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
-            "implementation_version": "3.6.3",
+            "implementation_version": "3.5.2",
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "4.13.0-38-generic",
+            "platform_release": "4.13.0-39-generic",
             "platform_system": "Linux",
-            "platform_version": "#43~16.04.1-Ubuntu SMP Wed Mar 14 17:48:43 UTC 2018",
-            "python_full_version": "3.6.3",
-            "python_version": "3.6",
+            "platform_version": "#44~16.04.1-Ubuntu SMP Thu Apr 5 16:43:10 UTC 2018",
+            "python_full_version": "3.5.2",
+            "python_version": "3.5",
             "sys_platform": "linux"
         },
         "pipfile-spec": 6,
@@ -70,10 +70,10 @@
         },
         "certifi": {
             "hashes": [
-                "sha256:14131608ad2fd56836d33a71ee60fa1c82bc9d2c8d98b7bdbc631fe1b3cd1296",
-                "sha256:edbc3f203427eef571f79a7692bb160a2b0f7ccaa31953e99bd17e307cf63f7d"
+                "sha256:9fa520c1bacfb634fa7af20a76bcbd3d5fb390481724c597da32c719a7dca4b0",
+                "sha256:13e698f54293db9f89122b0581843a782ad0934a4fe0172d2a980ba77fc61bb7"
             ],
-            "version": "==2018.1.18"
+            "version": "==2018.4.16"
         },
         "cffi": {
             "hashes": [
@@ -105,7 +105,6 @@
                 "sha256:3c85641778460581c42924384f5e68076d724ceac0f267d66c757f7535069c93",
                 "sha256:e90f17980e6ab0f3c2f3730e56d1fe9bcba1891eeea58966e89d352492cc74f4"
             ],
-            "markers": "platform_python_implementation != 'PyPy'",
             "version": "==1.11.5"
         },
         "chardet": {
@@ -173,9 +172,9 @@
         },
         "django-allauth": {
             "hashes": [
-                "sha256:7b31526cccd1c46f9f09acf0703068e8a9669337d29eb065f7e8143c2d897339"
+                "sha256:7d9646e3560279d6294ebb4c361fef829708d106da697658cf158bf2ca57b474"
             ],
-            "version": "==0.35.0"
+            "version": "==0.36.0"
         },
         "django-cors-headers": {
             "hashes": [
@@ -186,10 +185,10 @@
         },
         "django-extensions": {
             "hashes": [
-                "sha256:37a543af370ee3b0721ff50442d33c357dd083e6ea06c5b94a199283b6f9e361",
-                "sha256:bc9f2946c117bb2f49e5e0633eba783787790ae810ea112fe7fd82fa64de2ff1"
+                "sha256:3be3debf53c77ca795bdf713726c923aa3c3f895e1a42e2e31a68c1a562346a4",
+                "sha256:94bfac99eb262c5ac27e53eda96925e2e53fe0b331af7dde37012d07639a649c"
             ],
-            "version": "==2.0.6"
+            "version": "==2.0.7"
         },
         "django-filter": {
             "hashes": [
@@ -233,10 +232,10 @@
         },
         "gunicorn": {
             "hashes": [
-                "sha256:75af03c99389535f218cc596c7de74df4763803f7b63eb09d77e92b3956b36c6",
-                "sha256:eee1169f0ca667be05db3351a0960765620dad53f53434262ff8901b68a1b622"
+                "sha256:7ef2b828b335ed58e3b64ffa84caceb0a7dd7c5ca12f217241350dec36a1d5dc",
+                "sha256:bc59005979efb6d2dd7d5ba72d99f8a8422862ad17ff3a16e900684630dd2a10"
             ],
-            "version": "==19.7.1"
+            "version": "==19.8.1"
         },
         "idna": {
             "hashes": [
@@ -294,9 +293,9 @@
         },
         "openpyxl": {
             "hashes": [
-                "sha256:63165adcc806a5c281febb344f3594541f778f05b99a3a5e802941a3c0a85f71"
+                "sha256:0046fca88d6731875a385bf7edd689d7c4133f829203ea615a81291de3fa48b6"
             ],
-            "version": "==2.5.2"
+            "version": "==2.5.3"
         },
         "psycopg2": {
             "hashes": [
@@ -438,10 +437,10 @@
         },
         "stripe": {
             "hashes": [
-                "sha256:d895204135102ff63ad26cdbb315180fdec3f01c44fe964533f022f2719c35b2",
-                "sha256:2ec19bf8ad588ec04b36c35f359196fa1991f9ad911b1686ac2a12651a154947"
+                "sha256:a2f2d8a0be26bd85abcb20421f54480ea58b12850b93f89ae7935ed6dd7be441",
+                "sha256:f2efc020defa311ed0eeaeff163e24a131cfa737e270672b9af8bb107f37cce6"
             ],
-            "version": "==1.79.1"
+            "version": "==1.80.0"
         },
         "tablib": {
             "hashes": [

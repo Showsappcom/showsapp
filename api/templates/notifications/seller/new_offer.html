@@ -2,13 +2,24 @@
 {% load notifications_tags %}
 
 {% block subject %}
+{{ subject }}
 {% endblock %}
 {% block body %}
 
-<p>Great news! A buyer has offered </b>${{ offer.value }}</b> for your <b>{{ item.name }}</b>.
- 
-    Would you like to <a href="{% settings_value "FRONTEND_DOMAIN" %}app/main">accept/decline</a> this offer?</p>
+Great news! A buyer has offered <b>${{ offer.value }}</b> for your <b>{{ item.name }}</b>. <br/>
 
-<p>If you accept the offer, the buyer will automatically be forwarded your contact email/phone number so that you can schedule a pickup.</p>
+If you accept the offer, the buyer will automatically be forwarded your contact email/phone number so that you can schedule a pickup.<br/><br/>
+
+<b>The buyer's message:</b><br/>
+{{ offer.message }}<br/><br/>
+
+Would you like to accept or decline this offer?</p>
+
+
+{% endblock %}
+
+{% block cta %}
+
+href="{% settings_value "FRONTEND_DOMAIN" %}app/main">Accept / Decline
 
 {% endblock %}
