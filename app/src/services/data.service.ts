@@ -66,6 +66,7 @@ export class DataService {
 
     });
 
+
   }
 
   private _checkError( error : any, endPoint : any ) {
@@ -79,25 +80,26 @@ export class DataService {
 
 
   /* Service Method to Login User */
-  public sendData( url : string, options : Object, override : boolean = false, justSend : boolean = false ) : Observable<any> {
+  public sendData( url : string, options : Object, override : boolean = false, justSend : boolean = false, noToken : boolean = false ) : Observable<any> {
     let isResponseHeaderExists = false;
 
     let headers = new HttpHeaders();
 
-    if (this._baseState && this._baseState.loggedIn && this._cookieService.get('sa_access_token')) {
+    if(!noToken){
+      if (this._baseState && this._baseState.loggedIn && this._cookieService.get('sa_access_token')) {
 
-      headers = headers.append('authorization', 'jwt ' + this._cookieService.get('sa_access_token'));
-      (Object as any).assign(options, { 'headers': headers });
+        headers = headers.append('authorization', 'jwt ' + this._cookieService.get('sa_access_token'));
 
+      }
+
+      if (override && this._cookieService.get('sa_access_token')) {
+
+        headers = headers.append('authorization', 'jwt ' + this._cookieService.get('sa_access_token'));
+
+      }
     }
 
-    if (override && this._cookieService.get('sa_access_token')) {
 
-      headers = headers.append('authorization', 'jwt ' + this._cookieService.get('sa_access_token'));
-
-      // console.log('i am here ....', headers);
-
-    }
 
     (Object as any).assign(options, { 'headers': headers });
 

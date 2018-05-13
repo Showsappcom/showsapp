@@ -53,12 +53,10 @@ export class AuthService {
   /**
    * @param {CookieService} _cookieService - Provides cookie service
    * @param {DataService} _dataService - Provides data service
-   * @param {Store<fromRoot.State>} _store - Provides store provider
    * @param {ToastEvent} _toastEvent - Provides toast event
    */
   constructor( private _cookieService : CookieService,
                private _dataService : DataService,
-               private _store : Store<fromRoot.State>,
                private _toastEvent : ToastEvent ) {
 
   }

@@ -103,7 +103,10 @@ export class BuyerService {
 
 
           console.log('option Cubed', optionCubed);
-          if (optionCubed >= 100) {
+
+          if (optionCubed <= 0) {
+            return '0';
+          } else if (optionCubed >= 100) {
 
             return '100';
 

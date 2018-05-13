@@ -37,9 +37,9 @@
               <form novalidate [formGroup]="offerControl">
                 <div>
                   <mat-form-field>
-                    <input matInput placeholder="Email" formControlName="email">
-                    <mat-error *ngIf="offerControl.get('email').hasError('email')">Not a valid email</mat-error>
-                    <mat-error *ngIf="offerControl.get('email').hasError('required')">Offer is required</mat-error>
+                      <textarea matInput placeholder="Message Seller" matTextareaAutosize matAutosizeMinRows="1"
+                                matAutosizeMaxRows="5" formControlName="message"></textarea>
+                    <mat-hint>Ex: 'I can come today'</mat-hint>
                   </mat-form-field>
                 </div>
                 <div class="spinner-offer-container">
@@ -62,18 +62,17 @@
                     </mat-progress-spinner>
                   </div>
                 </div>
+                <div class="explanation-container" style="margin-bottom:10px;">
+                  Your offer is expected to have {{spinnerValue}}% chance of being accepted by the seller
+                </div>
                 <div>
                   <mat-form-field>
-                      <textarea matInput placeholder="Message Seller" matTextareaAutosize matAutosizeMinRows="1"
-                                matAutosizeMaxRows="5" formControlName="message"></textarea>
-                    <mat-hint>Ex: 'I can come today'</mat-hint>
+                    <input matInput placeholder="Email" formControlName="email">
+                    <mat-error *ngIf="offerControl.get('email').hasError('email')">Not a valid email</mat-error>
+                    <mat-error *ngIf="offerControl.get('email').hasError('required')">Offer is required</mat-error>
                   </mat-form-field>
                 </div>
               </form>
-
-              <div class="explanation-container">
-                Your offer is expected to have {{spinnerValue}}% chance of being accepted by the seller
-              </div>
               <button mat-button color="primary" [disabled]="!offerControl.valid" (click)="sendOffer()">{{sellerItem.accepted ? 'JOIN WAIT LIST' : 'SEND OFFER'}}
               </button>
             </div>
