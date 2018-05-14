@@ -13,10 +13,7 @@
 
     Email: {{ item.sa_user.email }} <br/><br/>
 
-    Please contact the seller directly so that you can schedule the item pickup.<br/><br/>
-
-    <b>Are you a seller?</b><br/>
-    Use ShowsApp to manage buyers across all the marketplaces you sell in. Click the “Create Link” button in your dashboard, enter a few details about your item, click the “copy” button, and paste in any marketplaces you want to sell your item. ShowsApp will aggregate all the offers and notify you, while automating a wait list in case the first buyer falls through. Saves you time and frustration, and always free to use.<br/><br/>
+    Please contact the seller within 24 hours so that you can schedule the item pickup. Seller reserves the right to find another buyer if at any time they believe you won’t follow through with your offer.<br/><br/>
 
 {% else %}
    Unfortunately, the seller has declined your offer of <b>${{ offer.value }}</b> for <b>{{ item.name }}</b>.<br/><br/>
@@ -25,7 +22,7 @@
 
 {% endif %}
 
-<b>PS: Get the mobile app. experience!</b>
+<b>Are you a seller? Get the mobile app. experience!</b>
 Click <a href="{% settings_value "FRONTEND_DOMAIN" %}">here</a> to add ShowsApp to your phone’s home screen. 
 
 
