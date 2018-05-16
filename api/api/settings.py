@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'accounts',
     'utils',
     'markets',
-    'notifications'
+    'notifications',
+    'usertracking'
 ]
 
 MIDDLEWARE = [
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'usertracking.middleware.APITrackingMiddleWare',
 ]
 
 ROOT_URLCONF = 'api.urls'
