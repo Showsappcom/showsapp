@@ -25,9 +25,7 @@ class APITrackingMiddleWare(MiddlewareMixin):
         return None
 
     def process_response(self, request, response):
-        ### extract the hijack status from the session object to differenciate between 
-        ### hijacked requests and real users requests
-        is_hijacked = request.session.get('is_hijacked_user', False)
+
         try:
             time = request.time
         except:
@@ -46,7 +44,6 @@ class APITrackingMiddleWare(MiddlewareMixin):
             ip = get_client_ip(request)
         except:
             ip = '0.0.0.0'
-        RecordAPITracking_Async(email, request.path,is_hijacked,str(request_timestamp), execution_time, response.status_code, ip)    
-        #APITracking.objects.create(user = user, path = request.path, hijack = is_hijacked,request_timestamp=  request_timestamp,time_spent = execution_time)
+        RecordAPITracking_Async(email, request.path,str(request_timestamp), execution_time, response.status_code, ip)
 
         return response        
