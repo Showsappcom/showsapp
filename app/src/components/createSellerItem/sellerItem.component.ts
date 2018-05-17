@@ -142,7 +142,7 @@ export class SellerItemComponent {
       ],
       description: [
         '',
-        [ Validators.required ]
+        []
       ],
       address: [
         '',
