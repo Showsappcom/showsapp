@@ -39,11 +39,13 @@ class APITrackingMiddleWare(MiddlewareMixin):
                 logout(request)
         except:
             email = ''
-        
+
         try:
             ip = get_client_ip(request)
         except:
             ip = '0.0.0.0'
-        RecordAPITracking_Async(email, request.path,str(request_timestamp), execution_time, response.status_code, ip)
+        
+        if request.path.startswith('/api/'):
+            RecordAPITracking_Async(email, request.path,str(request_timestamp), execution_time, response.status_code, ip)
 
         return response        
