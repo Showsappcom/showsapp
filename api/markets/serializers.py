@@ -1,14 +1,25 @@
 from rest_framework import serializers, exceptions
-from markets.models import WaitingListSubscription, Item, Offer
+from markets.models import WaitingListSubscription, Item, Offer, GalleryPhoto
 from accounts.serializers import AccountSerializer, SAUserSerializer, SignupSerializer
 from django.db.models import Q
 import stripe
 from notifications.mailers import NewOfferNotification, OfferResolveNotification
 from django.contrib.auth.models import User
 
+class GallerySerializer(serializers.ModelSerializer):    
+    class Meta:
+        model = GalleryPhoto
+        fields = ('id', 'gallery_photo_small_url')
+
+
+
 class ItemSerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField('_url')
     accepted = serializers.SerializerMethodField('_accepted')
+    images = serializers.SerializerMethodField('_images')
+
+    def _images(self, obj):
+        return GallerySerializer(obj.images.filter(active=True), many=True).data
 
     def _url(self, obj):
         return '%s/%s' %(obj.sa_user.id, obj.slug)
@@ -19,7 +30,7 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ('id', 'name', 'description', 'slug', 'price', 'good_faith_money', 'accepted',
-        'active', 'requires_good_faith_money', 'latitude','longitude','url','address', 'created_at')
+        'active', 'requires_good_faith_money', 'latitude','longitude','url','address', 'created_at', 'images')
 
 class CreateItemSerializer(serializers.Serializer):
     name = serializers.CharField(allow_null=False, allow_blank=False, write_only=True, required=True)
@@ -206,6 +217,11 @@ class DetailedItemSerializer(serializers.ModelSerializer):
     offers = serializers.SerializerMethodField('_offers')
     waiting_list = serializers.SerializerMethodField('_waiting_list')
     url = serializers.SerializerMethodField('_url')
+    images = serializers.SerializerMethodField('_images')
+
+    def _images(self, obj):
+        return GallerySerializer(obj.images.filter(active=True), many=True).data
+
     def _url(self, obj):
         return '%s/%s' %(obj.sa_user.id, obj.slug)
 
@@ -219,4 +235,4 @@ class DetailedItemSerializer(serializers.ModelSerializer):
         model = Item
         fields = ('id', 'name', 'description', 'slug', 'price', 'active',
                   'good_faith_money', 'requires_good_faith_money',
-                  'url', 'offers', 'waiting_list', 'created_at')
+                  'url', 'offers', 'waiting_list', 'created_at', 'images')

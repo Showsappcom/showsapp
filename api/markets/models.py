@@ -2,6 +2,7 @@ from django.db import models
 from accounts.models import Account, SAUser
 from django.utils import timezone
 from django.utils.text import slugify
+from django.conf import settings
 # Create your models here.
 
 class Item(models.Model):
@@ -74,19 +75,20 @@ class WaitingListSubscription(models.Model):
         app_label = 'markets'
 
 def itemgallery_generate_filename(self, filename):
-    url = "%s/%s/small/%s" % ('gallery', self.user.id, filename)
+    url = "%s/%s/small/%s" % ('gallery', self.item.id, filename)
     return url 
 
 class GalleryPhoto(models.Model):
-    item = models.ForeignKey(Item, related_name='gallery', null=True, blank=True, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, related_name='images', null=True, blank=True, on_delete=models.CASCADE)
     description = models.TextField(blank=True, null=True)
     link = models.CharField(max_length=255, blank=True, null=True)
+    active = models.BooleanField(default=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     photo_file_name = models.FileField(upload_to=itemgallery_generate_filename, blank=True, null=True)
 
     class Meta:
-        app_label = 'users'   
+        app_label = 'markets'   
 
     @property
     def gallery_photo_small_url(self):
