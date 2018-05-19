@@ -78,7 +78,7 @@ export class SellerItemService {
 
       this._toastEvent.fire({
         type: COMMON_CONST.ERROR,
-        message: 'There was an error getting your items please try agin'
+        message: 'There was an error getting your items please try again'
       });
 
       return Observable.throw(error || COMMON_CONST.SERVER_ERROR);

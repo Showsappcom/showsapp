@@ -10,7 +10,8 @@
     <div class="form-container" *ngIf="itemCreated" style="margin-bottom:20px;" id="itemCreatedTxt">
       <p>Please copy the text below and paste it into your ad: </p>
       <p id="createTxt">
-        Want to know if the item is still available? Click here <span class="primary-color"><a href="{{itemLink}}">{{itemLink}}</a></span> and instantly get the answer. Want to know if your offer will be competitive? Try a no-commitment offer against the ShowsApp prediction engine before submitting to the seller
+        Please copy the link below and paste it into your ad. The link will generate your item's photo and default copy inviting buyers to test their offer's viability before sending it to you. Good luck with your sale.
+        <a href="{{itemLink}}"><span class="primary-color">{{itemLink}}</span></a>
       </p>
     </div>
     <div class="form-container" *ngIf="!itemCreated">
