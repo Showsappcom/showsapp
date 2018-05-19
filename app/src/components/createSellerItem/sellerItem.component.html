@@ -17,7 +17,7 @@
       <form novalidate [formGroup]="itemFormControl">
 
         <mat-form-field>
-          <input matInput required placeholder="1-10 words to describe the item benefit to the buyer." type="text" formControlName="name"
+          <input matInput required placeholder="1-10 words to describe the item benefit to buyer." type="text" formControlName="name"
                  id="productName" tabindex="0"/>
           <mat-error *ngIf="itemFormControl.get('name').hasError('required')">
             Headline is required
