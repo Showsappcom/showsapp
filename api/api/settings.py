@@ -243,6 +243,24 @@ STRIPE = {
     "PUBLISHABLE_KEY": "pk_test_key"
 }
 
+# AWS section
+# -----------------------
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+AWS_STORAGE_BUCKET_NAME = ''
+AWS_CLOUDFROUND_ENDPOINT = ''
+AWS_AUTO_CREATE_BUCKET = True
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_FILE_OVERWRITE = False
+
+DEFAULT_FILE_STORAGE = 'utils.s3storage.S3BotoStorage'
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+MEDIA_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+#IMAGES_URL = 'http://%s.s3-website-us-east-1.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+IMAGES_URL = 'https://%s/' % AWS_CLOUDFROUND_ENDPOINT
+
+
 # import the customized settings from settings_local
 
 try:

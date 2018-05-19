@@ -96,5 +96,5 @@ class GalleryPhoto(models.Model):
             result = '%s%s' %(settings.IMAGES_URL, self.photo_file_name)
         else:
             result =  '%sdefault/%s' % (settings.IMAGES_URL, settings.DEFAULT_PROFILE_PHOTO)
-        return result        
+        return result
 

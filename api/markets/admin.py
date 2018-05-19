@@ -34,9 +34,9 @@ class GalleryPhotoAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at','image_tag')
 
     def image_tag(self, obj):
-  
         return '<img src="{}" width="150px" height="150px" />'.format(obj.gallery_photo_small_url)
 
     image_tag.short_description = 'Image'
     image_tag.allow_tags = True
+
 admin.site.register(GalleryPhoto, GalleryPhotoAdmin)

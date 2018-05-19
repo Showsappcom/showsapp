@@ -2,15 +2,15 @@ import os
 import mimetypes
 
 try:
-    from cStringIO import StringIO
+    from StringIO import StringIO
 except ImportError:
-    from StringIO import StringIO  # noqa
+    from io import StringIO
 
 from django.conf import settings
 from django.core.files.base import File
 from django.core.files.storage import Storage
 from django.core.exceptions import ImproperlyConfigured, SuspiciousOperation
-from django.utils.encoding import force_unicode, smart_str
+from django.utils.encoding import smart_str
 
 from boto.s3.connection import S3Connection, SubdomainCallingFormat
 from boto.exception import S3ResponseError
@@ -59,10 +59,10 @@ def safe_join(base, *paths):
     Paths outside the base path indicate a possible security
     sensitive operation.
     """
-    from urlparse import urljoin
-    base_path = force_unicode(base)
+    from urllib.parse import urljoin
+    base_path = base
     base_path = base_path.rstrip('/')
-    paths = [force_unicode(p) for p in paths]
+    # paths = [force_unicode(p) for p in paths]
 
     final_path = base_path
     for path in paths:
@@ -202,7 +202,7 @@ class S3BotoStorage(Storage):
         return smart_str(name, encoding=self.file_name_charset)
 
     def _decode_name(self, name):
-        return force_unicode(name, encoding=self.file_name_charset)
+        return name
 
     def _compress_content(self, content):
         """Gzip a given string content."""

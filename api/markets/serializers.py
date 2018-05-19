@@ -6,12 +6,29 @@ import stripe
 from notifications.mailers import NewOfferNotification, OfferResolveNotification
 from django.contrib.auth.models import User
 
-class GallerySerializer(serializers.ModelSerializer):    
+
+class ImageSerializer(serializers.ModelSerializer):    
     class Meta:
         model = GalleryPhoto
         fields = ('id', 'gallery_photo_small_url')
 
+class CreateImageSerializer(serializers.Serializer):
+    description = serializers.CharField(allow_null=True, allow_blank=True, write_only=True)
+    item_id = serializers.IntegerField(allow_null=False, write_only=True, required=True)
+    picture = serializers.ImageField(allow_null=False, write_only=True, required=True)
 
+    def create(self, validated_data):
+        photo_file_name = validated_data.get('picture')
+        description = validated_data.get('description')
+        item = Item.objects.get(pk=validated_data.get('item_id'))
+
+        image = GalleryPhoto.objects.create(
+            description=description,
+            item=item,
+            photo_file_name=photo_file_name
+        )
+
+        return image
 
 class ItemSerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField('_url')
@@ -19,7 +36,7 @@ class ItemSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField('_images')
 
     def _images(self, obj):
-        return GallerySerializer(obj.images.filter(active=True), many=True).data
+        return ImageSerializer(obj.images.filter(active=True), many=True).data
 
     def _url(self, obj):
         return '%s/%s' %(obj.sa_user.id, obj.slug)
@@ -220,7 +237,7 @@ class DetailedItemSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField('_images')
 
     def _images(self, obj):
-        return GallerySerializer(obj.images.filter(active=True), many=True).data
+        return ImageSerializer(obj.images.filter(active=True), many=True).data
 
     def _url(self, obj):
         return '%s/%s' %(obj.sa_user.id, obj.slug)
