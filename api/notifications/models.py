@@ -82,8 +82,8 @@ class UserEmailNotificationSettings(models.Model):
     sauser = models.ForeignKey(SAUser, related_name="notifications_settings", null=True, on_delete=models.CASCADE)
     enable = models.NullBooleanField()
     token = models.CharField(db_index=True, max_length=360, blank=True, null=True)
-    created_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
-    updated_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         app_label = 'notifications'

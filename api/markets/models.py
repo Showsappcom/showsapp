@@ -2,6 +2,7 @@ from django.db import models
 from accounts.models import Account, SAUser
 from django.utils import timezone
 from django.utils.text import slugify
+from django.conf import settings
 # Create your models here.
 
 class Item(models.Model):
@@ -16,8 +17,8 @@ class Item(models.Model):
     latitude = models.FloatField(blank=False, null=True, default=0.0)
     longitude = models.FloatField(blank=False, null=True, default=0.0)
     address = models.CharField(max_length=360, blank=True, null=True)
-    created_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
-    updated_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         app_label = 'markets'
@@ -57,9 +58,8 @@ class Offer(models.Model):
     accepted = models.BooleanField(default=False, blank=True)
     good_faith_money_paid = models.FloatField(blank=False, null=False, default=0.0)
     charge_token = models.CharField(max_length=360, blank=True, null=True)
-    created_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
-    updated_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
-
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     class Meta:
         app_label = 'markets'
 
@@ -68,8 +68,33 @@ class WaitingListSubscription(models.Model):
     sa_user = models.ForeignKey(SAUser, related_name='waiting_list_subscription', null=True, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, related_name='waiting_list_subscription', on_delete=models.CASCADE)
     active = models.BooleanField(default=True, blank=True)
-    created_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
-    updated_at = models.DateTimeField(blank=True, null=True, default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         app_label = 'markets'
+
+def itemgallery_generate_filename(self, filename):
+    url = "%s/%s/small/%s" % ('gallery', self.item.id, filename)
+    return url 
+
+class GalleryPhoto(models.Model):
+    item = models.ForeignKey(Item, related_name='images', null=True, blank=True, on_delete=models.CASCADE)
+    description = models.TextField(blank=True, null=True)
+    link = models.CharField(max_length=255, blank=True, null=True)
+    active = models.BooleanField(default=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    photo_file_name = models.FileField(upload_to=itemgallery_generate_filename, blank=True, null=True)
+
+    class Meta:
+        app_label = 'markets'   
+
+    @property
+    def gallery_photo_small_url(self):
+        if self.photo_file_name and self.photo_file_name != '':
+            result = '%s%s' %(settings.IMAGES_URL, self.photo_file_name)
+        else:
+            result =  '%sdefault/%s' % (settings.IMAGES_URL, settings.DEFAULT_PROFILE_PHOTO)
+        return result
+

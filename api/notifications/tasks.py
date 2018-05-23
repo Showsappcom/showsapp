@@ -1,10 +1,10 @@
-from celery import shared_task
+# from celery import shared_task
 from notifications.mailers import *
 from accounts.models import *
 from notifications.utils import *
 
 
-@shared_task
+# @shared_task
 def WelcomeNotification_Async(user_id):
     account = Account.objects.get(pk = user_id)
     users = account.onf_users.all()

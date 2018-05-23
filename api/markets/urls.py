@@ -19,4 +19,6 @@ urlpatterns = [
     path('accept_offer/', AcceptDeclineOffer.as_view(), name="accept_offer"),
     path('join_waiting_list/', JoinWaitingList.as_view(), name="join_waiting_list"),
     path('pay_gfm/', PayGFM.as_view(), name="pay_gfm"),
+    path('image/', ImageView.as_view(), name='image'),
+    path('image/<int:id>', ImageView.as_view(), name='image'),
 ]

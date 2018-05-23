@@ -20,11 +20,46 @@ from django.http import HttpResponse
 from django.template import Template, Context
 from django.template.loader import get_template
 
+
+class ImageView(generics.CreateAPIView):
+    """
+    A protected API to create an image for an item.
+    """
+    serializer_class = ImageSerializer
+    parser_classes = (FormParser, MultiPartParser, )
+    authentication_classes = (JSONWebTokenAuthentication, )
+
+    """
+    A protected API to create an image for an item.
+    """
+    def post(self, request, format='json'):
+        serializer = CreateImageSerializer(data=request.data, context={ 'request': request})
+        if serializer.is_valid():
+            item = serializer.save()
+            return Response(ImageSerializer(item).data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id):
+        """
+        A protected API to delete an iamge by id.
+        """
+        if GalleryPhoto.objects.filter(id=id):
+            image = GalleryPhoto.objects.get(pk=id)
+            if image.item.sa_user != request.user.sa_user:
+                return Response({}, 403)
+            image.active = False
+            image.save()
+            serializer = self.get_serializer(image, context={'request': request})
+            return Response(serializer.data)
+        else:
+            return Response({}, status=404)        
+
 class CreateItem(generics.CreateAPIView):
     """
-    A prodtected API to create an item as a seller.
+    A protected API to create an item as a seller.
     """
     serializer_class = CreateItemSerializer
+    authentication_classes = (JSONWebTokenAuthentication, )
 
     def post(self, request, format='json'):
         serializer = CreateItemSerializer(data=request.data, context={'request': request})
@@ -32,8 +67,7 @@ class CreateItem(generics.CreateAPIView):
             item = serializer.save()
             return Response(ItemSerializer(item).data)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
-
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PlaceOffer(generics.CreateAPIView):
     """
@@ -201,6 +235,8 @@ class MyItem(generics.ListAPIView):
         """
         if Item.objects.filter(id=id):
             item = Item.objects.get(pk=id)
+            if item.sa_user != request.user.sa_user:
+                return Response({}, 403)
             item.active = False
             item.save()
             serializer = self.get_serializer(item, context={'request': request})
