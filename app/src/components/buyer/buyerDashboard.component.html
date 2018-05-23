@@ -17,18 +17,20 @@
           <div class="mat-card-title" *ngIf="!offerSent">
             <span class="primary-color">{{sellerItem.name}}</span> - ${{sellerItem.price}}.00
           </div>
-          <div class="offer-info-container" [ngClass]="{'item-available': !sellerItem.accepted , 'item-not-available' : sellerItem.accepted}">
-            <mat-icon style="margin-right:10px" *ngIf="!sellerItem.accepted && sellerItem.active">check_circle</mat-icon>
+          <div class="offer-info-container"
+               [ngClass]="{'item-available': !sellerItem.accepted , 'item-not-available' : sellerItem.accepted}">
+            <mat-icon style="margin-right:10px" *ngIf="!sellerItem.accepted && sellerItem.active">check_circle
+            </mat-icon>
             <span *ngIf="!sellerItem.accepted && sellerItem.active">This item is still available</span>
             <mat-icon style="margin-right:10px" *ngIf="sellerItem.accepted && sellerItem.active">error</mat-icon>
             <span *ngIf="sellerItem.accepted  && sellerItem.active">This item has been sold pending pickup. Enter your email and offer to be automatically notified if the buyer falls through</span>
             <mat-icon style="margin-right:10px" *ngIf="!sellerItem.active">error</mat-icon>
-            <span *ngIf="!sellerItem.active">This item is no longer available, and not accepting more offers.</span>            
+            <span *ngIf="!sellerItem.active">This item is no longer available, and not accepting more offers.</span>
           </div>
           <div class="mat-card-container" *ngIf="!offerSent">
             <div class="mat-card-ref provide-space">
               <mat-form-field class="read-only">
-            <textarea matInput readonly placeholder="Description" matTextareaAutosize matAutosizeMinRows="0"
+                <textarea matInput readonly placeholder="Description" matTextareaAutosize matAutosizeMinRows="0"
                       matAutosizeMaxRows="10" [value]="sellerItem.description"></textarea>
               </mat-form-field>
               <mat-form-field class="read-only">
@@ -37,13 +39,6 @@
             </div>
             <div class="mat-card-ref offer-container left-aligned">
               <form novalidate [formGroup]="offerControl">
-                <div>
-                  <mat-form-field>
-                      <textarea matInput placeholder="Message Seller" matTextareaAutosize matAutosizeMinRows="1"
-                                matAutosizeMaxRows="5" formControlName="message"></textarea>
-                    <mat-hint>Ex: 'I can come today'</mat-hint>
-                  </mat-form-field>
-                </div>
                 <div class="spinner-offer-container">
                   <mat-form-field>
                     <input matInput placeholder="Offer" formControlName="value">
@@ -69,13 +64,21 @@
                 </div>
                 <div>
                   <mat-form-field>
+                      <textarea matInput placeholder="Message Seller" matTextareaAutosize matAutosizeMinRows="1"
+                                matAutosizeMaxRows="5" formControlName="message"></textarea>
+                    <mat-hint>Ex: 'I can come today'</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field>
                     <input matInput placeholder="Email" formControlName="email">
                     <mat-error *ngIf="offerControl.get('email').hasError('email')">Not a valid email</mat-error>
                     <mat-error *ngIf="offerControl.get('email').hasError('required')">Offer is required</mat-error>
                   </mat-form-field>
                 </div>
               </form>
-              <button mat-button color="primary" [disabled]="!offerControl.valid" (click)="sendOffer()">{{sellerItem.accepted ? 'JOIN WAIT LIST' : 'SEND OFFER'}}
+              <button mat-button color="primary" [disabled]="!offerControl.valid" (click)="sendOffer()">
+                {{sellerItem.accepted ? 'JOIN WAIT LIST' : 'SEND OFFER'}}
               </button>
             </div>
           </div>
@@ -93,7 +96,9 @@
           </div>
           <div class="mat-card-container" *ngIf="offerSent && needToValidateEmail">
             <div class="mat-card-content">
-              <div style="margin-bottom: 5px;">Please check you e-mail to validate your e-mail address once validated the offer will be sent</div>
+              <div style="margin-bottom: 5px;">Please check you e-mail to validate your e-mail address once validated
+                the offer will be sent
+              </div>
             </div>
           </div>
         </mat-card>

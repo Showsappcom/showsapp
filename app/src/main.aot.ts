@@ -36,7 +36,7 @@ function init() {
     window.addEventListener('load', () => {
       console.log('!!!!!!!!!!i am here ....');
 
-      navigator.serviceWorker.register('/swapppwa.js').then(registration => {
+      navigator.serviceWorker.register('/sapppwa.js').then(registration => {
         console.log('SW registered: ', registration);
         platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
 
