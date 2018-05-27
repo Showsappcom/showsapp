@@ -259,7 +259,7 @@ DEFAULT_FILE_STORAGE = 'utils.s3storage.S3BotoStorage'
 MEDIA_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 #IMAGES_URL = 'http://%s.s3-website-us-east-1.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 IMAGES_URL = 'https://%s/' % AWS_CLOUDFROUND_ENDPOINT
-
+FACEBOOK_APP_ID = ''
 
 # import the customized settings from settings_local
 

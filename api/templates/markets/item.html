@@ -9,7 +9,7 @@
 
 <!-- Open Graph data -->
   <meta property="og:title" content="{{ item.name }} | ShowsApp.com" />
-  <!-- <meta property="fb:app_id" content="{% settings_value "FACEBOOK_APP_ID" %}" />  -->
+  <meta property="fb:app_id" content="{% settings_value "FACEBOOK_APP_ID" %}" /> 
   <meta property="og:type" content="profile" />
   <meta property="og:url" content='{% settings_value "DOMAIN" %}/item/{{ item.sa_user.id }}/{{ item.slug }}' />
   <meta property="og:image" content= "{% if item.images.first.gallery_photo_small_url %}{{ item.images.first.gallery_photo_small_url }}{% else %}https://s3.amazonaws.com/showsapp-static-production/static/showsapp.jpg{% endif %}" />
