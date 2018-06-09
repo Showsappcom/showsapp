@@ -6,10 +6,14 @@
 {% endblock %}
 {% block body %}
 
+{% if for_offer %}
+You're one step behind sending your offer, please verify your email to have it sent.
+{% else %}
 Thanks for registering with ShowsApp.com. Please activate your account by clicking on the button below.
-
+{% endif %}
 {% endblock %}
 
 {% block cta %}
-href='{% settings_value "FRONTEND_DOMAIN" %}activate/{{ user.account.activation_token }}'>Activate
+href='{% settings_value "FRONTEND_DOMAIN" %}activate/{{ user.account.activation_token }}'>
+{% if for_offer %}Verify{% else %}Activate{% endif %}
 {% endblock %}

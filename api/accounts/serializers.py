@@ -36,6 +36,7 @@ class SignupSerializer(serializers.Serializer):
         first_name = validated_data.get('first_name')
         last_name = validated_data.get('last_name')
         name = validated_data.get('name')
+        for_offer = validated_data.get('for_offer')
 
         try:
             auth_user = User.objects.create(first_name=first_name,
@@ -59,7 +60,7 @@ class SignupSerializer(serializers.Serializer):
             account.activation_token = token
             account.save()
 
-            WelcomeNotification(sa_user).send()
+            WelcomeNotification(sa_user, for_offer).send()
         except:
             raise exceptions.APIException('Error saving the user.')
 

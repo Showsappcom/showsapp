@@ -123,11 +123,11 @@ class CreateOfferSerializer(serializers.Serializer):
                 'password': 'ldjlfajsd;lfajdslkfajdslkfj',
                 'first_name': '',
                 'last_name': '',
-                'name': ''
+                'name': '',
+                'for_offer': True
             })
-            print(signup.is_valid())
             if signup.is_valid():
-                sa_user = signup.save()
+                sa_user = signup.save(for_offer=True)
             elif signup.errors.get('email') != None:
                 sa_user = User.objects.filter(username__iexact=email)[0].sa_user
                 if not sa_user.activated:

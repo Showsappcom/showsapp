@@ -6,15 +6,25 @@ from notifications.utils import *
 
 
 class WelcomeNotification(NotificationBase):
-    def __init__(self, user, template='./notifications/common/welcome.html', verb=Notification.Verb.WELCOME):
+    def __init__(self, user, for_offer, template='./notifications/common/welcome.html', verb=Notification.Verb.WELCOME):
         self.user = user
-        self.subject = "Please activate your account"
+        self.for_offer = for_offer
+        if for_offer:
+            self.subject = "Verify your email to send the offer."
+        else:         
+            self.subject = "Please activate your account"
+
         self.need_settings = False
         super(WelcomeNotification, self).__init__(template, verb , user.user, level=Notification.LEVELS.INFO)
 
     def create_context(self):
         context = super(WelcomeNotification, self).create_context()
-        context.update({'user': self.user, 'subject': self.subject, 'datetime': timezone.now() + datetime.timedelta(hours=12) })      
+        context.update({
+            'user': self.user,
+            'subject': self.subject,
+            'datetime': timezone.now() + datetime.timedelta(hours=12),
+            'for_offer': self.for_offer
+        })      
         return context
 
 
