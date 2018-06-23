@@ -71,9 +71,8 @@
                 </div>
                 <div>
                   <mat-form-field>
-                    <input matInput placeholder="Email" formControlName="email">
-                    <mat-error *ngIf="offerControl.get('email').hasError('email')">Not a valid email</mat-error>
-                    <mat-error *ngIf="offerControl.get('email').hasError('required')">Offer is required</mat-error>
+                    <input matInput placeholder="Your Name" formControlName="name">
+                    <mat-error *ngIf="offerControl.get('name').hasError('required')">Name is required</mat-error>
                   </mat-form-field>
                 </div>
               </form>
@@ -82,23 +81,10 @@
               </button>
             </div>
           </div>
-          <div class="mat-card-title" *ngIf="offerSent && !needToValidateEmail">
-            <span class="primary-color">Offer Sent</span>
-          </div>
-          <div class="mat-card-container" *ngIf="offerSent && !needToValidateEmail">
+          <div class="mat-card-container" *ngIf="offerSent">
             <div class="mat-card-content">
-              <div style="margin-bottom: 5px;">Stay tuned! you will be notified by email when the seller accepts/declines your offer.</div>
+              <div style="margin-bottom: 5px;">Your offer has been successfully submitted!</div>
               <div>Submit another <span class="primary-color" (click)="offerSent = !offerSent">Offer?</span></div>
-            </div>
-          </div>
-          <div class="mat-card-title" *ngIf="offerSent && needToValidateEmail">
-            <span class="primary-color">Please Validate Email</span>
-          </div>
-          <div class="mat-card-container" *ngIf="offerSent && needToValidateEmail">
-            <div class="mat-card-content">
-              <div style="margin-bottom: 5px;">Please check you e-mail to validate your e-mail address once validated
-                the offer will be sent
-              </div>
             </div>
           </div>
         </mat-card>

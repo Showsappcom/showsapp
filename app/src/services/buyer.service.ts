@@ -39,7 +39,7 @@ export class BuyerService {
   /**
    * @type {string} _BASE_URL - Provides based url
    */
-  private _BASE_URL : string = APP_SETUP.devEnvironment ? 'http://staging.aws.showsapp.com:8888/' : location.origin + '/';
+  private _BASE_URL : string = APP_SETUP.devEnvironment ? 'http://localhost:8888/' : location.origin + '/';
   /**
    * @type {string} _getItemURL - Provides activation url url
    */
@@ -55,12 +55,6 @@ export class BuyerService {
     let x = (Number(offer) / Number(price));
 
     if (x <= 1 && x > 0) {
-
-      // let primaryTerm = Math.pow(10, -9)*-1;
-      // let secondTerm = Math.pow(10,-6);
-      // let xFourth = Math.pow(x, 4);
-      // let xThird = Math.pow(x, 3);
-      // let xSquared = Math.pow(x, 2);
 
       x = x * 100;
 
@@ -93,14 +87,6 @@ export class BuyerService {
         } else {
 
           let optionCubed = Math.trunc((0.0003 * Math.pow(x, 3)) - (0.0238 * Math.pow(x, 2)) + 0.6125 * x - 1.5308);
-          // let optionY = (-1*primaryTerm*xFourth)+(3*secondTerm*xThird)+(-0.0002*xSquared)+(0.0052*x);
-          // let y = (-1 * Math.pow(10, -9) * Math.pow(x, 4)) + (3 * Math.pow(10, -6) * Math.pow(x, 3)) - (0.0002 * Math.pow(x, 2)) + (0.0052 * x);
-          // console.log('y i simply:::', y, optionY,optionCubed);
-          // console.log('x i simply:::', x);
-          // console.log('x4 i simply:::', xFourth);
-          // console.log('x3 i simply:::', xThird);
-          // console.log('x2 i simply:::', xSquared);
-
 
           console.log('option Cubed', optionCubed);
 

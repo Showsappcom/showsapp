@@ -102,39 +102,24 @@ class DetailedOfferSerializer(serializers.ModelSerializer):
 class CreateOfferSerializer(serializers.Serializer):
     item = serializers.IntegerField(allow_null=False, write_only=True, required=True)
     message = serializers.CharField(allow_null=True, allow_blank=True, write_only=True)
-    email = serializers.CharField(allow_null=False, allow_blank=False, required=True)
+    name = serializers.CharField(allow_null=False, allow_blank=False, required=True)
     value = serializers.FloatField(allow_null=False, write_only=True, required=True)
 
     def create(self, validated_data):
         user = self.context['request'].user
-        email = validated_data.get('email')
+        name = validated_data.get('email')
         item_id = validated_data.get('item')
         message = validated_data.get('message')
         value = validated_data.get('value')
         item = Item.objects.get(pk=item_id)
-        on_hold = True
+        on_hold = False
 
         if item.active == False:
             raise exceptions.APIException('The item is no longer available.')
 
         if user.is_anonymous:
-            signup = SignupSerializer(data={
-                'email': email,
-                'password': 'ldjlfajsd;lfajdslkfajdslkfj',
-                'first_name': '',
-                'last_name': '',
-                'name': '',
-                'for_offer': True
-            })
-            if signup.is_valid():
-                sa_user = signup.save(for_offer=True)
-            elif signup.errors.get('email') != None:
-                sa_user = User.objects.filter(username__iexact=email)[0].sa_user
-                if not sa_user.activated:
-                    raise exceptions.APIException('Should verify the account first.')
-
+            sa_user = None
         else:
-            on_hold = False
             sa_user = user.sa_user
 
         offer = Offer.objects.create(

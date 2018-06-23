@@ -102,11 +102,10 @@ export class BuyerDashboardComponent {
         '',
         [ Validators.required ]
       ],
-      email: [
+      name: [
         '',
         [
-          Validators.required,
-          CustomFormValidator.EmailValidator()
+          Validators.required
         ]
       ],
       message: [ '' ]
@@ -186,7 +185,6 @@ export class BuyerDashboardComponent {
       console.log('the status iss', err);
       if (err.status === 500 && err.error && err.error.detail && err.error.detail === 'Should verify the accout first.') {
         this.offerSent = true;
-        this.needToValidateEmail = true;
       }
     });
 
