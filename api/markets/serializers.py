@@ -107,7 +107,7 @@ class CreateOfferSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         user = self.context['request'].user
-        name = validated_data.get('email')
+        name = validated_data.get('name')
         item_id = validated_data.get('item')
         message = validated_data.get('message')
         value = validated_data.get('value')
@@ -124,6 +124,7 @@ class CreateOfferSerializer(serializers.Serializer):
 
         offer = Offer.objects.create(
             item=item,
+            name=name,
             message=message,
             value=value,
             on_hold=on_hold,

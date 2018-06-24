@@ -5,17 +5,8 @@
 {{ subject }}
 {% endblock %}
 {% block body %}
-
-Great news! A buyer has offered <b>${{ offer.value }}</b> for your <b>{{ item.name }}</b>. <br/>
-
-If you accept the offer, the buyer will automatically be forwarded your contact email/phone number so that you can schedule a pickup.<br/><br/>
-
-<b>The buyer's message:</b><br/>
-{{ offer.message }}<br/><br/>
-
-Would you like to accept or decline this offer?</p>
-
-
+<p>Great news! <b>{% if offer.name %}{{ offer.name }}{% else %}A Buyer{% endif %}</b> has offered <b>${{ offer.value }}</b> for your <b>{{ item.name }}</b>.</p>
+<p>Would you like to accept or decline this offer?</p>
 {% endblock %}
 
 {% block cta %}

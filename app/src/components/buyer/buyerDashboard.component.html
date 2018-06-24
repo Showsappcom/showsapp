@@ -62,13 +62,13 @@
                 <div class="explanation-container" style="margin-bottom:10px;">
                   Your offer is expected to have {{spinnerValue}}% chance of being accepted by the seller
                 </div>
-                <div>
+                <!-- <div>
                   <mat-form-field>
                       <textarea matInput placeholder="Message Seller" matTextareaAutosize matAutosizeMinRows="1"
                                 matAutosizeMaxRows="5" formControlName="message"></textarea>
                     <mat-hint>Ex: 'I can come today'</mat-hint>
                   </mat-form-field>
-                </div>
+                </div> -->
                 <div>
                   <mat-form-field>
                     <input matInput placeholder="Your Name" formControlName="name">
@@ -84,6 +84,7 @@
           <div class="mat-card-container" *ngIf="offerSent">
             <div class="mat-card-content">
               <div style="margin-bottom: 5px;">Your offer has been successfully submitted!</div>
+              <div style="margin-bottom: 5px;">The seller will receive your offer via email, but you can also follow up with them in the communication channel you made contact with them.</div>
               <div>Submit another <span class="primary-color" (click)="offerSent = !offerSent">Offer?</span></div>
             </div>
           </div>
