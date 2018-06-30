@@ -27,7 +27,7 @@ export class CustomPreloadingStrategy implements PreloadingStrategy {
 
 const appRoutes : Routes = [
   {
-    path: '',
+    path: '/',
     redirectTo: 'login',
     pathMatch: 'full'
   },
