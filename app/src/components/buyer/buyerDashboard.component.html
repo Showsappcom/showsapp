@@ -75,6 +75,10 @@
                     <mat-error *ngIf="offerControl.get('name').hasError('required')">Name is required</mat-error>
                   </mat-form-field>
                 </div>
+
+                <div class="explanation-container" style="margin-bottom:10px;" *ngIf="sellerItem.good_faith_money > 0">
+                  * Please note that a payment of ${{ sellerItem.good_faith_money * sellerItem.price / 100 }} is required to place an offer.
+                </div>
               </form>
               <button mat-button color="primary" [disabled]="!offerControl.valid" (click)="sendOffer()">
                 {{sellerItem.accepted ? 'JOIN WAIT LIST' : 'SEND OFFER'}}

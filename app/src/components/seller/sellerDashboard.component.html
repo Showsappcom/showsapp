@@ -15,13 +15,13 @@
     <div class="item-list" *ngIf="dataReturned && sellersItems && sellersItems.length > 0">
       <mat-card class="mat-card-ref" *ngFor="let item of sellersItems; let i = index">
         <mat-card-title class="card-title-row">
-          <div class="card-title"><span>{{item.name}}</span> - ${{item.price}} <mat-icon class="primary-color" *ngIf="item.offerAccepted">checked</mat-icon></div>
+          <div class="card-title"><span>{{item.name}}</span> - ${{item.price}} <span *ngIf="item.good_faith_money > 0" class="accent-color"> with {{ item.good_faith_money }}% good faith money.</span> <mat-icon class="primary-color" *ngIf="item.offerAccepted">checked</mat-icon></div>
           <button mat-icon-button color="primary" class="icon-button" (click)="openConfirmationModal(item['id'], i)">
             <mat-icon>delete</mat-icon>
           </button>
         </mat-card-title>
         <mat-card-subtitle>
-            Yes! It is still available. Receive the ShowsApp.com 7 Day Money Back Guarantee when you make your offer through <a href="{{domain}}/item/{{item.url}}" target="_blank"><span class="accent-color">{{domain}}/item/{{item.url}}</span></a>, Think of it as a free buyer protection plan for used items.
+          Yes! It is still available. Receive the ShowsApp.com 7 Day Money Back Guarantee when you make your offer through <a href="{{domain}}/item/{{item.url}}" target="_blank"><span class="accent-color">{{domain}}/item/{{item.url}}</span></a>, Think of it as a free buyer protection plan for used items.
         </mat-card-subtitle>
         <mat-card-content>
           <!--<div class="embed-link"><span class="primary-color" id="item-{{item.id}}">www.showsapp.com/{{item.url}}</span>-->

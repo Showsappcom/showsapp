@@ -2,7 +2,7 @@ export interface SellerItemObject {
   name : string;
   description : string;
   price : string;
-  good_faith_money : string;
+  good_faith_money : number;
   requires_good_faith_money? : boolean;
   latitude? : number;
   longitude? : number;
@@ -20,7 +20,7 @@ export interface SellerItemModel {
   id : number;
   description : string;
   price : string;
-  good_faith_money : string;
+  good_faith_money : number;
   requires_good_faith_money? : boolean;
   latitude? : number;
   longitude? : number;

@@ -39,7 +39,7 @@ export class BuyerService {
   /**
    * @type {string} _BASE_URL - Provides based url
    */
-  private _BASE_URL : string = APP_SETUP.devEnvironment ? 'http://localhost:8888/' : location.origin + '/';
+  private _BASE_URL : string = APP_SETUP.devEnvironment ? 'http://staging.aws.showsapp.com:8888/' : location.origin + '/';
   /**
    * @type {string} _getItemURL - Provides activation url url
    */

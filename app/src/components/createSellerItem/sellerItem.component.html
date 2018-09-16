@@ -39,13 +39,21 @@
         </mat-form-field>
         <mat-form-field>
           <span matPrefix>$ &nbsp;</span>
-          <input matInput placeholder="Price" formControlName="price" type="string">
+          <input matInput required placeholder="Price" formControlName="price" type="string">
           <span matSuffix>.00</span>
           <mat-error *ngIf="itemFormControl.get('price').hasError('required')">
             Please provide a price
           </mat-error>
           <mat-error *ngIf="itemFormControl.get('price').hasError('number')">
             Please provide a price that is greater than 0 and less than 1000000
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <span matPrefix>$ &nbsp;</span>
+          <input matInput placeholder="Good Faith Money" formControlName="good_faith_money" type="number">
+          <span matSuffix>%</span>
+          <mat-error *ngIf="itemFormControl.get('good_faith_money').hasError('number')">
+            Please provide a percentage of your item's price
           </mat-error>
         </mat-form-field>
       </form>
