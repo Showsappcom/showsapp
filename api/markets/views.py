@@ -78,7 +78,7 @@ class PlaceOffer(generics.CreateAPIView):
         serializer = CreateOfferSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             offer = serializer.save()
-            return Response(OfferSerializer(offer).data)
+            return Response(OfferSerializer(offer).data)    
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

@@ -15,8 +15,54 @@
   <meta property="og:image" content= "{% if item.images.first.gallery_photo_small_url %}{{ item.images.first.gallery_photo_small_url }}{% else %}https://s3.amazonaws.com/showsapp-static-production/static/showsapp.jpg{% endif %}" />
   <meta property="og:description" content="7 Day MONEY BACK GUARANTEE when your offer is accepted through ShowsApp."/>
   <meta property="og:site_name" content="ShowsApp.com" />
-
+  
+  <script src="https://checkout.stripe.com/checkout.js"></script>
 
 {% endblock %}
 
+
+{% block body %}
+
+<h1>{{ item.name }}</h1>
+<p>{{ item.description }}</p>
+
+{% if item.images.first.gallery_photo_small_url %}{{ item.images.first.gallery_photo_small_url }}{% else %}https://s3.amazonaws.com/showsapp-static-production/static/showsapp.jpg{% endif %}
+{{ item.images.first.gallery_photo_small_url }}
+{{ item.images.first }}
+
+
+
+<button id="customButton">Purchase {{ item.id }} {{ item.name }}</button>
+
+<script>
+    var handler = StripeCheckout.configure({
+      key: 'pk_test_WUgzIND04xMLZ21JPsTHaPsk',
+      image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+      locale: 'auto',
+      token: function(token) {
+        console.log(token);
+        // You can access the token ID with `token.id`.
+        // Get the token ID to your server-side code for use.
+      }
+    });
+    
+    document.getElementById('customButton').addEventListener('click', function(e) {
+      // Open Checkout with further options:
+      handler.open({
+        name: 'ShowsApp',
+        description: '2 widgets',
+        currency: 'cad',
+        amount: 12000
+      });
+      e.preventDefault();
+    });
+    
+    // Close Checkout on page navigation:
+    window.addEventListener('popstate', function() {
+      handler.close();
+    });
+    </script>
+
+
+{% endblock %}
 

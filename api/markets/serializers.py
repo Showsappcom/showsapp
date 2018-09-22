@@ -5,7 +5,7 @@ from django.db.models import Q
 import stripe
 from notifications.mailers import NewOfferNotification, OfferResolveNotification
 from django.contrib.auth.models import User
-
+from django.conf import settings
 
 class ImageSerializer(serializers.ModelSerializer):    
     class Meta:
@@ -34,6 +34,7 @@ class ItemSerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField('_url')
     accepted = serializers.SerializerMethodField('_accepted')
     images = serializers.SerializerMethodField('_images')
+    stripe_publishable_key = serializers.SerializerMethodField('_stripe_publishable_key')
 
     def _images(self, obj):
         return ImageSerializer(obj.images.filter(active=True), many=True).data
@@ -44,10 +45,13 @@ class ItemSerializer(serializers.ModelSerializer):
     def _accepted(self, obj):
         return obj.offers.filter(accepted=True).exists()
 
+    def _stripe_publishable_key(self, obj):
+        return settings.STRIPE['PUBLISHABLE_KEY']
     class Meta:
         model = Item
         fields = ('id', 'name', 'description', 'slug', 'price', 'good_faith_money', 'accepted',
-        'active', 'requires_good_faith_money', 'latitude','longitude','url','address', 'created_at', 'images')
+                  'active', 'requires_good_faith_money', 'latitude', 'longitude', 'url',
+                  'address', 'created_at', 'images', 'stripe_publishable_key')
 
 class CreateItemSerializer(serializers.Serializer):
     name = serializers.CharField(allow_null=False, allow_blank=False, write_only=True, required=True)
@@ -104,6 +108,7 @@ class CreateOfferSerializer(serializers.Serializer):
     message = serializers.CharField(allow_null=True, allow_blank=True, write_only=True)
     name = serializers.CharField(allow_null=False, allow_blank=False, required=True)
     value = serializers.FloatField(allow_null=False, write_only=True, required=True)
+    stripeToken = serializers.CharField(allow_null=False, allow_blank=True, write_only=True)
 
     def create(self, validated_data):
         user = self.context['request'].user
@@ -111,10 +116,14 @@ class CreateOfferSerializer(serializers.Serializer):
         item_id = validated_data.get('item')
         message = validated_data.get('message')
         value = validated_data.get('value')
+        stripeToken = validated_data.get('stripeToken')
         item = Item.objects.get(pk=item_id)
         on_hold = False
 
-        if item.active == False:
+        if item.good_faith_money > 0 and stripeToken == '':
+            raise exceptions.APIException('Payment is required');
+
+        if not item.active:
             raise exceptions.APIException('The item is no longer available.')
 
         if user.is_anonymous:
@@ -130,6 +139,24 @@ class CreateOfferSerializer(serializers.Serializer):
             on_hold=on_hold,
             sa_user=sa_user
         )
+        
+        stripe.api_key = settings.STRIPE['SECRET_KEY']
+
+        if item.good_faith_money > 0:
+            try:
+                charge = stripe.Charge.create(
+                    amount=int(item.good_faith_money * item.price),
+                    currency='cad',
+                    description=str(offer),
+                    source=stripeToken,
+                    capture=False
+                )
+                offer.charge_token = charge.id
+                offer.save()
+            except:
+                raise exceptions.APIException('Failed to capture money.')
+
+        on_hold = False
 
         if not on_hold:
             NewOfferNotification(item.sa_user, item, offer).send()
@@ -153,10 +180,21 @@ class AcceptDeclineOfferSerializer(serializers.Serializer):
             raise exceptions.ValidationError('Unauthorized to perform this action.')
 
         offer.accepted = accept
-
+        if offer.charge_token != '' and accept:
+            try:
+                stripe.api_key = settings.STRIPE['SECRET_KEY']
+                charge = stripe.Charge.retrieve(offer.charge_token)
+                charge.capture()
+                offer.charge_token = ''
+            except:
+                raise exceptions.ValidationError('Failed to captcure payment')
         offer.save()
 
-        OfferResolveNotification(offer.sa_user, offer.item, offer).send()
+        try:
+            OfferResolveNotification(offer.sa_user, offer.item, offer).send()
+        except:
+            pass
+
         return offer
 
 class WaitingListSubscriptionSerializer(serializers.ModelSerializer):
@@ -194,8 +232,6 @@ class PayGFMSerializer(serializers.Serializer):
     token = serializers.CharField(write_only=True, required=True)
 
     def create(self, validated_data):
-
-        print(self.context['request'])
         offer_id = validated_data.get('offer')
         offer = Offer.objects.get(pk=offer_id)
         item = offer.item

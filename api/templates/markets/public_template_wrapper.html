@@ -11,11 +11,8 @@
     {% endblock %}
   </head>
   <body>
-   <h1>{{ item.name }}</h1>
-   <p>{{ item.description }}</p>
-
-   {% if item.images.first.gallery_photo_small_url %}{{ item.images.first.gallery_photo_small_url }}{% else %}https://s3.amazonaws.com/showsapp-static-production/static/showsapp.jpg{% endif %}
-   {{ item.images.first.gallery_photo_small_url }}
-   {{ item.images.first }}
+    
+    {% block body %}
+    {% endblock %}
   </body>
 </html>
