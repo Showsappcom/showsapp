@@ -68,8 +68,6 @@ export class AuthService {
   public checkToken() : any {
 
     let access_token : string = this._cookieService.get('sa_access_token');
-    console.log('the access token is', access_token);
-
 
     if (access_token && access_token !== null) {
 
@@ -111,10 +109,6 @@ export class AuthService {
    */
   public updateToken( token : string ) : void {
     this._cookieService.put('sa_access_token', token);
-
-    // console.log('the token is simply', this._cookieService.get('sa_access_token'));
-
-
   }
 
 
@@ -146,8 +140,7 @@ export class AuthService {
 
       if (this._cookieService.get('sa_access_token')) {
         this._cookieService.put('sa_access_token', null);
-        this._cookieService.remove('sa_access_token');
-        console.log('TOKEN STILL HERE', this._cookieService.get('sa_access_token'), this._cookieService.get('sa_access_token'));
+        this._cookieService.remove('sa_access_token');    
 
       }
 

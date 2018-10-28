@@ -178,8 +178,6 @@ export class ActivateComponent {
     this.passwordFormControl.valueChanges.takeWhile(() => {
       return this._compActive;
     }).subscribe(val => {
-      console.log('this val changed....', val);
-
       this._testEquality('password', 'confirmPassword');
     });
   }
@@ -193,9 +191,6 @@ export class ActivateComponent {
     } else {
       this.passwordFormControl.setErrors(null);
     }
-
-    console.log('i clear error here', this.passwordFormControl);
-
   }
 
   /**
@@ -233,7 +228,6 @@ export class ActivateComponent {
     this._route.params.takeWhile(() => {
       return this._compActive;
     }).subscribe(( params ) => {
-      console.log('will send activation request', params);
 
       if (params && params[ 'activateCode' ].length > 0) {
 

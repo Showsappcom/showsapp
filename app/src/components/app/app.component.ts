@@ -142,8 +142,6 @@ export class AppComponent implements OnInit {
       this._authService.checkToken().takeWhile(() => {
         return this._compActive;
       }).subscribe(( data : any ) => {
-          // console.log('the data is:', data);
-          // console.log('the data is:', this._baseState);
 
           this._store.dispatch(new BaseActions.Update({
             ...this._baseState, loggedIn: true, authToken: data.token, loggedInUser: ''
@@ -153,19 +151,14 @@ export class AppComponent implements OnInit {
           this._processLandingPage();
         },
         () => {
-          console.log('@@@need to login again', this._currentRoute);
-          // console.log('@@@need to login again', window);
           setTimeout(() => {
             this._checkRoute();
-
-            // this._routeToPath('/login');
           }, 0);
         });
     }
   }
 
   private _checkRoute() : void {
-    console.log('this route @@@@@@@@@@@@@@@@@@@@@', this._currentRoute);
     if (!this._currentRoute.match('reset') && !this._currentRoute.match('activate') && !this._currentRoute.match('email') && !this._currentRoute.match('item')) {
 
       this._routeToPath('/login');
@@ -177,12 +170,6 @@ export class AppComponent implements OnInit {
    * @returns void
    */
   private _processLandingPage() : void {
-
-    // console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
-    // console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
-    // console.log('the base state is::::', this._baseState);
-    // console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
-    // console.log('the base state is:::::::::::::::::::::::::::::::::::::::::');
     if (this._currentRoute === '/login' && this._baseState.loggedIn) {
       this._routeToPath('/app/main');
 
@@ -200,11 +187,9 @@ export class AppComponent implements OnInit {
       return this._compActive;
 
     }).subscribe(( state : BaseState ) => {
-      // console.log('the state is::::::::::::::::::::::::', state);
       this._baseState = state;
       if (this._baseState.loggedIn) {
         this._authService.updateToken(this._baseState.authToken);
-        console.log('the requested route is:::', this._routeRequested, this._currentRoute, window.location);
 
         this._routeToPath(this._currentRoute);
       }
@@ -271,9 +256,6 @@ export class AppComponent implements OnInit {
 
 
       snackBarRef.onAction().subscribe(( action ) => {
-
-        console.log('the action was', action);
-        // snackBarRef.dismiss();
         this._closeToast();
 
       });
@@ -294,9 +276,6 @@ export class AppComponent implements OnInit {
   private _setupToastSub() : void {
 
     this._toastEvent.on().subscribe(( toastModel : ToastMsgModel ) => {
-
-      console.log('the toastModel is', toastModel);
-
       this._processToast(toastModel);
     });
 
@@ -347,14 +326,9 @@ export class AppComponent implements OnInit {
 
 
       if (event instanceof RoutesRecognized) {
-
-        // console.log('the route is:::', event.url);
         if (event && event.url !== '/login' && event.url !== '/app/main') {
           this._routeRequested = event.url;
         }
-
-
-        console.log('the current and requested routes are :::::', this._currentRoute, this._routeRequested);
       }
 
 

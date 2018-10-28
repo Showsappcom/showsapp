@@ -88,8 +88,6 @@ export class BuyerService {
 
           let optionCubed = Math.trunc((0.0003 * Math.pow(x, 3)) - (0.0238 * Math.pow(x, 2)) + 0.6125 * x - 1.5308);
 
-          console.log('option Cubed', optionCubed);
-
           if (optionCubed <= 0) {
             return '0';
           } else if (optionCubed >= 100) {
@@ -121,19 +119,13 @@ export class BuyerService {
 
   public getSellerData( sellerId : string, slugId : string ) : any {
 
-    console.log('i will use this service soon', sellerId, slugId);
-
-
     let requestOptions = {
       method: 'GET',
       body: {},
       withCredentials: true
     }, url = this._getItemURL + sellerId + '/' + slugId + '/';
 
-
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
-
-      console.log('the response is:::::::::', res);
 
       return res;
 
@@ -167,8 +159,6 @@ export class BuyerService {
 
     }).catch(( error : any ) => {
 
-
-      console.log('the error is :::', error);
       if (error.status === 500 && error.error && error.error.detail && error.error.detail === 'Should verify the accout first.') {
         this._toastEvent.fire({
           type: COMMON_CONST.INFO,

@@ -77,9 +77,6 @@ export class ActivateService {
    * @return any
    */
   public activateAccount( activationCode : string ) : any {
-
-    console.log('i will activate here', activationCode);
-
     let requestOptions = {
       method: 'POST',
       body: {
@@ -87,9 +84,6 @@ export class ActivateService {
       },
       withCredentials: true
     }, url = this._activateURL;
-
-    console.log('the url is::::', url);
-    console.log('the activation code is::: ', activationCode);
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
 
@@ -115,8 +109,6 @@ export class ActivateService {
    */
   public validateEmail( activationCode : string ) : any {
 
-    console.log('i will activate here', activationCode);
-
     let requestOptions = {
       method: 'POST',
       body: {
@@ -124,9 +116,6 @@ export class ActivateService {
       },
       withCredentials: true
     }, url = this._validateURL;
-
-    console.log('the url is::::', url);
-    console.log('the activation code is::: ', activationCode);
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
 
@@ -152,16 +141,11 @@ export class ActivateService {
    */
   public setNewPassword( emailObject : PasswordModel ) : any {
 
-    console.log('i will activate here', emailObject);
-
     let requestOptions = {
       method: 'POST',
       body: emailObject,
       withCredentials: true
     }, url = this._setNewPasswordURL;
-
-    console.log('the url is::::', url);
-    console.log('the activation code is::: ', emailObject);
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
 

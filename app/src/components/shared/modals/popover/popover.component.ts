@@ -69,13 +69,9 @@ export class PopoverComponent {
    * @returns void
    */
   private _openModal( event : Event ) : void {
-
-    console.log('i will open modal here', event);
     if (event[ 'type' ] === 'DeleteConfirmation') {
       this.dialogRef = this.dialog.open(DeletePopoverComponent);
-
     }
-
   }
 
   /**
@@ -85,17 +81,12 @@ export class PopoverComponent {
   private _subscribeModalEvents() : void {
 
     this._modalsEventSubscription = this._modalsEvent.on().subscribe(( event ) => {
-
-      console.log('popover modal event : ', event);
-
       // Open event
       if (event[ 'action' ] === 'open') {
-
         this._openModal(event);
       }
       // Close Event
       else if (event[ 'action' ] === 'close') {
-
         this._closeModal();
       }
 

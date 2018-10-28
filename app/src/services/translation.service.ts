@@ -52,8 +52,6 @@ export class TranslationService {
    * @returns {object}
    */
   getTranslations( module : string, language ? : string ) : any {
-
-    console.log('the module is:', module, language);
     let selectedLang : string;
 
     if (language) {

@@ -34,21 +34,11 @@ function isIOS() {
 function init() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      console.log('!!!!!!!!!!i am here ....');
-
       navigator.serviceWorker.register('/sapppwa.js').then(registration => {
-        console.log('SW registered: ', registration);
         platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
-
       }).catch(registrationError => {
-        console.log('SW registration failed: ', registrationError);
         platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
-
       });
-
-      // platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
-
-
     });
   } else {
 
@@ -58,10 +48,7 @@ function init() {
 }
 
 if (process.env.NODE_ENV === 'aot_cordova') {
-
-  console.log('i am here ...');
   document.addEventListener('deviceready', () => {
-
     platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
 
   }, false);
@@ -69,7 +56,3 @@ if (process.env.NODE_ENV === 'aot_cordova') {
   init();
 
 }
-// document.addEventListener('deviceready', () => {
-//
-//
-// }, false);

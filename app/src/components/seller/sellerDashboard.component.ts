@@ -81,11 +81,8 @@ export class SellerDashboardComponent {
 
 
   ngOnInit() {
-
-    console.log('INIT IS HERE......');
     this._getSellersItems();
     this._setupModalListener();
-
   }
 
   ngOnDestroy() {
@@ -100,7 +97,6 @@ export class SellerDashboardComponent {
     }).subscribe(( event : any ) => {
 
       if (event[ 'action' ] === 'delete') {
-        console.log('the event is::::', event);
         this.archiveItem(this._objectToDelete[ 'id' ], this._objectToDelete[ 'index' ]);
       }
 
@@ -116,45 +112,19 @@ export class SellerDashboardComponent {
   private _getSellersItems() : void {
     let offerList = [];
     this.dataReturned = false;
-    // let temp = JSON.parse(JSON.stringify(SellerItems));
-
-    // console.log('the sellers items are ::::', this.sellersItems, SellerItems);
-    // this.sellersItems.forEach(( node ) => {
-    //   offerList = [
-    //     ...offerList,
-    //     ...node.offers.forEach(( offer ) => {
-    //       return { ...offer, objectId: node.id, title: node.title };
-    //
-    //     })
-    //   ];
-    // });
 
     this._sellerService.getSellerData().takeWhile(() => {
       return this._compActive;
     }).subscribe(( data : any ) => {
-      console.log('@@@@@@@@@@@@@@@::::::');
-      console.log('@@@@@@@@@@@@@@@::::::');
-      console.log('the data is::::::', data.results);
-      console.log('@@@@@@@@@@@@@@@::::::');
-      console.log('@@@@@@@@@@@@@@@::::::');
       this.sellersItems = data.results;
 
       this.sellersItems.forEach(( item ) => {
         item[ 'offerAccepted' ] = this._sellerService.determineOfferAccepted(item[ 'offers' ], 'accepted');
       });
-
-      console.log('the sellersItems are ', this.sellersItems);
-
-
     });
-    // this.offerList = offerList;
     this.errorGettingData = false;
-
     this.offerList = offerList;
-    console.log('offerList:::', this.offerList);
     this.dataReturned = true;
-
-
   }
 
 
@@ -178,12 +148,8 @@ export class SellerDashboardComponent {
     this._sellerService.archiveItem(id).takeWhile(() => {
       return this._compActive;
     }).subscribe(( data : any ) => {
-
-      console.log('the response is::::', data);
       this.sellersItems.splice(index, 1);
       this._modalEvent.fire({ action: COMMON_CONST.POPOVER.CLOSE, type: 'DeleteConfirmation' });
-
-
     });
   }
 

@@ -61,8 +61,6 @@ export class SellerService {
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
 
-      console.log('the response is:::::::::', res);
-
       return res;
 
     }).catch(( error : any ) => {
@@ -88,8 +86,6 @@ export class SellerService {
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
 
-      console.log('the response is:::::::::', res);
-
       return res;
 
     }).catch(( error : any ) => {
@@ -114,11 +110,7 @@ export class SellerService {
 
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
-
-      console.log('the response is:::::::::', res);
-
       return res;
-
     }).catch(( error : any ) => {
 
       this._toastEvent.fire({
@@ -172,7 +164,6 @@ export class SellerService {
     let offerTemp = offerArray.sort(( a, b ) => {
       return Number(b[ 'value' ]) - Number(a[ 'value' ]);
     });
-    console.log('the offer array is:::', offerTemp);
     return offerTemp;
   }
 }

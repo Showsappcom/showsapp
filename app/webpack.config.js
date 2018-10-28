@@ -400,14 +400,10 @@ if ( ENV_DESKTOP_AOT_CORDOVA ) {
 
 
   if ( IS_DEV === 'false' ) {
-    // console.log('PRODUCTION BUILD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!', IS_DEV);
     config.module.rules.push( rules.stringReplaceProd, rules.typescriptaot );
     // config.module.rules.push( rules.typescriptaot);
   } else {
-    // console.log('DEV BUILD !!!!!!!!!!!!!!!!!!!!!!!!!!!!!', IS_DEV);
-
     config.module.rules.push( rules.stringReplaceDev, rules.typescriptaot );
-
   }
 
   config.output.filename = '[name].[chunkhash].js';
@@ -551,7 +547,4 @@ if ( ENV_TEST ) {
       path.resolve( __dirname, '/src' )
     )
   );
-
-  // console.log('the config is', config.module.rules);
-
 }

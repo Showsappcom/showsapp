@@ -62,9 +62,6 @@ export class LoginService {
     }, url = this._registerURL;
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
-
-
-      console.log('the response is simply::::', res);
       return res;
 
     }).catch(( error : any ) => {
@@ -86,21 +83,7 @@ export class LoginService {
       withCredentials: true
     }, url = this._loginURL;
 
-    console.log('the url is::::', url);
-    console.log('the credentials are::: ', credential);
-
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
-
-
-      // this._store.dispatch(new base.Update({
-      //   authToken: '',
-      //   loggedIn: true,
-      //   loggedInUser: 'test',
-      //   theme: 'shows-app-theme',
-      //   language: 'english'
-      // }));
-
-      console.log('the response is simply::::', res);
       return res;
 
     }).catch(( error : any ) => {
@@ -121,9 +104,6 @@ export class LoginService {
       body: { email: emailString },
       withCredentials: true
     }, url = this._retrievePasswordURL;
-
-    console.log('the url is::::', url);
-    console.log('the email is::: ', emailString);
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
 

@@ -81,8 +81,6 @@ export class NegotiationService {
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
 
-      console.log('the response is:::::::::', res);
-
       return res;
 
     }).catch(( error : any ) => {
@@ -110,8 +108,6 @@ export class NegotiationService {
 
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
-
-      console.log('the response is:::::::::', res);
 
       return res;
 

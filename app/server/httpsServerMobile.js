@@ -14,14 +14,11 @@ var options = {
 
 app.use(express.static(path));
 app.get("/*", function(req, res) {
-  //console.log("req", req, res);
   res.sendfile('/Users/mackenzie/Documents/Projects/ProjectRefactoring/JupiterDesktop/target/mobile/index.html');
 });
 var port = process.env.PORT || 5056;
 
 https.createServer(options, app).listen(port, function(){
-  console.log( 'Express started on https://localhost:' +
-    port + '; press Ctrl-C to terminate.' );
 });
 
 

@@ -18,13 +18,10 @@ import { CustomFormValidator } from '../../validators/customForm.validator';
 @Component({
   templateUrl: './buyerDashboard.component.html',
   styleUrls: [ './buyerDashboard.component.scss' ]
-
 })
 
 
 export class BuyerDashboardComponent {
-
-
   /**
    * @type {boolean} _compActive - provides reference when the comp is active
    */
@@ -87,11 +84,8 @@ export class BuyerDashboardComponent {
 
 
   ngOnInit() {
-
-    console.log('i will init here');
     this._determineOptions();
     this._generateForm();
-
   }
 
   private _generateForm() : void {
@@ -123,37 +117,21 @@ export class BuyerDashboardComponent {
     this.offerControl.valueChanges.takeWhile(() => {
       return this._compActive;
     }).subscribe(val => {
-      console.log('this val changed....', val);
       this.spinnerValue = this._buyerService.getProbability(this.sellerItem.price, val.value);
-
-
     });
 
   }
 
   private _getDataForUser() : void {
-    console.log('i will get data here');
-
     if (this._sellerId && this._sellerId.length > 0 && this._slugId && this._slugId.length > 0) {
       this._buyerService.getSellerData(this._sellerId, this._slugId).takeWhile(() => {
-
         return this._compActive;
-
       }).subscribe(( data : any ) => {
-        console.log('the data is::::::::::::::::::');
-        console.log('the data is::::::::::::::::::');
-        console.log('the data is::::::::::::::::::');
-        console.log('the data is:::', data);
-        console.log('the data is::::::::::::::::::');
-        console.log('the data is::::::::::::::::::');
-        console.log('the data is::::::::::::::::::');
         this.sellerItem = data;
-        // this.sellerItem['accepted'] = true;
         this.offerControl.get('item').setValue(data[ 'id' ]);
         this.dataReturned = true;
       });
     }
-
   }
 
   private _determineOptions() : void {
@@ -162,12 +140,9 @@ export class BuyerDashboardComponent {
     this._route.params.takeWhile(() => {
       return this._compActive;
     }).subscribe(( params ) => {
-      console.log('the params are::::::::', params);
       this._sellerId = params[ 'sellerId' ];
       this._slugId = params[ 'slugId' ];
-
       this._getDataForUser();
-
     });
 
 
@@ -178,11 +153,9 @@ export class BuyerDashboardComponent {
     this._buyerService.sendOffer(this.offerControl.value).takeWhile(() => {
       return this._compActive;
     }).subscribe(( data ) => {
-      console.log('the data is :::', data);
       this.offerSent = true;
 
     }, ( err ) => {
-      console.log('the status iss', err);
       if (err.status === 500 && err.error && err.error.detail && err.error.detail === 'Should verify the accout first.') {
         this.offerSent = true;
       }

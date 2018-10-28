@@ -110,19 +110,13 @@ export class SellerItemComponent {
     this._route.data.takeWhile(() => {
       return this._compActive;
     }).subscribe(( data ) => {
-
-      console.log('the data is:::::', data);
       this.createItem = data[ 'create' ];
-
-
     });
 
     this._route.params.takeWhile(() => {
       return this._compActive;
     }).subscribe(( params ) => {
-      console.log('the params are::::::::', params);
       this._itemId = params[ 'id' ];
-
     });
 
 
@@ -177,15 +171,12 @@ export class SellerItemComponent {
       this._sellerItemService.saveItem(this.itemFormControl.value).takeWhile(() => {
         return this._compActive;
       }).subscribe(( res : any ) => {
-        console.log('the res for create item is...', res);
         this.itemCreated = true;
         this.itemLink = APP_SETUP.domain + '/item/' + res[ 'url' ];
         // this.close();
       });
 
     } else {
-      console.log('I will edit item action ;......');
-
     }
   }
 

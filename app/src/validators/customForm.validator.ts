@@ -236,11 +236,9 @@ export class CustomFormValidator {
     let value = control.value;
 
     if (value >= 0 && value <= 59) {
-      // console.log('valeeee', value);
       return null;
     }
     else {
-      // console.log('valeeee123', value);
       return { 'invalid': true };
     }
 
