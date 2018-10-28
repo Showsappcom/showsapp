@@ -4,8 +4,8 @@
   "description": "A proto-type application to help sellers and buyers",
   "homepage": "index.html",
   "author": {
-    "name": "Mackenzie Niedzwiecki",
-    "email": "Mackenzie.j.Niedzwiecki@gmail.com"
+    "name": "Showsapp",
+    "email": ""
   },
   "license": "MIT",
   "private": true,
@@ -24,7 +24,6 @@
     "build-mobile:prod-dev": "cross-env NODE_ENV=aot_mobile_production DEV=true webpack  --display-chunks --progress",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "clean": "del-cli target",
-    "cleanCordova": "del-cli /Users/mackenzie/Documents/Projects/Cordova/lxi/www/* --force",
     "compodocDesktop": "./node_modules/.bin/compodoc -p tsconfig.json -d ./documentation/desktop",
     "compodocMobile": "./node_modules/.bin/compodoc -p tsconfigMobile.json -d ./documentation/mobile",
     "lint": "run-s lint:ts",

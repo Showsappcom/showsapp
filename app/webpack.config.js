@@ -228,13 +228,10 @@ else if ( ENV_DESKTOP_AOT_CORDOVA ) {
     polyfills: './src/polyfills.ts',
     vendor: './src/vendor.ts'
   };
-  // config.module.rules.push(rules.typescriptaot);
 
-
-  // config.module.rules.push( rules.typescriptaot );
 
   config.output = {
-    path: path.resolve( '/Users/mackenzie/Documents/Projects/Cordova/lxi/www' ),
+    path: path.resolve( '' ),
     publicPath: ''
   };
 
