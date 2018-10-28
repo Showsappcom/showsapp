@@ -54,6 +54,7 @@ class ImageView(generics.CreateAPIView):
         else:
             return Response({}, status=404)        
 
+
 class CreateItem(generics.CreateAPIView):
     """
     A protected API to create an item as a seller.
@@ -146,6 +147,37 @@ class MyItems(generics.ListAPIView):
         items = user.items.filter(active=True).order_by('-id')
 
         return items
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True, context={'request': request})
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True, context={'request': request})
+        return Response(serializer.data)
+
+class MarketplaceList(generics.ListAPIView):
+    """
+    A protected API to list the marketplaces for a member
+    """
+    pagination_class = StandardResultsSetPagination
+    authentication_classes = (JSONWebTokenAuthentication, )
+    permission_classes = (IsAuthenticated,)
+    serializer_class = MarketplaceSerializer
+
+    def get_queryset(self):
+        user = self.request.user.sa_user
+
+        marketplace_memberships = user.marketplacememberships.filter(active=True).values_list('marketplace_id', flat=True)
+        marketplaces = Marketplace.objects.filter(id__in = marketplace_memberships, active=True)
+        print(marketplace_memberships)
+        # marketplaces = user.marketplaces.filter(active=True).order_by('-id')
+
+        return marketplaces
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())

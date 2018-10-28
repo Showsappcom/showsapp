@@ -21,4 +21,5 @@ urlpatterns = [
     path('pay_gfm/', PayGFM.as_view(), name="pay_gfm"),
     path('image/', ImageView.as_view(), name='image'),
     path('image/<int:id>', ImageView.as_view(), name='image'),
+    path('marketplace/', MarketplaceList.as_view(), name="marketplace"),
 ]

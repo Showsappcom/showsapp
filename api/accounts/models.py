@@ -32,4 +32,4 @@ class SAUser(models.Model):
         app_label = 'accounts'
 
     def __str__(self):
-        return "%s - %s %s (%s)" %(self.id, self.first_name, self.last_name, self.email)    
+        return "%s - %s %s (%s)" %(self.id, self.first_name, self.last_name, self.email)
