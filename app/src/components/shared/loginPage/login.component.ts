@@ -123,8 +123,6 @@ export class LoginComponent {
       return this._compActive;
 
     }).subscribe(( state : BaseState ) => {
-
-      console.log('the state::: is :::::', state);
       this._baseState = state;
 
       if (this._baseState.loggedIn) {
@@ -132,9 +130,7 @@ export class LoginComponent {
         this._msgEvent.fire({
           msg: 'loggedIn'
         });
-
       }
-
     });
 
   }
@@ -213,15 +209,12 @@ export class LoginComponent {
 
 
     this.signingIn = true;
-    console.log('we will log in there');
     this._loginService.login({
       username: this.loginFormControl.get('username').value,
       password: this.loginFormControl.get('password').value
     }).takeWhile(() => {
       return this._compActive;
     }).subscribe(( res : any ) => {
-
-      console.log('the response is ::', res, this._baseState);
       this._store.dispatch(new BaseActions.Update({
         ...this._baseState, loggedIn: true, authToken: res.token
       }));
@@ -237,8 +230,6 @@ export class LoginComponent {
    * @returns void
    */
   public register() : void {
-
-    console.log('i will be here');
     this._loginService.register({
       first_name: this.requestFormControl.get('firstName').value,
       last_name: this.requestFormControl.get('lastName').value,
@@ -255,7 +246,6 @@ export class LoginComponent {
         message: 'Please Check Your E-mail, to verify the account'
       });
       this.loginView = true;
-      console.log('the response is ::', res);
     });
   }
 
@@ -265,22 +255,15 @@ export class LoginComponent {
    * @returns void
    */
   public retrievePassword() : void {
-    console.log('i will send e-mail to retrieve password');
-
     this._loginService.retrievePassword(this.forgotEmailFormGroup.get('forgotEmail').value).takeWhile(() => {
       return this._compActive;
     }).subscribe(( res : any ) => {
-
-      console.log('the response is ::', res);
       this._toastEvent.fire({
         type: COMMON_CONST.INFO,
         message: 'Please Check Your E-mail, for instruction to reset your password'
       });
 
       this.loginView = true;
-
-
-      // ...this._baseState, loggedIn: true,
     });
 
   }

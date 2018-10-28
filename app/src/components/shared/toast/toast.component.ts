@@ -80,7 +80,6 @@ export class ToastComponent {
 
   private _updateToastType() : void {
 
-    console.log('the toast  is simply', this.data);
     if (this.data && this.data.message) {
       this.toastMessage = this.data.message;
     }

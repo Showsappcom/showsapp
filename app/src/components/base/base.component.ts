@@ -152,9 +152,6 @@ export class BaseComponent {
     this._authService.logOut().takeWhile(() => {
       return this._compActive;
     }).subscribe(( resp ) => {
-
-      console.log('i will be done here ...', resp);
-
       if (resp !== 'error') {
         this._store.dispatch(new BaseActions.Update({
           authToken: '',

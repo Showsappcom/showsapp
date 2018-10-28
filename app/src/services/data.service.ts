@@ -60,10 +60,7 @@ export class DataService {
       return this._compActive;
 
     }).subscribe(( state : BaseState ) => {
-
-      console.log('the state is:', state);
       this._baseState = state;
-
     });
 
 

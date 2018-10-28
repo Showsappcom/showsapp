@@ -69,11 +69,7 @@ export class SellerItemService {
 
 
     return this._dataService.sendData(url, requestOptions).map(( res : any ) => {
-
-      console.log('the response is:::::::::', res);
-
       return res;
-
     }).catch(( error : any ) => {
 
       this._toastEvent.fire({

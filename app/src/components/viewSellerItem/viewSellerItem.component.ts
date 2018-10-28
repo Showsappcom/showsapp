@@ -105,11 +105,8 @@ export class ViewSellerItemComponent {
     this._route.params.takeWhile(() => {
       return this._compActive;
     }).subscribe(( params ) => {
-      console.log('the params are::::::::', params);
       this._itemId = params[ 'id' ];
-
       this._getOffers();
-
     });
 
 
@@ -120,14 +117,11 @@ export class ViewSellerItemComponent {
       return this._compActive;
     }).subscribe(( data : any ) => {
 
-      console.log('the item is:::', data);
       this.item[ 'price' ] = data[ 'price' ];
       this.item[ 'title' ] = data[ 'name' ];
       this.item[ 'offers' ] = this._sellerService.sortByPrice(data[ 'offers' ]);
 
-
       this.offerAcceptedOnItem = this._sellerService.determineOfferAccepted(this.item[ 'offers' ], 'accepted');
-
       this.dataReturned = true;
     });
 
@@ -141,10 +135,8 @@ export class ViewSellerItemComponent {
     }).takeWhile(() => {
       return this._compActive;
     }).subscribe(( res : any ) => {
-      console.log('the res for create item is...', res);
 
       this.item[ 'offers' ] = this._sellerService.updateSellerItem(res[ 'id' ], res[ 'accepted' ], this.item[ 'offers' ]);
-
       this.offerAcceptedOnItem = this._sellerService.determineOfferAccepted(this.item[ 'offers' ], 'accepted');
 
     });
@@ -161,8 +153,6 @@ export class ViewSellerItemComponent {
     }).subscribe(( res : any ) => {
       this.item[ 'offers' ] = this._sellerService.updateSellerItem(res[ 'id' ], res[ 'accepted' ], this.item[ 'offers' ]);
       this.offerAcceptedOnItem = this._sellerService.determineOfferAccepted(this.item[ 'offers' ], 'accepted');
-
-      console.log('the res for create item is...', res);
     });
   }
 

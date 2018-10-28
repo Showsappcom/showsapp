@@ -22,10 +22,7 @@ describe('Component: LoginComponent', () => {
         FormBuilder,
         {
           useClass: class {
-
             public loginUser() : void {
-              console.log('i will login user here');
-
             }
           }
         },
@@ -47,11 +44,9 @@ describe('Component: LoginComponent', () => {
 
 
   it('should have component defined', () => {
-
     fixture.whenStable().then(() => {
       expect(component).toBeDefined();
     });
-
   });
 
 
