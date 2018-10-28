@@ -1,12 +1,56 @@
 from django.db import models
-from accounts.models import Account, SAUser
-from django.utils import timezone
+from accounts.models import SAUser
 from django.utils.text import slugify
 from django.conf import settings
-# Create your models here.
+from utils.utils import Enumeration
+
+
+class Marketplace(models.Model):
+    name = models.CharField(max_length=360, blank=True, null=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        app_label = 'markets'
+
+    def __str__(self):
+        return "%s - %s" %(self.id, self.name)
+
+
+class MarketplaceMembership(models.Model):
+
+    Access = Enumeration(
+        'owner',
+        'buyer',
+        'seller',
+        'requested'
+    )
+
+    ACCESS_LEVEL = (
+        (Access.OWNER, ('owner')),
+        (Access.BUYER, ('buyer')),
+        (Access.SELLER, ('seller')),
+        (Access.REQUESTED, ('requested'))
+    )
+
+    sa_user = models.ForeignKey(SAUser, related_name='marketplacememberships', null=False,
+                              on_delete=models.CASCADE)
+    marketplace = models.ForeignKey(Marketplace,
+                                    related_name='marketplacememberships',
+                                    null=False, on_delete=models.CASCADE)
+
+    access_level = models.IntegerField(choices=ACCESS_LEVEL, db_index=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        app_label = 'markets'
+
+    def __str__(self):
+        return "%s - %s" %(self.id, self.marketplace.name)
+
 
 class Item(models.Model):
     sa_user = models.ForeignKey(SAUser, related_name='items', null=True, on_delete=models.CASCADE)
+    marketplace = models.ForeignKey(Marketplace, related_name='items', null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=360, blank=True, null=True)
     description = models.TextField(blank=True, null=True, default="")
     slug = models.SlugField(max_length=255, blank=True, null=True, db_index = True)
@@ -25,7 +69,7 @@ class Item(models.Model):
 
     def __str__(self):
         return "%s - %s" %(self.id, self.name) 
-        
+
     def setSlug(self):
         name = self.name
         slug = slugify(name)
@@ -61,6 +105,7 @@ class Offer(models.Model):
     charge_token = models.CharField(max_length=360, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     class Meta:
         app_label = 'markets'
 
@@ -75,9 +120,11 @@ class WaitingListSubscription(models.Model):
     class Meta:
         app_label = 'markets'
 
+
 def itemgallery_generate_filename(self, filename):
     url = "%s/%s/small/%s" % ('gallery', self.item.id, filename)
     return url 
+
 
 class GalleryPhoto(models.Model):
     item = models.ForeignKey(Item, related_name='images', null=True, blank=True, on_delete=models.CASCADE)
@@ -89,13 +136,15 @@ class GalleryPhoto(models.Model):
     photo_file_name = models.FileField(upload_to=itemgallery_generate_filename, blank=True, null=True)
 
     class Meta:
-        app_label = 'markets'   
+        app_label = 'markets' 
 
     @property
     def gallery_photo_small_url(self):
         if self.photo_file_name and self.photo_file_name != '':
             result = '%s%s' %(settings.IMAGES_URL, self.photo_file_name)
         else:
-            result =  '%sdefault/%s' % (settings.IMAGES_URL, settings.DEFAULT_PROFILE_PHOTO)
+            result =  '%sdefault/%s' % (settings.IMAGES_URL, settings.DEFAULT_ITEM_PHOTO)
         return result
+
+
 

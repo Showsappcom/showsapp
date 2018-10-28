@@ -27,6 +27,16 @@ class WaitingListSubscriptionAdmin(admin.ModelAdmin):
 
 admin.site.register(WaitingListSubscription, WaitingListSubscriptionAdmin)
 
+class MarketplaceAdmin(admin.ModelAdmin):
+    save_on_top = True
+
+admin.site.register(Marketplace, MarketplaceAdmin)
+
+class MarketplaceMembershipAdmin(admin.ModelAdmin):
+    save_on_top = True
+
+admin.site.register(MarketplaceMembership, MarketplaceMembershipAdmin)
+
 class GalleryPhotoAdmin(admin.ModelAdmin):
     save_on_top = True
     list_display = ('image_tag','id', 'item', 'description', 'link', 'created_at', 'updated_at', 'photo_file_name', 'gallery_photo_small_url')

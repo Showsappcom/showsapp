@@ -1,5 +1,5 @@
 from rest_framework import serializers, exceptions
-from markets.models import WaitingListSubscription, Item, Offer, GalleryPhoto
+from markets.models import WaitingListSubscription, Item, Offer, GalleryPhoto, Marketplace, MarketplaceMembership
 from accounts.serializers import AccountSerializer, SAUserSerializer, SignupSerializer
 from django.db.models import Q
 import stripe
@@ -52,6 +52,13 @@ class ItemSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'description', 'slug', 'price', 'good_faith_money', 'accepted',
                   'active', 'requires_good_faith_money', 'latitude', 'longitude', 'url',
                   'address', 'created_at', 'images', 'stripe_publishable_key')
+
+
+class MarketplaceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Marketplace
+        fields = ('id', 'name',)
+
 
 class CreateItemSerializer(serializers.Serializer):
     name = serializers.CharField(allow_null=False, allow_blank=False, write_only=True, required=True)
