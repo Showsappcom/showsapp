@@ -7,11 +7,11 @@ services:
       - postgres_data:/var/lib/postgresql/data/
   api:
     build: ./api
-    command: python /usr/src/api/manage.py runserver 0.0.0.0:8000
+    command: python /usr/src/api/manage.py runserver 0.0.0.0:8888
     volumes:
       - ./api/:/usr/src/api/
     ports:
-      - 8000:8000
+      - 8888:8888
     depends_on:
       - db
     environment:
