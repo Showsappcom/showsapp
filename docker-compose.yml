@@ -1,0 +1,21 @@
+version: '3.6'
+
+services:
+  db:
+    image: postgres:10.1-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  web:
+    build: ./api
+    command: python /usr/src/api/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./api/:/usr/src/api/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - SECRET_KEY=please_change_me
+
+volumes:
+  postgres_data:
