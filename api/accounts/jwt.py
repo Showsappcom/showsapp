@@ -22,7 +22,6 @@ class CustomJWTSerializer(JSONWebTokenSerializer):
     username_field = 'username'
 
     def validate(self, attrs):
-        print("here ---------------->")
         password = attrs.get("password")
         user_obj = User.objects.filter(email=attrs.get("username").lower()).first() or User.objects.filter(username=attrs.get("username")).first()
         print(user_obj)
